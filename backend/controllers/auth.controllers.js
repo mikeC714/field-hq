@@ -67,13 +67,13 @@ import bcrypt from "bcrypt";
 
         res.cookie("access_token", token,{
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: 'strict',
             maxAge: 900000 // 15M
         })
         res.cookie("refresh_token", safe, {
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: "strict",
             maxAge: 604800000 // 7D
         })

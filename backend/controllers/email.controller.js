@@ -14,7 +14,7 @@ import { catchAsync } from "../utils/catchAsync.js";
 
 		const emailToken = Auth.signEmail({ id: user, quoteId, customerId }, "2d")
 		const expiry = await tokenService.storeQuoteToken(quoteId, emailToken);
-		const link = `http://${process.env.PORT}/quote/acceptance?token=${emailToken}`;
+		const link = `${process.env.FRONTEND_URL}/quote/acceptance?token=${emailToken}`;
 
 
         const userInfo = await userService.getUserById(user);
