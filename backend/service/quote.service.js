@@ -67,9 +67,6 @@ export default {
     },
 
     async createQuote(user, customer, quote, labor, materials){
-        // if(!quote.length || !customer.length || !labor.length || !materials.length){
-        //     return;
-        // }
         try{
             const customerData = await db.query(
                 `INSERT INTO customers 
@@ -82,7 +79,7 @@ export default {
                 `INSERT INTO quotes
                     (user_id, customer_id, status, markup, total)
                 VALUES($1, $2, $3, $4, $5)    
-                RETURNING id, created_at`, 
+                RETURNING id, created_at::date::text`, 
                 [user, customerData?.rows[0]?.id, quote.status, quote.markup, quote.total]
             );
 
@@ -104,7 +101,7 @@ export default {
             ]);
 			
 			return{
-				quote: quoteData.rows[0].id,
+				quoteData: {id: quoteData.rows[0].id, created_at: quoteData.rows[0].created_at },
 				customerId: customerData.rows[0].id
 			}
 

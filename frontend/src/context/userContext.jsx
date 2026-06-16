@@ -19,7 +19,7 @@ export function UserProvider({children}){
 			const cached = localStorage.getItem("user");
 			return cached ? { user: JSON.parse(cached) } : undefined;
 		},
-    	retry: true,
+    	retry: false,
 		refetchOnMount: true,
 		staleTime: 0,
     });

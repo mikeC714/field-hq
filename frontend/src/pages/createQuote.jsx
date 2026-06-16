@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { useEmailHook } from '../hooks/email.hooks.jsx';
-import { useCreateQuote } from "../hooks/createQuote.hook.jsx";
+import { useCreateQuote } from "../hooks/quote.hooks.jsx";
 import { CreateQuoteForm } from '../comps/createQuote.form.jsx';
 import { CqNavBar } from '../comps/navBar.jsx'
 import { Send, Loader, Check } from 'lucide-react';

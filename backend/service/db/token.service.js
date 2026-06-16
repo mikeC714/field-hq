@@ -48,17 +48,17 @@ export default {
         }
     },
 
-    async storeQuoteToken(id, token){
-        if(!id) throw new AppError("User not found.", 404);
+    async storeQuoteToken(quoteId, token){
+        if(!quoteId) throw new AppError("Failed to provide quote id.", 400);
         if(!token) throw new AppError("Failed to provide valid token.", 401);
         try{
 			const encrypted = encrypt(token);
             const results = await db.query(
-                "INSERT INTO quote_tokens (quote_id, token) VALUES($1, $2) RETURNING expires_at::date",
-                [id, encrypted]
+                "INSERT INTO quote_tokens (quote_id, token) VALUES($1, $2) RETURNING expires_at::date::text",
+                [quoteId, encrypted]
             );
 
-		return results.rows[0].expires_at.toISOString().split('T')[0];
+		return results.rows[0].expires_at;
         }catch(err){
             throw err;
         }

@@ -1,6 +1,7 @@
 import PDFDocument from 'pdfkit';
 
-export async function pdf({ quoteInfo, materials, labor, user, customer, expiry }) {
+export async function pdf({ quote, materials, labor, user, customer, expiry }) {
+	const { data, created_at } = quote;
     return new Promise((resolve, reject) => {
         const doc = new PDFDocument({ margin: 50, size: 'A4' });
         const chunks = [];
@@ -37,7 +38,7 @@ export async function pdf({ quoteInfo, materials, labor, user, customer, expiry 
         doc.fillColor(blue).fontSize(13).font('Helvetica-Bold')
             .text('Quote date', 350, billToY, { continued: true })
             .font('Helvetica').fillColor('#333333')
-            .text(`  ${quoteInfo.created_at}`, { align: 'right' });
+            .text(`  ${created_at}`, { align: 'right' });
 
         doc.fillColor(blue).fontSize(13).font('Helvetica-Bold')
             .text('Due date', 350, billToY + 20, { continued: true })
@@ -120,7 +121,8 @@ export async function pdf({ quoteInfo, materials, labor, user, customer, expiry 
         doc.fillColor('#666666').fontSize(13).font('Helvetica')
             .text('Subtotal', 350, totalsY, { width: 100 });
         doc.fillColor('#333333')
-            .text(String(quoteInfo.subTotal), 455, totalsY, { width: 100, align: 'right' });
+            .text(String(data.subTotal), 455, totalsY, { width: 100, align: 'right' });
+
 
         doc.moveTo(350, totalsY + 20).lineTo(565, totalsY + 20)
             .strokeColor(blue).lineWidth(2).stroke();
@@ -128,7 +130,7 @@ export async function pdf({ quoteInfo, materials, labor, user, customer, expiry 
         doc.fillColor(blue).fontSize(13).font('Helvetica-Bold')
             .text('Total (USD)', 350, totalsY + 28, { width: 100 });
         doc.fontSize(15)
-            .text(String(quoteInfo.total), 455, totalsY + 28, { width: 100, align: 'right' });
+            .text(String(data.total), 455, totalsY + 28, { width: 100, align: 'right' });
 
         // ── Footer ────────────────────────────────────────────
         const footerY = totalsY + 70;

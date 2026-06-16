@@ -2811,8 +2811,33 @@ input::-webkit-inner-spin-button {
 
 
 
+.qtAPage{
+	height: 100vh;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
 
+.qtAMsgContainer{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
 
+.qtAIconContainer{
+	height: 28px;
+	width: 28px;
+	border: none;
+	border-radius: 22px;
+}
+
+.success{
+	background-color: rgba(11,146,9, .45);
+}
+.isError{
+	background-color: rgba(255, 0, 0, .40);
+}
 
 
 

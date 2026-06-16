@@ -10,15 +10,26 @@ import { catchAsync } from "../utils/catchAsync.js";
         const user = req.user;
         const { customer, labor, materials, quote } = req.body;
 
-		const { quoteId, customerId } = await quoteService.createQuote(user, customer, quote, labor, materials);
+		const { quoteData, customerId } = await quoteService.createQuote(user, customer, quote, labor, materials);
 
-		const emailToken = Auth.signEmail({ id: user, quoteId, customerId }, "2d")
-		const expiry = await tokenService.storeQuoteToken(quoteId, emailToken);
+		const emailToken = Auth.signEmail({ id: user, quoteId: quoteData.id, customerId }, "2d")
+		const expiry = await tokenService.storeQuoteToken(quoteData.id, emailToken);
 		const link = `${process.env.FRONTEND_URL}/quote/acceptance?token=${emailToken}`;
-
+		console.log(expiry);
 
         const userInfo = await userService.getUserById(user);
-        await sendQuoteEmail({ userInfo, quoteInfo: quote, materials, labor, customer, link, expiry });
+        await sendQuoteEmail({ 
+			userInfo, 
+			quote:{ 
+				data: quote, 
+				created_at: quoteData.created_at
+			}, 
+			materials, 
+			labor, 
+			customer, 
+			link, 
+			expiry 
+		});
 
 		return res.status(200).json({ success: true });
     })

@@ -5,11 +5,11 @@ import { quoteEmailTemplate } from "../public/emailTemplate.js";
 import { passwordResetEmailTemplate } from '../public/passwordResetTemplate.js';
 const resend = new Resend(process.env.RESEND_KEY)
 
-	export async function sendQuoteEmail({ userInfo, quoteInfo, materials, labor, customer, link, expiry }){
+	export async function sendQuoteEmail({ userInfo, quote, materials, labor, customer, link, expiry }){
 		const senderName = `${userInfo.first_name} ${userInfo.last_name} `;
 		try{
-        	if(!quoteInfo) throw new AppError("Failed to provide quote info. Cannot send empty quote.", 400);
-			const pdfBuffer = await pdf({ quoteInfo, materials, labor, user: userInfo, customer, expiry });
+        	if(!quote) throw new AppError("Failed to provide quote info. Cannot send empty quote.", 400);
+			const pdfBuffer = await pdf({ quote, materials, labor, user: userInfo, customer, expiry });
 			const { error } = await resend.emails.send({
                 from: `${senderName}  <noreply@field-hq.com>`,
                 to: customer.email,
