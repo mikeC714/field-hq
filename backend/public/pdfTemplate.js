@@ -38,12 +38,12 @@ export async function pdf({ quote, materials, labor, user, customer, expiry }) {
         doc.fillColor(blue).fontSize(13).font('Helvetica-Bold')
             .text('Quote date', 350, billToY, { continued: true })
             .font('Helvetica').fillColor('#333333')
-            .text(`  ${created_at}`, { align: 'right' });
+            .text(`${created_at}`, { align: 'right' });
 
         doc.fillColor(blue).fontSize(13).font('Helvetica-Bold')
             .text('Due date', 350, billToY + 20, { continued: true })
             .font('Helvetica').fillColor('#333333')
-            .text(`  ${expiry}`, { align: 'right' });
+            .text(`${expiry}`, { align: 'right' });
 
         // ── Materials Table Header ────────────────────────────
         const materialsTableTop = billToY + 80;
