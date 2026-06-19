@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+:root {
+    --orange: #eea12d;
+    --bg-left: #141414;
+    --bg-right: #0d0d0d;
+    --border:  #4d4b4ba2;
+    --text: #f0f0f0;
+    --text-muted: #888;
+    --input-bg: #1e1e1e;
+    --font: "Montserrat", sans-serif;
+	--skin:    #2a2a2a;
+	--stroke:  var(--orange);
+	--mid:     #1e1e1e;
+	--signbg:  #111111;
+	--font: 'Montserrat', sans-serif;
+}
+
+
+@media (max-width: 667px){
+	body{
+		overflow-y: hidden;
+	}
+	.authPage{
+		height: 100vh;
+		overflow-x: hidden;
+		overflow-y: hidden;
+	}	
+	.authLeft{
+		display: grid;
+		grid-template-rows: auto 1fr;
+		row-gap: 4em;
+	}
+	.authRight{
+		display: none;
+	}
+	.authLogo{
+		grid-row: 1;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+	.authLogoIcon{
+		height: 4rem;
+		width: 4rem;
+	}
+	.authContent{
+		grid-row: 2;
+		align-self: center;
+		justify-self: center;
+		height: 100vh;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}	
+	.authTopSection{
+		display: flex;
+		flex-direction: column;
+
+	}
+	.authTabs{
+		display: flex;
+		gap: 1rem;
+	}
+	.authTab{
+		background: none;
+		font-family: var(--font);
+		border: none;
+		color: white;
+		height: 20px;
+		cursor: pointer;
+		margin-bottom: 10px;
+		border-bottom: 1px solid transparent;
+		transition: border-bottom-color .1s ease;
+	}
+	.authTab.active{
+		border-bottom: 2px solid var(--orange);
+	}
+	.authHeader > h1{
+		font-weight: 440;
+		font-size: 24px;
+		font-family: var(--font)			
+	}	
+	.authHeader > p{
+		font-family: var(--font);
+		font-size: 16px;
+	}
+	.authForm{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	.authInputs{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		margin-bottom: 12px;
+		gap: 1em;
+	}
+	.authInputGroup{
+		display:flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+	.authInputGroup > label{
+		font-size: 14px;
+		font-family: var(--font);
+	}
+	.authInputWrapper{
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+	.authInputWrapper > input{
+		height: 24px;
+		border: 2px solid transparent;
+		border-radius: 4px;
+		padding-left: 6px;
+		transition: border-color .1s ease;
+	}
+	.authInputWrapper > input:focus{
+		border-color: var(--orange);
+		outline: none;
+	}
+	.authLabelRow{
+		display: flex;
+		font-family: var(--font);
+		font-size: 14px;
+		gap: 12px;
+	}
+	.authPasswordToggle{
+		border: 1px solid #FFFFF;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+	.authRemember{
+		font-family: var(--font);
+		font-size: 14px;
+		margin-bottom: 10px;
+	}
+	.authSubmitBtn{
+		width: 50%;
+		height: 100%;
+		padding: 8px;
+		justify-self: center;
+		align-self: center;
+		border: none;
+		background-color: var(--orange);
+		color: white;
+		font-family: var(--font);
+		font-size: 13px;
+		border-radius: 6px;
+		margin-bottom: 10px;
+	}
+	.authSwitch{
+		font-family: var(--font);
+		font-size: 13px;
+	}
+	.authSwitch > button{
+		border: none;
+		background: none;
+		color: var(--orange);
+	}
+	.authSignGroup{
+		display: flex;
+		justify-content: center;
+		position: relative;
+	}
+	.authSignWrapper{
+		display: flex;
+		flex-direction: column;
+		padding-bottom: 4px;
+		margin-bottom: 10px
+	}
+	.authSignWrapper > input{
+		width: 74%;
+	}
+	.authSignIcon{
+		position: absolute;
+		left: 0;
+	}
+}	
+

@@ -21,28 +21,29 @@ export function Authentication() {
                     <img className="authLogoIcon" src={logo} />
                     <span>FIELD HQ</span>
                 </div>
-                <div className="authTopSection">
-                    <div className="authTabs">
-                        <button className={`authTab ${isAuth ? 'active' : ''}`} onClick={() => setAuth(true)}>
-                            Sign In
-                        </button>
-                        <button className={`authTab ${!isAuth ? 'active' : ''}`} onClick={() => setAuth(false)}>
-                            Sign Up
-                        </button>
-                    </div>
-                    <div className="authHeader">
-                        <h1>{isAuth ? 'Welcome Back' : 'Create Account'}</h1>
-                        <p>{isAuth ? 'Sign in to manage your jobs and quotes' : 'Sign up to start managing your business'}</p>
-                    </div>
-                </div>
-                <AuthForm
-                    key={isAuth}
-                    isAuth={isAuth}
-                    onSubmit={handleSubmit}
-                    isPending={isAuth ? loginMutation.isPending : signupMutation.isPending}
-                    onSwitch={() => setAuth(prev => !prev)}
-                />
-
+				<div className="authContent">
+					<div className="authTopSection">
+						<div className="authTabs">
+							<button className={`authTab ${isAuth ? 'active' : ''}`} onClick={() => setAuth(true)}>
+								Sign In
+							</button>
+							<button className={`authTab ${!isAuth ? 'active' : ''}`} onClick={() => setAuth(false)}>
+								Sign Up
+							</button>
+						</div>
+						<div className="authHeader">
+							<h1>{isAuth ? 'Welcome Back' : 'Create Account'}</h1>
+							<p>{isAuth ? 'Sign in to manage your jobs and quotes' : 'Sign up to start managing your business'}</p>
+						</div>
+					</div>
+					<AuthForm
+						key={isAuth}
+						isAuth={isAuth}
+						onSubmit={handleSubmit}
+						isPending={isAuth ? loginMutation.isPending : signupMutation.isPending}
+						onSwitch={() => setAuth(prev => !prev)}
+					/>
+				</div>
             </div>
             <div className="authRight">
                 <div className="mockWindow">
