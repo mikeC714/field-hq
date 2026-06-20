@@ -15,6 +15,12 @@
 		--font: 'Montserrat', sans-serif;
 	}
 
+	*,
+	body{
+		margin:0;
+		padding:0;
+	}
+
 	.authPage{
 		height: 100vh;
 		display: flex;
