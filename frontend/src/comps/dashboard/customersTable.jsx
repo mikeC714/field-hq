@@ -26,10 +26,7 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
         }
     }
 
-
-
-
-	/*function showCustomerCard(customer, quote){
+/*function showCustomerCard(customer, quote){
         return (
             <CustomerCard
                 firstName={customer.first_name}
@@ -42,7 +39,7 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
             />
 	)
     }*/
-    
+   
     return(
         <div className="customerTableContainer">
             <div className="customerTable">
@@ -73,23 +70,21 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
                                                 >
                                                     <Trash2 className='customerDeleteIcon' />
                                                 </button>
-                                            <div className="cusomterJobId">QT-{String(customerIndex + 1).padStart(3,0)}</div>
+                                            <div className="customerJobId">QT-{String(customerIndex + 1).padStart(3,0)}</div>
                                             <div className="customerNameNAdd">
                                                 <span className='customerNameTxt'>{customer?.first_name}  {customer?.last_name}</span>
                                                 <span className="customerAddressTxt">{customer?.address}</span>
                                             </div>
                                         </div>
-                                        <div className="trRight">
-                                            <div className="quoteJobDescriptionTxt">{quote?.job[0]?.description}</div>
-                                            <div className="quoteTotalTxt">${quote?.total.toLocaleString()}</div>
-                                            <div 
-                                                className="quoteStatusCell"
-                                            >
-                                                <QuoteStatus status={quote?.status} />
-                                            </div>
-                                            <div className="quoteCreatedAtTxt">{dayjs(quote?.created_at).calendar(null, calendarConfig)}</div>
-                                        </div>
-                                </div>
+										<div className="quoteJobDescriptionTxt">{quote?.job[0]?.description}</div>
+									<div className='trRight'>
+											<div className="quoteTotalTxt">${quote?.total.toLocaleString()}</div>
+											<div className="quoteStatusCell">
+												<QuoteStatus status={quote?.status} />
+											</div>
+											<div className="quoteCreatedAtTxt">{dayjs(quote?.created_at).calendar(null, calendarConfig)}</div>
+										</div>
+									</div>
                         )) :<p> No Customers.</p> }
                 </div>
                 <div className='pageBtnContainer'>

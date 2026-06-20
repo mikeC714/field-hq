@@ -83,8 +83,6 @@ export function Dashboard(){
                         onChange={handleSearchChange}
                     />
                 </div>
-
-                <div className='customerTableContainer'>
                     <CustomerTable 
                         data={filteredData}
 						isLoading={isLoading}
@@ -99,7 +97,6 @@ export function Dashboard(){
 						visible={visible}
 						setVisible={setVisible}
                     />
-                </div>
             </div>
         </div>
     )
