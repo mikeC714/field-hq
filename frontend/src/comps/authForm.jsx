@@ -11,7 +11,7 @@ export function AuthForm({ isAuth, onSubmit, isPending, onSwitch }) {
                 <div className="authInputGroup authSignGroup">
                     <label>Name</label>
                     <div className="authInputWrapper authSignWrapper">
-                        <User size={15} className="authInputIcon authSignIcon" />
+                        <User size={15} className="authSignIcon" />
                         <input type="text" name="firstName" placeholder="First Name" required />
                         <input type="text" name='lastName' placeholder='Last Name' required/>
                     </div>
