@@ -1,1 +1,121 @@
-for dash
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+	--orange: #eea12d;
+	--bg-left: #141414;
+	--bg-right: #0d0d0d;
+	--border:  #4d4b4ba2;
+	--text: #f0f0f0;
+	--text-muted: #888;
+	--input-bg: #1e1e1e;
+	--font: "Montserrat", sans-serif;
+	--skin:    #2a2a2a;
+	--stroke:  var(--orange);
+	--mid:     #1e1e1e;
+	--signbg:  #111111;
+	--font: 'Montserrat', sans-serif;
+}
+
+@media(max-width: 480px){
+	.dashboardPage{
+		display: grid;
+		grid-template-rows: auto auto 1fr;
+	}
+	.dashboardHeader{
+		display:flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		position: relative;
+	}
+	.hamburgerBtn{
+		position: absolute;
+		left: 10px;
+		border:none;
+		background:none;
+		cursor:pointer;
+	}
+	.dashboardNav{
+		grid-column: 2;
+		width: 100%;
+	}
+	.navLeft{
+		display: flex;
+		justify-content:center;
+		align-items: center;
+		width:100%;
+	}
+	.navLogo{
+		display:flex;
+		align-items: center;
+		justify-content:center;
+		width: 100%;
+	}
+	.navRight{
+		display: none;
+	}
+	.dashboardBody{
+		display:grid;
+		grid-template-rows:auto 1fr auto;
+		row-gap: 10px;
+	}
+	.quickAccessContainer{
+		grid-row: 1;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+	}
+	.statCardsGrid{
+		display:grid;
+		grid-template: auto auto/ auto auto;
+		gap: 10px;
+		padding:0;
+		margin: 0;
+	}
+	.statCardWrapper{
+		height: 100%;
+		width: 100%;
+		display: flex;
+		justify-content: flex-start;
+	}
+	.statCard{
+		width: 100%;
+		height: 100%;
+		display:flex;
+		padding: 10px 10px 20px 10px;
+		justify-content:flex-start;
+		flex-direction: column;
+	}
+	.statCardTitle{
+		font-family:var(--font);
+		font-size: 9px;
+		margin:0;
+	}
+	.statCardValue{
+		margin:0;
+		padding-left: 10px;
+	}
+	.statCardSubtitle{
+		margin:0;
+	}
+	.filterRow{
+
+	}
+	.statusBtnsContainer{
+		display:none;
+	}
+	.customerTableContainer{
+		grid-row: 3;
+	}
+	.tableHead{
+		display:none;
+		width: 100%;
+	}
+	.customerDataRow{
+		width: 100%;
+
+	}
+
+}
+
+

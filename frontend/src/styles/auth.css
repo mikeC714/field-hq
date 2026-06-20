@@ -165,6 +165,7 @@
 		cursor: pointer;
 		font-size: 13px;
 		font-family: var(--font);
+		color: white;
 		transition: opacity .2s ease;
 	}
 	.authSubmitBtn:hover{

@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
@@ -20,6 +19,10 @@
 	--mid:     #1e1e1e;
 	--signbg:  #111111;
 }
+
+
+/* ── RIGHT COLUMN ── */
+
 
 /* FORGOT PASSWORD PAGE */
 
