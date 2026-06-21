@@ -9,7 +9,6 @@ export function NavBar(){
     const { logoutMutation } = useAuth();
     const { nameInitials } = useUserContext();
     const navigate = useNavigate();
-
     return(
         <nav className='dashboardNav'>
             <div className='navLeft'>

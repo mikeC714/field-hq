@@ -22,6 +22,9 @@ export function UserProvider({children}){
     	retry: false,
 		refetchOnMount: true,
 		staleTime: 0,
+		onError:() => {
+			localStorage.removeItem("user");
+		}
     });
 
     const firstName = data?.user?.first_name ?? "";

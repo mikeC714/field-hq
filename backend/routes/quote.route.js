@@ -6,7 +6,7 @@ import { verifyToken } from '../middleware/auth.middleware.js';
 
 const quoteRouter = express.Router();
 
-quoteRouter.get('/quote/acceptance', handleAcceptance);
+quoteRouter.put('/quote/acceptance', handleAcceptance);
 
 quoteRouter.use(verifyToken);
 quoteRouter.get('/customer-quote', getCustomerQuoteInfo);
