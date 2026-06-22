@@ -46,11 +46,11 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
         <div className="customerTableContainer">
             <div className="customerTable">
                 <div className="tableHead">
-                    <div className="trLeft">
+                    <div className="thLeft">
                         <p>JOB ID</p>
                         <p>CUSTOMER</p>
                     </div>
-                    <div className="trRight">
+                    <div className="thRight">
                         <p>JOB TYPE</p>
                         <p>TOTAL</p>
                         <p>STATUS</p>

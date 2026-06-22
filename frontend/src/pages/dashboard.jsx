@@ -57,7 +57,7 @@ export function Dashboard(){
 									onClick={() => logoutMutation.mutate()}
 									className="hamburgerLogout"
 								>
-									<LogOut size={17} className='burgerLogout'/>	
+									<LogOut size={20} className='burgerLogout'/>	
 								</li>
 							</ul>
 					</Hamburger>
