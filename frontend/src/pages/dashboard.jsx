@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/auth.hooks.jsx";
-import { useUserContext } from "../context/userContext.jsx";
 import { QuickAccess } from '../comps/dashboard/quickAccess.jsx';
 import { useCustomerTableHook, useCustomerDelete } from '../hooks/customerTable.hooks.jsx';
 import { CustomerTable } from '../comps/dashboard/customersTable.jsx'
 import { NavBar } from '../comps/navBar.jsx';
-import { Bell, LogOut, Menu } from "lucide-react"; 
+import { Bell, LogOut, Menu, User, ClipboardPen } from "lucide-react"; 
 
 export function Dashboard(){
     const [activeFilter, setActiveFilter] = useState('ALL');
@@ -14,9 +13,8 @@ export function Dashboard(){
     const [page, setPage] = useState(1);
 	const [open, setOpen] = useState(false);
     const { filteredData, paginated, isLoading, isError, error } = useCustomerTableHook({activeFilter, searchFilter, page});
-    const [visible, setVisible] = useState(false); 
+    const [visible, setVisible] = useState(null); 
     const { logoutMutation } = useAuth();
-    const { nameInitials } = useUserContext();
     const navigate = useNavigate();
     const { mutate, isPending: deletePending, isError: deleteError } = useCustomerDelete();
     const filters = ['ALL','DRAFT','SENT', 'PENDING', 'APPROVED', 'COMPLETED', 'UNPAID'];
@@ -27,31 +25,39 @@ export function Dashboard(){
     return(
         <div className='dashboardPage'>
 			<header className="dashboardHeader">
-				<button 
-					className="hamburgerBtn"
-					onClick={() => setOpen(prev => !prev)}>
-					<Menu />
-				</button>
+				<div className='burgerWrapper'>
+					<button 
+						className="burgerBtn"
+						onClick={() => setOpen(prev => !prev)}>
+						<Menu />
+					</button>
+				</div>
 				{open && (
 					<Hamburger> 
-							<ul> 
+							<ul className='burgerUl'> 
 								<li
-									className="hamburgerProfile"
+									className="burgerProfile"
 									onClick={() => navigate('/profile')}
 								>
-									{nameInitials}
+									<User size={20}/>
 								</li> 
 								<li 
-									className="hamburgerAlerts"
+									className="burgerAlerts"
 									onClick={() => navigate('/alerts')}
 								>
-									<Bell />Alerts	
+									<Bell size={20}/>	
+								</li>
+								<li 
+									className='burgerCq'
+									onClick={() => navigate('/create-quote')}
+								>
+									<ClipboardPen size={20} />
 								</li>
 								<li 
 									onClick={() => logoutMutation.mutate()}
 									className="hamburgerLogout"
 								>
-									<LogOut />Logout	
+									<LogOut size={17} className='burgerLogout'/>	
 								</li>
 							</ul>
 					</Hamburger>
@@ -63,7 +69,7 @@ export function Dashboard(){
                     <QuickAccess />
                 </div>
                 <div className='filterRow'>
-                    <div className='statusBtnsContainer'>
+                  <div className='statusBtnsContainer'>
                         {filters.map(btns => (
                             <button 
                                 className={`statusBtns ${activeFilter === btns ? 'active' : ''}`}

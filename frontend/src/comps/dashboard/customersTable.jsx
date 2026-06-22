@@ -3,9 +3,6 @@ import { ArrowLeft, ArrowRight, Trash2 } from "lucide-react"; import calendar fr
 import dayjs from 'dayjs';
 
 export function CustomerTable({ data, page, setPage, handleDelete, visible, setVisible }) {
-		
-	console.log(page);
-
     dayjs.extend(calendar);
 
     function QuoteStatus({ status }){
@@ -39,7 +36,12 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
             />
 	)
     }*/
-   
+
+	function handleVisbility(id){
+		setVisible(prev => (prev === id ? null : id));
+		console.log("clicked");
+	}
+
     return(
         <div className="customerTableContainer">
             <div className="customerTable">
@@ -61,27 +63,33 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
                         [...customer.quote]
                             .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
                             .map(quote =>
-                                <div key={quote.id} className="customerDataRow">
-                                    <div className="customerCard" onClick={() => setVisible(true)}></div>
+                                <div 
+									key={quote.id} 
+									className="customerDataRow"
+									onClick={() => handleVisbility(quote.id)}
+								>
+								{visible === quote.id && (
+									<button 
+										className='customerDeleteBtn'
+										onClick={(e) => {
+											e.stopPropagation();
+											handleDelete({ quoteId: quote?.id })
+										}}
+										>
+											<Trash2 size={20} />
+										</button>
+								)}
                                         <div className="trLeft">
-                                            <button 
-                                                className='customerDeleteBtn'
-                                                onClick={() => handleDelete({ quoteId: quote?.id }) }
-                                                >
-                                                    <Trash2 className='customerDeleteIcon' />
-                                                </button>
-                                            <div className="customerJobId">QT-{String(customerIndex + 1).padStart(3,0)}</div>
-                                            <div className="customerNameNAdd">
-                                                <span className='customerNameTxt'>{customer?.first_name}  {customer?.last_name}</span>
-                                                <span className="customerAddressTxt">{customer?.address}</span>
-                                            </div>
-                                        </div>
+											<div className="customerJobId">QT-{String(customerIndex + 1).padStart(3,0)}</div>
+												<div className="customerNameNAdd">
+													<span className='customerNameTxt'>{customer?.first_name}  {customer?.last_name}</span>
+													<span className="customerAddressTxt">{customer?.address}</span>
+												</div>
+											</div>
 										<div className="quoteJobDescriptionTxt">{quote?.job[0]?.description}</div>
 									<div className='trRight'>
 											<div className="quoteTotalTxt">${quote?.total.toLocaleString()}</div>
-											<div className="quoteStatusCell">
 												<QuoteStatus status={quote?.status} />
-											</div>
 											<div className="quoteCreatedAtTxt">{dayjs(quote?.created_at).calendar(null, calendarConfig)}</div>
 										</div>
 									</div>
