@@ -32,6 +32,7 @@ export function NavBar(){
                                 className='navPopBtns' 
                                 onClick={() => navigate('/notifications')}
                             >
+								<span className="navPopBubble"></span>
                                 alerts
                             </button>
                         <button
@@ -39,6 +40,7 @@ export function NavBar(){
                             // disabled={logoutMutation.isPending}
                             className='navPopBtns'   
                         >
+							<span className="navPopBubble"></span>
                             log out
                         </button>
                     </div>
@@ -103,14 +105,14 @@ function NavHoverPopUp({children, content}){
     function mouseLeave(){
         timeOutRef.current = setTimeout(() => {
             setIsVisible(false)
-        }, 300)
+        }, 400)
     }
 
     return(
         <div 
         className='navPopUpContainer'
-        onMouseEnter={mouseEnter}
-        onMouseLeave={mouseLeave}
+			onMouseEnter={mouseEnter}
+			onMouseLeave={mouseLeave}
         >
             { children }
             {isVisible && <div className='navPopUpContent'>{ content }</div>}
