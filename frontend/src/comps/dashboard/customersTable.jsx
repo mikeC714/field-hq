@@ -79,6 +79,15 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
 											<Trash2 size={20} />
 										</button>
 								)}
+									<button 
+										className='customerDeleteBtn'
+										onClick={(e) => {
+											e.stopPropagation();
+											handleDelete({ quoteId: quote?.id })
+										}}
+										>
+											<Trash2 size={20} />
+										</button>
                                         <div className="trLeft">
 											<div className="customerJobId">QT-{String(customerIndex + 1).padStart(3,0)}</div>
 												<div className="customerNameNAdd">
@@ -102,7 +111,7 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
 							console.log("PAGE MINUS 1")
 							setPage(p => p -1)}}
                     >
-                        <ArrowLeft />
+                        <ArrowLeft size={18}/>
                     </button>
                     <button 
                         disabled = {page?.nextPage ? false : true }
@@ -110,7 +119,7 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
 							console.log("PAGE PLUS 1")
 							setPage(p => p +1)}}
                     >
-                        <ArrowRight />
+                        <ArrowRight size={18}/>
                     </button>
                 </div>
             </div>

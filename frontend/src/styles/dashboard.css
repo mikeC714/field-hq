@@ -94,6 +94,7 @@
 	display:flex;
 	flex-direction:column;
 	align-items:center;
+	z-index:100;
 }
 .navPopUpContent{
 	background: rgba(20, 20, 20, 0.45); 
@@ -300,13 +301,33 @@
 	left:50%;
 	font-family:var(--font);
 }
+.customerDeleteBtn{
+	visibility:hidden;
+	cursor:pointer;
+	color:red;
+	border:none;
+	background:none;
+	position:absolute;
+	transition: visibility .1s ease opacity 2s ease;
+}
+.customerDeleteBtn:hover{
+	opacity:.8;
+}
 .customerDataRow{
+	position:relative;
 	width:100%;
 	display:flex;
 	justify-content:space-between;
 	align-items:center;
 	border-bottom:1px solid var(--border);
 	padding:10px;
+	cursor:pointer;
+}
+.customerDataRow:hover .customerDeleteBtn{
+	visibility:visible;
+}
+.customerDataRow:active{
+	pointer-events: none;
 }
 .trLeft{
 	width:20%;
@@ -352,6 +373,7 @@
 	font-size:14px;
 	letter-spacing:2%;
 	display:grid;
+	align-items:center;
 	grid-template-columns:repeat(3,auto);
 }
 .quoteTotalTxt{
@@ -359,11 +381,12 @@
 }
 .quoteStatus{
 	grid-column:2;
-	margin-left:40px;
+	margin-left:46px;
 	font-size:12px;
 	border-radius:12px;
 	height:fit-content;
 	width:fit-content;
+	justify-self:flex-start;
 	align-self:center;
 	padding:8px;
 	font-family:var(--font);
@@ -406,8 +429,25 @@
 	font-weight:560;
 	font-family:var(--font);
 }
-
-
+.pageBtnContainer{
+	cursor:pointer;
+	position:absolute;
+	bottom:4%;
+	right:4%;
+	display:flex;
+	gap:40px;
+}
+.pageBtnContainer > button{
+	height:2.2rem;
+	width:2.2rem;
+	border-radius:6px;
+}
+.pageBtnContainer > button:hover{
+	cursor:pointer;
+}
+.pageBtnContainer > button:disabled{
+	cursor:default;
+}
 @media(max-width:1024px){
 	#root{
 		padding:0;
