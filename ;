@@ -103,7 +103,6 @@
 	padding:10px;
 }
 .cqCustomerCard{
-	border:1px solid var(--border);
 	background:var(--bg-left);
 	justify-self:center;
 	height:60%;
@@ -164,6 +163,7 @@ input[type=number] {
   appearance: textfield;
 }
 .cqSection{
+	position:relative;
 	justify-self:center;
 	height:fit-content;
 	width:100%;
@@ -177,14 +177,7 @@ input[type=number] {
 	margin-bottom:10px;
 	font-family:var(--font);
 }
-.cqSectionLabel{
-	width:20%;
-	align-self:flex-end;
-	justify-self:flex-end;
-}
 .cqTable{
-	border:1px solid var(--border);
-	width:100%;
 	display:flex;
 	flex-direction:column;
 	border-radius:10px;
@@ -195,7 +188,6 @@ input[type=number] {
 	font-size:13px;
 }
 .cqAddBtn{
-	width:4rem;
 	padding:6px;
 	border:1px solid var(--border);
 	border-radius:6px;
@@ -249,11 +241,14 @@ input[type=number] {
 	position:relative;
 	display:flex;
 	gap:20px;
-	margin-bottom: 10px;
 }
 .cqSmallContainer{
 	display:flex;
 	gap:20px;
+}
+.cqTableRow > button{
+	position:absolute;
+	right:2%;
 }
 .cqColSmallHrs{
 	justify-self:flex-end;
@@ -265,109 +260,11 @@ input[type=number] {
 	display:block;
 }
 .cqTableRow > button{
-	position:absolute;
-	right:28px;
 	border:none;
 	background:none;
 	height:2em;
 	width:2em;
-	cursor:pointer;
-}
-
-.cqRight{
-	overflow-x:hidden;
-	width:60%;
+	align-self:center;
 	justify-self:center;
-	display:grid;
-	grid-template-rows:repeat(3,auto);
-	margin-top:20px;
-	padding:10px;
-	background-color:var(--bg-left);
-	border:1px solid var(--border);
-	border-radius:20px;
-}
-.cqSummaryTitle{
-	display:flex;
-	font-family:var(--font);
-	padding-top:10px;
-	padding-left:10px;
-	font-weight:480;
-}
-.cqCalc{
-	padding-left:10px;
-	display:flex;
-	justify-content:center;
-	align-items:flex-end;
-	flex-direction:column;
-	padding-right:2em;
-	gap:2em;
-	font-family:var(--font);
-}
-.cqSubtotalRow{
-	width:100%;
-	display:flex;
-	justify-content:space-between;
-}
-.cqMarkupContainer{
-	width:100%;
-	display:flex;
-	justify-content:space-between;
-}
-.cqMarkupRow{
-	display:flex;
-	justify-content:space-between;
-	align-items:center;
-	gap:4px;
-	padding-right:4px;
-	width:20%;
-}
-.cqMarkupInput{
-	width:3.2em;
-	height:2em;
-	text-align:center;
-	border-radius:6px;
-	border:none;
-	outline:1px solid transparent;
-}
-.cqMarkupInput:focus{
-	outline:1px solid var(--orange);
-	background:none;
-}
-.cqMarkupPct{
-	font-size:13px;
-	color:var(--input-bg);
-}
-.cqTotalRow{
-	border-top:1px solid var(--border);
-	padding-left:10px;
-	padding-top:40px;
-	width:100%;
-	display:flex;
-	justify-content:space-between;
-	align-items:center;
-	font-weight:600;
-	font-size:18px;
-}
-.cqTotalValue{
-	font-size:24px;
-	font-weight:620;
-	color:var(--orange);
-}
-.cqSendToCustomerBtn{
-	width:72%;
-	height:88%;
-	border:none;
-	border-radius:16px;
-	justify-self:center;
-	background-color:var(--orange);
-	text-align:center;
-	font-weight:600;
-	font-family:var(--font);
-	letter-spacing:.04em;
-	display:flex;
-	justify-content:center;
-	align-items:center;
-	gap:20px;
-	color:rgb(0,0,0);
 	cursor:pointer;
 }

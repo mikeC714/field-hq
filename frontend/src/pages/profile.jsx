@@ -242,7 +242,7 @@ export function ProfilePage() {
     useEffect(() => {
         if (!userId) return;
         const saved = localStorage.getItem(`userConfig`);
-        setUserConfig(saved ? JSON.parse(saved) : {
+		 setUserConfig(saved ? JSON.parse(saved) : {
           phoneNumber: "",
           location: "",
           department: "",
@@ -277,7 +277,9 @@ export function ProfilePage() {
 
     return (
         <div className='profilePage'>
-            <NavBar />
+			<header className="profileHeader">
+				<NavBar />
+			</header>
             <div className='profileBody'>
                 <div className='profileHeaderCard'>
                     <div className='profileHeaderLeft'>

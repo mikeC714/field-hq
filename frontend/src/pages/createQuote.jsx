@@ -224,34 +224,36 @@ export function CreateQuote(){
                 </div>
                 <div className='cqRight'>
                     <p className='cqSummaryTitle'>SUMMARY</p>
-                    <div className='cqSummaryRow'>
-                        <span className='cqSummaryLabel'>Subtotal</span>
-                        <span className='cqSummaryValue'>${subTotal.toLocaleString()}</span>
-                    </div>
-                    <div className='cqSummaryRow'>
-                        <span className='cqSummaryLabel'>Markup</span>
-                        <div className='cqMarkupRow'>
-                            <input
-                                className='cqMarkupInput'
-                                type='number'
-                                value={userMarkup}
-                                placeholder='0'
-                                onChange={(e) => setUserMarkup(e.target.value)}
-                            />
-                            <span className='cqMarkupPct'>%</span>
-                            <span className='cqMarkupDifference'>${markUpDiff}</span>
-                        </div>
-                    </div>
-                    <div className='cqTotalRow'>
-                        <span className='cqTotalLabel'>Total</span>
-                        <span className='cqTotalValue'>${total.toFixed(2)}</span>
-                    </div>
+					<div className="cqCalc">
+						<div className='cqSubtotalRow'>
+							<span className='cqSummaryLabel'>Subtotal</span>
+							<span className='cqSummaryValue'>${subTotal.toLocaleString()}</span>
+						</div>
+						<div className='cqMarkupContainer'>
+							<span className='cqSummaryLabel'>Markup</span>
+							<div className='cqMarkupRow'>
+								<input
+									className='cqMarkupInput'
+									type='number'
+									value={userMarkup}
+									placeholder='0'
+									onChange={(e) => setUserMarkup(e.target.value)}
+								/>
+								<span className='cqMarkupPct'>%</span>
+								<span className='cqMarkupDifference'>${markUpDiff}</span>
+							</div>
+						</div>
+					<div className='cqTotalRow'>
+						<span className='cqTotalLabel'>Total</span>
+						<span className='cqTotalValue'>${total.toFixed(2)}</span>
+					</div>
+					</div>
                     <button 
                         className='cqSendToCustomerBtn'
                         onClick={() => {
                             handleSendQuote()
                         }}>
-                        SEND TO CUSTOMER <Send size={14} />
+                        SEND TO CUSTOMER <Send  size={14} />
                     </button>
                 </div>
 

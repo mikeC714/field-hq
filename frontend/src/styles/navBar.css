@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+:root {
+	--orange: #eea12d;
+	--bg-left: #141414;
+	--bg-right: #0d0d0d;
+	--border:  #4d4b4ba2;
+	--text: #f0f0f0;
+	--text-muted: #888;
+	--input-bg: #1e1e1e;
+	--font: "Montserrat", sans-serif;
+	--skin:    #2a2a2a;
+	--stroke:  var(--orange);
+	--mid:     #1e1e1e;
+	--signbg:  #111111;
+	--font: 'Montserrat', sans-serif;
+}
+.dashboardNav{
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	width:100%;
+	background-color:none;
+}
+.navLeft{
+	padding-left:16px;
+	height:fit-content;
+	width:fit-content;
+}
+.navLogo{
+	height:4.2em;
+	width:4.2em;
+	cursor:pointer;
+}
+.navRight{
+	width:20%;
+	padding-right:62px;
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+}
+.profileContainer{
+	height:3em;
+	width:3em;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	border:1px solid var(--border);
+	background-color:var(--bg-left);
+	border-radius:2em;
+	position:relative;
+}
+.profileContainer > h3{
+	font-size:14px;
+	font-family:var(--font);
+	font-weight:580;
+}
+.navPopUpContainer{
+	position:relative;
+	height:fit-content;
+	width:fit-content;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	z-index:100;
+}
+.navPopUpContent{
+	background: rgba(20, 20, 20, 0.45); 
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px); 
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	border-radius: 16px;
+	box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+	position:absolute;
+	top: 100%;      
+	left: 50%;
+	transform: translateX(-50%); 
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	margin-top:10px;
+	width:80px;
+	height:80px;
+	border-radius:12px;
+	padding:0;
+}
+.navPopUpActions{
+	display:flex;
+	justify-content:space-evenly;
+	align-items:center;
+	flex-direction:column;
+	height:100%;
+	width:fit-content;
+	padding-left: 8px;
+	padding-right: 8px;
+	position:relative;
+}
+.navPopBtns{
+	background:none;
+	cursor:pointer;
+	border:none;
+	font-family:var(--font);
+	font-weight:440;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	position:relative;
+	padding-left:4px;
+	padding-right:6px;
+	transition: color .4s ease;
+}
+.navPopBubble{
+	position:absolute;
+	visibility:hidden;
+	left:0%;
+	transform:translate(-60%, 4%);
+	height:.4em;
+	width:.4em;
+	background:var(--orange);
+	border-radius:2em;
+	transition: visibility .2s ease;
+}
+.navPopBtns:hover{
+	color:var(--orange);
+}
+.navPopBtns:hover .navPopBubble{
+	visibility: visible;
+}
+.createQuoteBtn{
+	font-weight:460;
+	font-family:var(--font);
+	color:black;
+	cursor:pointer;
+	background-color:var(--orange);
+	border:none;
+	height:2.4rem;
+	padding:2px 12px 2px 12px;;
+	border-radius:14px;
+	transition: opacity .9s ease;
+}
+.createQuoteBtn:hover{
+	opacity: .8;
+}
