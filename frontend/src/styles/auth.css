@@ -362,7 +362,7 @@
 		background: #1e1e1e;
 		border: 1px solid var(--border);
 		color: var(--text-muted);
-	}
+	},
 	@media(max-width: 1024px){
 		body{
 			overflow-y: hidden;
@@ -546,8 +546,7 @@
 			position: absolute;
 			left: 0;
 		}
-	}
-
+	},
 	@media(max-width: 768px){
 		body{
 			overflow-y: hidden;
@@ -731,8 +730,7 @@
 		position: absolute;
 		left: 0;
 	}
-}
-
+},
 @media(max-width: 600px){
 	body{
 		overflow-y: hidden;
@@ -913,8 +911,7 @@
 		position: absolute;
 		left: 0;
 	}
-}
-
+},
 @media(max-width: 480px){
 	body{
 		overflow-y: hidden;
