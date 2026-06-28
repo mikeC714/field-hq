@@ -1,10 +1,20 @@
 import { useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiFetch } from "../../utils/apiFetch.jsx";
+import { useMediaQuery } from "../../utils/mediaQuery.jsx";
 import { Loader } from "lucide-react";
 import config from "../config.js"
 
-export function useCustomerTableHook({activeFilter= '', searchFilter = '', page = 1, limit = 4}){
+export function useCustomerTableHook({activeFilter= '', searchFilter = '', page = 1}){
+	let limit = 11;
+	const desktop = useMediaQuery('(max-width:1024px)');
+	const tablet = useMediaQuery('(max-width:820px)');
+	const mobile = useMediaQuery('(max-width:500px)');
+
+	if(desktop) limit = 11;
+	if(tablet) limit = 8;
+	if(mobile) limit = 2;
+
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['customers', activeFilter, page, limit], 
         queryFn: async() => await apiFetch(`${config.SERVER}/api/all-customers?filter=${activeFilter}&page=${page}&limit=${limit}`),

@@ -273,12 +273,13 @@
 	background-color:var(--bg-left);
 	border:1px solid var(--border);
 	border-radius:10px;
-	height:64%;
+	height:70%;
 }
 .pNotiGrid{
 	height:100%;
-	display:grid;
-	grid-template:repeat(4,auto)/repeat(2,auto);
+	display:flex;
+	justify-content:center;
+	align-items:center;
 	position:relative;
 }
 .pNotiBtns{
@@ -297,11 +298,12 @@
 }
 .pNotiEmpty{
 	color:white;
+	grid-column:1/-1;
+	grid-row:1/-1;
+	justify-self:center;
+	align-self:center;
+	text-align:center;
 	font-family:var(--font);
-	font-weight:420;
-	grid-row:2;
-	grid-column:1/ span 2;
-	place-self:center;
 }
 .notiPageBtnContainer{
 	display:flex;
@@ -311,6 +313,46 @@
 	right:80px;
 	bottom:20px;
 	gap:2em;
+}
+.pNotiList{
+	height:100%;
+	width:100%;
+	display:grid;
+	grid-template: repeat(2,.42fr)/ repeat(2,1fr);
+}
+.pNotis{
+	align-self:center;
+	height:fit-content;
+	width:80%;
+	height:40%;
+	justify-self:center;
+	padding:10px;
+	border:1px solid var(--border);
+	border-radius:10px;
+	position:relative;
+}
+.pNotiIcon{
+	position:absolute;
+	right:16px;
+	height:1.4em;
+	width:1.4em;
+	padding:8px;
+	border-radius:20px;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+.pNotiContent{
+	color:white;
+	width:100%;
+	height:100%;
+	font-family:var(--font);
+	display:flex;
+	flex-direction:column;
+	justify-content:space-evenly;
+}
+.pNotiHead{
+	font-size:16px;
 }
 
 

@@ -26,6 +26,9 @@
 	height:fit-content;
 	width:fit-content;
 }
+.burgerWrapper{
+	display:none;
+}
 .navLogo{
 	height:4.2em;
 	width:4.2em;
@@ -141,4 +144,246 @@
 }
 .createQuoteBtn:hover{
 	opacity: .8;
+}
+@media (max-width:1024px) and (min-width:801px){
+	.dashboardPage{
+		height:100%;
+		display: grid;
+		grid-template-rows: auto 1fr;
+		background-color:var(--bg-right);
+	}
+	.dashboardHeader{
+		grid-row:1;
+		display:flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		position: relative;
+		border-bottom: 1px solid var(--border);
+		padding-bottom: 8px;
+	}
+	.burgerWrapper{
+		display:flex;
+		height: 100%;
+		position:relative;
+	}
+	.burgerBtn{
+		position: absolute;
+		top:20px;
+		padding-bottom: 4px;
+		left: 10px;
+		border:none;
+		background:none;
+		cursor:pointer;
+		height:4em;
+		width:4em;
+	}
+	.burgerContainer{
+		position:absolute;
+		top: 100%;       
+		left: 0;        
+		margin-left: 16px;
+		padding-top: 4px;
+		padding:4px;
+		background: #1a1a1a;
+		border: 1px solid #2a2a2a;
+		border-radius: 10px;
+		min-width: 32px; 
+		z-index: 10;
+	}
+	.burgerUl{
+		list-style: none;
+		display:flex;
+		flex-direction:column;
+		align-items:center;
+		gap:6px;
+	}
+	.burgerUl > li{
+		transition: color .2s ease;
+	}
+	.burgerUl > li:hover{
+		color:var(--orange);
+	}
+	.dashboardNav{
+		width: 100%;
+	}
+	.burgerLogout{
+		color:var(--orange);
+	}
+	.navLeft{
+		display: flex;
+		justify-content:center;
+		align-items: center;
+		width:100%;
+	}
+	.navLogo{
+		margin-top: 12px;
+		align-self: center;
+		display:flex;
+		align-items: center;
+		justify-content:center;
+		width: 100%;
+	}
+	.navLogoIcon{
+		height:4rem;
+		width:4.2rem;
+	}
+	.navRight{
+		display: none;
+	}
+}
+@media(max-width:800px){
+	.dashboardHeader{
+		grid-row:1;
+		display:flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		position: relative;
+		border-bottom: 1px solid var(--border);
+		padding-bottom: 8px;
+	}
+	.burgerWrapper{
+		display:flex;
+		height: 100%;
+		position:relative;
+	}
+	.burgerBtn{
+		position: absolute;
+		top:20px;
+		padding-bottom: 4px;
+		left: 10px;
+		border:none;
+		background:none;
+		cursor:pointer;
+		height:4em;
+		width:4em;
+	}
+	.burgerContainer{
+		position:absolute;
+		top: 100%;       
+		left: 0;        
+		margin-left: 16px;
+		padding-top: 4px;
+		padding:4px;
+		background: #1a1a1a;
+		border: 1px solid #2a2a2a;
+		border-radius: 10px;
+		min-width: 32px; 
+		z-index: 10;
+	}
+	.burgerUl{
+		list-style: none;
+		display:flex;
+		flex-direction:column;
+		align-items:center;
+		gap:6px;
+	}
+	.burgerUl > li{
+		transition: color .2s ease;
+	}
+	.burgerUl > li:hover{
+		color:var(--orange);
+	}
+	.dashboardNav{
+		width: 100%;
+	}
+	.burgerLogout{
+		color:var(--orange);
+	}
+	.navLeft{
+		display: flex;
+		justify-content:center;
+		align-items: center;
+		width:100%;
+	}
+	.navLogo{
+		margin-top: 12px;
+		align-self: center;
+		display:flex;
+		align-items: center;
+		justify-content:center;
+		width: 100%;
+	}
+	.navLogoIcon{
+		height:4rem;
+		width:4.2rem;
+	}
+	.navRight{
+		display: none;
+	}
+}
+@media(max-width:500){
+	.dashboardHeader{
+		grid-row:1;
+		display:flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		position: relative;
+		border-bottom: 1px solid var(--border);
+		padding-bottom: 8px;
+	}
+	.burgerWrapper{
+		display:flex;
+		height: 100%;
+		position:relative;
+	}
+	.burgerBtn{
+		position: absolute;
+		top:20px;
+		padding-bottom: 4px;
+		left: 10px;
+		border:none;
+		background:none;
+		cursor:pointer;
+	}
+	.burgerContainer{
+		position:absolute;
+		top: 100%;       
+		left: 0;        
+		margin-top: 8px;
+		margin-left: 8px;
+		padding-top: 4px;
+		padding:4px;
+		background: #1a1a1a;
+		border: 1px solid #2a2a2a;
+		border-radius: 10px;
+		min-width: 32px; 
+		z-index: 10;
+	}
+	.burgerUl{
+		list-style: none;
+		display:flex;
+		flex-direction:column;
+		align-items:center;
+		gap:6px;
+	}
+	.dashboardNav{
+		width: 100%;
+	}
+	.burgerLogout{
+		color:var(--orange);
+	}
+	.navLeft{
+		display: flex;
+		justify-content:center;
+		align-items: center;
+		width:100%;
+	}
+	.navLogo{
+		margin-top: 12px;
+		align-self: center;
+		display:flex;
+		align-items: center;
+		justify-content:center;
+		width: 100%;
+	}
+	.navLogoIcon{
+		height:2.4rem;
+		width:4rem;
+	}
+	.navRight{
+		display: none;
+	}
 }

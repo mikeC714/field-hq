@@ -187,7 +187,7 @@
 	border:none;
 	background:none;
 	position:absolute;
-	transition: visibility .1s ease opacity 2s ease;
+	transition: visibility .1s ease, opacity .2s ease;
 }
 .customerDeleteBtn:hover{
 	opacity:.8;
@@ -329,21 +329,93 @@
 .pageBtnContainer > button:disabled{
 	cursor:default;
 }
-@media(max-width:1024px){
-	#root{
-		padding:0;
-		margin:0;
-		height:100vh;
-	}
-	body{
-		padding:0;
-		margin:0;
-	}
+
+/* ===================== ≤1024px AND >800px ===================== */
+@media (max-width:1024px) and (min-width:801px){
 	.dashboardPage{
 		height:100%;
 		display: grid;
 		grid-template-rows: auto 1fr;
 		background-color:var(--bg-right);
+	}
+	.dashboardHeader{
+		grid-row:1;
+		display:flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		position: relative;
+		border-bottom: 1px solid var(--border);
+		padding-bottom: 8px;
+	}
+	.burgerWrapper{
+		display:flex;
+		height: 100%;
+		position:relative;
+	}
+	.burgerBtn{
+		position: absolute;
+		top:20px;
+		padding-bottom: 4px;
+		left: 10px;
+		border:none;
+		background:none;
+		cursor:pointer;
+		height:4em;
+		width:4em;
+	}
+	.burgerContainer{
+		position:absolute;
+		top: 100%;       
+		left: 0;        
+		margin-left: 16px;
+		padding-top: 4px;
+		padding:4px;
+		background: #1a1a1a;
+		border: 1px solid #2a2a2a;
+		border-radius: 10px;
+		min-width: 32px; 
+		z-index: 10;
+	}
+	.burgerUl{
+		list-style: none;
+		display:flex;
+		flex-direction:column;
+		align-items:center;
+		gap:6px;
+	}
+	.burgerUl > li{
+		transition: color .2s ease;
+	}
+	.burgerUl > li:hover{
+		color:var(--orange);
+	}
+	.dashboardNav{
+		width: 100%;
+	}
+	.burgerLogout{
+		color:var(--orange);
+	}
+	.navLeft{
+		display: flex;
+		justify-content:center;
+		align-items: center;
+		width:100%;
+	}
+	.navLogo{
+		margin-top: 12px;
+		align-self: center;
+		display:flex;
+		align-items: center;
+		justify-content:center;
+		width: 100%;
+	}
+	.navLogoIcon{
+		height:4rem;
+		width:4.2rem;
+	}
+	.navRight{
+		display: none;
 	}
 	.dashboardBody{
 		display:grid;
@@ -513,7 +585,7 @@
 		display:grid;
 		grid-template-columns:repeat(2,auto);
 		gap:16px;
-		width:100%;
+		width:auto;
 		font-family:var(--font);
 	}
 	.customerNameNAdd{
@@ -546,7 +618,7 @@
 		position:relative;
 		row-gap:10px;
 		height:100%;
-		width:96%;
+		width:auto;
 		font-family:var(--font);
 	}
 	.customerDeleteBtn{
@@ -579,42 +651,6 @@
 		font-size:11px;
 		font-weight: 400;
 	}
-	.quoteStatus.sentStatusStyle{
-		background-color: rgba(59,120,246,.25);
-		color: #38bdf8; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.pendingStatusStyle{
-		background-color: rgba(234,179,8,.12);
-		color: #facc15; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.approvedStatusStyle{
-		background-color: rgba(34,197,94,.12);
-		color: #4ade80; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.unpaidStatusStyle{
-		background-color: rgba(239,69,69,.12);
-		color: #f87171; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.draftStatusStyle{
-		background-color: rgba(143,168,184,.12);
-		color: #cbd5e1; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.completedStatusStyle{
-		background-color: rgba(147,51,234,.12);
-		color: #a78bfa; 
-		font-weight:560;
-		font-family:var(--font);
-	}
 	.quoteCreatedAtTxt{
 		font-size: 13px;
 		justify-self:center;
@@ -631,21 +667,93 @@
 		cursor:pointer;
 	}
 }
-@media(max-width:800px){
-	#root{
-		padding:0;
-		margin:0;
-		height:100vh;
-	}
-	body{
-		padding:0;
-		margin:0;
-	}
+
+/* ===================== ≤800px AND >500px ===================== */
+@media (max-width:800px) and (min-width:501px){
 	.dashboardPage{
 		height:100%;
 		display: grid;
 		grid-template-rows: auto 1fr;
 		background-color:var(--bg-right);
+	}
+	.dashboardHeader{
+		grid-row:1;
+		display:flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		position: relative;
+		border-bottom: 1px solid var(--border);
+		padding-bottom: 8px;
+	}
+	.burgerWrapper{
+		display:flex;
+		height: 100%;
+		position:relative;
+	}
+	.burgerBtn{
+		position: absolute;
+		top:20px;
+		padding-bottom: 4px;
+		left: 10px;
+		border:none;
+		background:none;
+		cursor:pointer;
+		height:4em;
+		width:4em;
+	}
+	.burgerContainer{
+		position:absolute;
+		top: 100%;       
+		left: 0;        
+		margin-left: 16px;
+		padding-top: 4px;
+		padding:4px;
+		background: #1a1a1a;
+		border: 1px solid #2a2a2a;
+		border-radius: 10px;
+		min-width: 32px; 
+		z-index: 10;
+	}
+	.burgerUl{
+		list-style: none;
+		display:flex;
+		flex-direction:column;
+		align-items:center;
+		gap:6px;
+	}
+	.burgerUl > li{
+		transition: color .2s ease;
+	}
+	.burgerUl > li:hover{
+		color:var(--orange);
+	}
+	.dashboardNav{
+		width: 100%;
+	}
+	.burgerLogout{
+		color:var(--orange);
+	}
+	.navLeft{
+		display: flex;
+		justify-content:center;
+		align-items: center;
+		width:100%;
+	}
+	.navLogo{
+		margin-top: 12px;
+		align-self: center;
+		display:flex;
+		align-items: center;
+		justify-content:center;
+		width: 100%;
+	}
+	.navLogoIcon{
+		height:4rem;
+		width:4.2rem;
+	}
+	.navRight{
+		display: none;
 	}
 	.dashboardBody{
 		display:grid;
@@ -815,7 +923,7 @@
 		display:grid;
 		grid-template-columns:repeat(2,auto);
 		gap:16px;
-		width:100%;
+		width:auto;
 		font-family:var(--font);
 	}
 	.customerNameNAdd{
@@ -848,7 +956,7 @@
 		position:relative;
 		row-gap:10px;
 		height:100%;
-		width:96%;
+		width:auto;
 		font-family:var(--font);
 	}
 	.customerDeleteBtn{
@@ -881,42 +989,6 @@
 		font-size:11px;
 		font-weight: 400;
 	}
-	.quoteStatus.sentStatusStyle{
-		background-color: rgba(59,120,246,.25);
-		color: #38bdf8; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.pendingStatusStyle{
-		background-color: rgba(234,179,8,.12);
-		color: #facc15; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.approvedStatusStyle{
-		background-color: rgba(34,197,94,.12);
-		color: #4ade80; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.unpaidStatusStyle{
-		background-color: rgba(239,69,69,.12);
-		color: #f87171; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.draftStatusStyle{
-		background-color: rgba(143,168,184,.12);
-		color: #cbd5e1; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.completedStatusStyle{
-		background-color: rgba(147,51,234,.12);
-		color: #a78bfa; 
-		font-weight:560;
-		font-family:var(--font);
-	}
 	.quoteCreatedAtTxt{
 		font-size: 13px;
 		justify-self:center;
@@ -934,23 +1006,87 @@
 		cursor:pointer;
 	}
 }
-@media(max-width:500px){
-	#root{
-		padding:0;
-		margin:0;
-		height:100vh;
-	}
-	body{
-		padding:0;
-		margin:0;
-	}
+
+/* ===================== ≤500px AND >400px ===================== */
+@media (max-width:500px) and (min-width:401px){
 	.dashboardPage{
 		height:100%;
 		display: grid;
 		grid-template-rows: auto 1fr;
 		background-color:var(--bg-right);
 	}
-	
+	.dashboardHeader{
+		grid-row:1;
+		display:flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		position: relative;
+		border-bottom: 1px solid var(--border);
+		padding-bottom: 8px;
+	}
+	.burgerWrapper{
+		display:flex;
+		height: 100%;
+		position:relative;
+	}
+	.burgerBtn{
+		position: absolute;
+		top:20px;
+		padding-bottom: 4px;
+		left: 10px;
+		border:none;
+		background:none;
+		cursor:pointer;
+	}
+	.burgerContainer{
+		position:absolute;
+		top: 100%;       
+		left: 0;        
+		margin-top: 8px;
+		margin-left: 8px;
+		padding-top: 4px;
+		padding:4px;
+		background: #1a1a1a;
+		border: 1px solid #2a2a2a;
+		border-radius: 10px;
+		min-width: 32px; 
+		z-index: 10;
+	}
+	.burgerUl{
+		list-style: none;
+		display:flex;
+		flex-direction:column;
+		align-items:center;
+		gap:6px;
+	}
+	.dashboardNav{
+		width: 100%;
+	}
+	.burgerLogout{
+		color:var(--orange);
+	}
+	.navLeft{
+		display: flex;
+		justify-content:center;
+		align-items: center;
+		width:100%;
+	}
+	.navLogo{
+		margin-top: 12px;
+		align-self: center;
+		display:flex;
+		align-items: center;
+		justify-content:center;
+		width: 100%;
+	}
+	.navLogoIcon{
+		height:2.4rem;
+		width:4rem;
+	}
+	.navRight{
+		display: none;
+	}
 	.dashboardBody{
 		display:grid;
 		grid-template-rows:auto auto 1fr;
@@ -1148,42 +1284,6 @@
 		font-size:11px;
 		font-weight: 400;
 	}
-	.quoteStatus.sentStatusStyle{
-		background-color: rgba(59,120,246,.25);
-		color: #38bdf8; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.pendingStatusStyle{
-		background-color: rgba(234,179,8,.12);
-		color: #facc15; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.approvedStatusStyle{
-		background-color: rgba(34,197,94,.12);
-		color: #4ade80; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.unpaidStatusStyle{
-		background-color: rgba(239,69,69,.12);
-		color: #f87171; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.draftStatusStyle{
-		background-color: rgba(143,168,184,.12);
-		color: #cbd5e1; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.completedStatusStyle{
-		background-color: rgba(147,51,234,.12);
-		color: #a78bfa; 
-		font-weight:560;
-		font-family:var(--font);
-	}
 	.quoteCreatedAtTxt{
 		font-size: 13px;
 	}
@@ -1199,21 +1299,87 @@
 		cursor:pointer;
 	}
 }
-@media(max-width: 400px){
-	#root{
-		padding:0;
-		margin:0;
-		height:100vh;
-	}
-	body{
-		padding:0;
-		margin:0;
-	}
+
+/* ===================== ≤400px ===================== */
+@media (max-width: 400px){
 	.dashboardPage{
 		height:100%;
 		display: grid;
 		grid-template-rows: auto 1fr;
 		background-color:var(--bg-right);
+	}
+	.dashboardHeader{
+		grid-row:1;
+		display:flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		position: relative;
+		border-bottom: 1px solid var(--border);
+		padding-bottom: 8px;
+	}
+	.burgerWrapper{
+		display:flex;
+		height: 100%;
+		position:relative;
+	}
+	.burgerBtn{
+		position: absolute;
+		top:20px;
+		padding-bottom: 4px;
+		left: 10px;
+		border:none;
+		background:none;
+		cursor:pointer;
+	}
+	.burgerContainer{
+		position:absolute;
+		top: 100%;       
+		left: 0;        
+		margin-top: 8px;
+		margin-left: 8px;
+		padding-top: 4px;
+		padding:4px;
+		background: #1a1a1a;
+		border: 1px solid #2a2a2a;
+		border-radius: 10px;
+		min-width: 32px; 
+		z-index: 10;
+		box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+	}
+	.burgerUl{
+		list-style: none;
+		display:flex;
+		flex-direction:column;
+		align-items:center;
+		gap:6px;
+	}
+	.dashboardNav{
+		width: 100%;
+	}
+	.burgerLogout{
+		color:var(--orange);
+	}
+	.navLeft{
+		display: flex;
+		justify-content:center;
+		align-items: center;
+		width:100%;
+	}
+	.navLogo{
+		margin-top: 12px;
+		align-self: center;
+		display:flex;
+		align-items: center;
+		justify-content:center;
+		width: 100%;
+	}
+	.navLogoIcon{
+		height:2.4rem;
+		width:4rem;
+	}
+	.navRight{
+		display: none;
 	}
 	.dashboardBody{
 		display:grid;
@@ -1388,9 +1554,13 @@
 		font-size: 13px;
 		color:var(--orange);
 	}
+	/* FIXED: was permanently visibility:hidden with no way to reveal it on touch.
+	   Now it's always visible at this breakpoint since hover doesn't really work on touch devices. */
 	.customerDeleteBtn{
 		position:absolute;
-		visibility:hidden;
+		visibility:visible;
+		right:8px;
+		top:8px;
 	}
 	.quoteStatus{
 		border-radius:12px;
@@ -1402,42 +1572,6 @@
 		font-family:var(--font);
 		font-size:11px;
 		font-weight: 400;
-	}
-	.quoteStatus.sentStatusStyle{
-		background-color: rgba(59,120,246,.25);
-		color: #38bdf8; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.pendingStatusStyle{
-		background-color: rgba(234,179,8,.12);
-		color: #facc15; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.approvedStatusStyle{
-		background-color: rgba(34,197,94,.12);
-		color: #4ade80; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.unpaidStatusStyle{
-		background-color: rgba(239,69,69,.12);
-		color: #f87171; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.draftStatusStyle{
-		background-color: rgba(143,168,184,.12);
-		color: #cbd5e1; 
-		font-weight:560;
-		font-family:var(--font);
-	}
-	.quoteStatus.completedStatusStyle{
-		background-color: rgba(147,51,234,.12);
-		color: #a78bfa; 
-		font-weight:560;
-		font-family:var(--font);
 	}
 	.quoteCreatedAtTxt{
 		font-size: 13px;
@@ -1455,3 +1589,40 @@
 	}
 }
 
+/* shared status-color theme (doesn't change across breakpoints) */
+.quoteStatus.sentStatusStyle{
+	background-color: rgba(59,120,246,.25);
+	color: #38bdf8; 
+	font-weight:560;
+	font-family:var(--font);
+}
+.quoteStatus.pendingStatusStyle{
+	background-color: rgba(234,179,8,.12);
+	color: #facc15; 
+	font-weight:560;
+	font-family:var(--font);
+}
+.quoteStatus.approvedStatusStyle{
+	background-color: rgba(34,197,94,.12);
+	color: #4ade80; 
+	font-weight:560;
+	font-family:var(--font);
+}
+.quoteStatus.unpaidStatusStyle{
+	background-color: rgba(239,69,69,.12);
+	color: #f87171; 
+	font-weight:560;
+	font-family:var(--font);
+}
+.quoteStatus.draftStatusStyle{
+	background-color: rgba(143,168,184,.12);
+	color: #cbd5e1; 
+	font-weight:560;
+	font-family:var(--font);
+}
+.quoteStatus.completedStatusStyle{
+	background-color: rgba(147,51,234,.12);
+	color: #a78bfa; 
+	font-weight:560;
+	font-family:var(--font);
+}
