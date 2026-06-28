@@ -21,6 +21,7 @@
 	display:grid;
 	grid-template-rows:auto 1fr;
 	background:var(--bg-right);
+	color:white;
 }
 .createQuoteNav{
 	grid-row:1;
@@ -52,7 +53,7 @@
 }
 .quoteStatusSelect{
 	height:3em;
-	width:10em;
+	width:fit-content;
 	padding-left:10px;
 	border-radius:8px;
 	border:1px solid var(--border);
@@ -61,6 +62,8 @@
 	font-weight:400;
 	background:transparent;
 	cursor:pointer;
+	color:white;
+	text-align:center;
 }
 .cqSendQuoteBtn{
 	height:3em;
@@ -80,7 +83,7 @@
 }
 .createQuoteContent{
 	display:grid;
-	grid-template: auto .8fr/ .70fr auto
+	grid-template: minmax(0, auto) 0.8fr / 0.70fr minmax(0, auto);
 }
 .cqLeft{
 	grid-column:1;
@@ -107,7 +110,7 @@
 	background:var(--bg-left);
 	justify-self:center;
 	height:60%;
-	width:100%;
+	width:80%;
 	border-radius:10px;
 	font-family:var(--font);
 	font-size:13px;
@@ -141,6 +144,7 @@
 	justify-self:center;
 }
 .cqInput{
+	color:white;
 	height:2.4em;
 	border-radius:8px;
 	border:1px solid var(--border);
@@ -149,6 +153,7 @@
 	outline:1px solid transparent;
 	box-sizing:border-box;
 	transition:outline-color .1s ease;
+	background-color:var(--input-bg);
 }
 .cqInput:focus{
 	border:none;
@@ -172,6 +177,8 @@ input[type=number] {
 	flex-direction:column;
 }
 .cqSectionHeader{
+	width:82%;
+	align-self:center;
 	display:flex;
 	justify-content:space-between;
 	margin-bottom:10px;
@@ -184,7 +191,8 @@ input[type=number] {
 }
 .cqTable{
 	border:1px solid var(--border);
-	width:100%;
+	width:80%;
+	align-self:center;
 	display:flex;
 	flex-direction:column;
 	border-radius:10px;
@@ -202,12 +210,13 @@ input[type=number] {
 	background:var(--input-bg);
 	cursor:pointer;
 	transition:background .1s ease;
+	color:white;
 }
 .cqAddBtn:hover{
 	background:var(--orange);
 }
 .cqTableHeader{
-	width:98%;
+	width:92%;
 	display:grid;
 	grid-template-columns:repeat(2,auto);
 	margin-bottom:8px;
@@ -218,12 +227,12 @@ input[type=number] {
 }
 .cqColSmallContainer{
 	grid-column:2;
-	width:60%;
+	width:48%;
 	justify-self:flex-end;
 	align-self:center;
 	display:grid;
-	grid-template-columns:.4fr .2fr auto;
-	column-gap:24px;
+	grid-template-columns:.34fr .24fr .4fr;
+	column-gap:10px;
 	align-items:center;
 }
 .cqColSmall{
@@ -234,6 +243,7 @@ input[type=number] {
 	font-size:13px;
 }
 .cqColSmallTotal{
+	justify-self:center;
 	font-size:14px;
 	align-self:center;
 }
@@ -242,13 +252,16 @@ input[type=number] {
 	font-size:14px;
 }
 .cqColSmallQty{
-	padding-right:26px;
+	padding-right:10px;
 	justify-self:flex-end;	
+}
+.cqColSmallUnit{
+	justify-self:flex-end;
 }
 .cqTableRow{
 	position:relative;
 	display:flex;
-	gap:20px;
+	gap:18px;
 	margin-bottom: 10px;
 }
 .cqSmallContainer{
@@ -256,13 +269,12 @@ input[type=number] {
 	gap:20px;
 }
 .cqColSmallHrs{
-	justify-self:flex-end;
-	padding-right:28px;
+	justify-self:center;
 	font-size:14px;
 }
 .cqColSmallRate{
+	justify-self:center;
 	font-size:14px;
-	display:block;
 }
 .cqTableRow > button{
 	position:absolute;
@@ -272,11 +284,13 @@ input[type=number] {
 	height:2em;
 	width:2em;
 	cursor:pointer;
+	color:white;
 }
 
 .cqRight{
 	overflow-x:hidden;
-	width:60%;
+	width:50%;
+	height:80%;
 	justify-self:center;
 	display:grid;
 	grid-template-rows:repeat(3,auto);
@@ -328,6 +342,8 @@ input[type=number] {
 	border-radius:6px;
 	border:none;
 	outline:1px solid transparent;
+	background-color:var(--input-bg);
+	color:white;
 }
 .cqMarkupInput:focus{
 	outline:1px solid var(--orange);
@@ -355,7 +371,7 @@ input[type=number] {
 }
 .cqSendToCustomerBtn{
 	width:72%;
-	height:88%;
+	height:68%;
 	border:none;
 	border-radius:16px;
 	justify-self:center;
@@ -363,6 +379,7 @@ input[type=number] {
 	text-align:center;
 	font-weight:600;
 	font-family:var(--font);
+	font-size:12px;
 	letter-spacing:.04em;
 	display:flex;
 	justify-content:center;

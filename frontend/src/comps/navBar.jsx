@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useRef } from 'react';
 import { useUserContext } from '../context/userContext.jsx';
 import { useAuth } from '../hooks/auth.hooks.jsx'
-import { Bell, LogOut} from 'lucide-react';
+import { LogOut, Menu } from "lucide-react";
 import logo from "../imgs/logo.svg";
 
 export function NavBar(){
@@ -28,16 +28,9 @@ export function NavBar(){
                 </button>
                 <NavHoverPopUp content={
                     <div className='navPopUpActions'>
-                            <button 
-                                className='navPopBtns' 
-                                onClick={() => navigate('/notifications')}
-                            >
-								<span className="navPopBubble"></span>
-                                alerts
-                            </button>
                         <button
                             onClick={() => logoutMutation.mutate()}
-                            // disabled={logoutMutation.isPending}
+                            disabled={logoutMutation.isPending}
                             className='navPopBtns'   
                         >
 							<span className="navPopBubble"></span>
@@ -119,3 +112,56 @@ function NavHoverPopUp({children, content}){
         </div>
     )
 }
+
+export function BurgerNav({setOpen, open, logout}){
+	const navigate = useNavigate();
+	return(
+		<>
+			<div className='burgerWrapper'>
+				<button 
+					className="burgerBtn"
+					onClick={() => setOpen(prev => !prev)}>
+					<Menu />
+				</button>
+			</div>
+			{open && (
+				<Hamburger> 
+						<ul className='burgerUl'> 
+							<li
+								className="burgerProfile"
+								onClick={() => navigate('/profile')}
+							>
+								<User size={20}/>
+							</li> 
+							<li 
+								className="burgerAlerts"
+								onClick={() => navigate('/alerts')}
+							>
+								<Bell size={20}/>	
+							</li>
+							<li 
+								className='burgerCq'
+								onClick={() => navigate('/create-quote')}
+							>
+								<ClipboardPen size={20} />
+							</li>
+							<li 
+								onClick={() => logout.mutate()}
+								className="hamburgerLogout"
+							>
+								<LogOut size={20} className='burgerLogout'/>	
+							</li>
+						</ul>
+				</Hamburger>
+			)}
+		</>
+	)
+}
+function Hamburger({ children }){
+	return(
+		<div className='burgerContainer'>
+			<nav className="burgerNav">{children}</nav>	
+		</div>
+	)
+}
+

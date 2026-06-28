@@ -69,6 +69,7 @@
 	justify-content:space-between;
 	font-family:var(--font);
 	padding-left:12px;
+	color:white;
 }
 .statCardTitle{
 	font-weight:440;
@@ -109,6 +110,7 @@
 	font-weight:400;
 	background: transparent;
 	cursor:pointer;
+	color:white;
 }
 .statusBtns.active{
 	background:var(--orange);
@@ -119,6 +121,8 @@
 	border-radius:12px;
 	border:1px solid var(--border);
 	outline:transparent;
+	background-color:var(--input-bg);
+	color:white;
 }
 .searchInput:focus{
 	outline:1px solid var(--orange);
@@ -146,6 +150,7 @@
 	display:flex;
 	justify-content:space-between;
 	align-items:center;
+	color:white;
 }
 .thLeft{
 	width:24%;
@@ -165,8 +170,9 @@
 }
 .tableBody{
 	height:100%;
-	background-color:white;
+	background-color:var(--bg-left);
 	position:relative;
+	color:white;
 }
 .tableBody > p{
 	position:absolute;
@@ -247,19 +253,18 @@
 	letter-spacing:2%;
 	display:grid;
 	align-items:center;
-	grid-template-columns:repeat(3,auto);
+	grid-template-columns:.52fr auto 1fr;
 }
 .quoteTotalTxt{
 	grid-column:1;
 }
 .quoteStatus{
 	grid-column:2;
-	margin-left:46px;
 	font-size:12px;
 	border-radius:12px;
 	height:fit-content;
 	width:fit-content;
-	justify-self:flex-start;
+	justify-self:center;
 	align-self:center;
 	padding:8px;
 	font-family:var(--font);
@@ -309,6 +314,10 @@
 	right:4%;
 	display:flex;
 	gap:40px;
+}
+.quoteCreatedAtTxt{
+	grid-column:3;
+	justify-self:center;
 }
 .pageBtnContainer > button{
 	height:2.2rem;
@@ -612,7 +621,7 @@
 	.trRight{
 		grid-column: 5 / 7;
 		display:grid;
-		grid-template-columns: repeat(3,auto);
+		grid-template-columns:repeat(3,auto);
 		position:relative;
 		row-gap:10px;
 		height:100%;
@@ -694,7 +703,6 @@
 		position:absolute;
 		left:50%;
 		transform: translate(-50%);
-		bottom:20px;
 		display:flex;
 		gap:4em;
 	}

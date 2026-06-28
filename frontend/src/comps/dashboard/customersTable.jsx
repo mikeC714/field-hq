@@ -128,17 +128,3 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
 }
 
 
-function CustomerCard({firstName, lastName, quoteId, address, jobDescription, }){
-    return(
-        <div>
-            <span>{quoteId}</span>
-            <div>
-                {firstName} {lastName}
-                <span>{address}</span>
-            </div>
-            <div>
-                {jobDescription}
-            </div>
-        </div>
-    )
-}

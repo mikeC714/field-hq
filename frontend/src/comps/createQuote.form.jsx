@@ -113,7 +113,7 @@ export function CreateQuoteForm({ handleCustomerForm, handleMaterialForm, handle
                     <div className='cqTableHeader'>
                         <span className='cqColDesc'>Description</span>
 					<div className='cqColSmallContainer'>
-                        <span className='cqColSmall cqColSmallHrs'>Hrs</span>
+                        <span className='cqColSmall cqColSmallHrs'>Hours</span>
                         <span className='cqColSmall cqColSmallRate'>Rate</span>
                         <span className='cqColSmall cqColSmallTotal'>Total</span>
 					</div>

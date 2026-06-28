@@ -49,12 +49,14 @@
 	display:flex;
 	justify-content:space-between;
 	align-items:center;
-	border:1px solid white;
+	border:1px solid var(--border);
 	border-radius:12px;
 	width:40%;
 	height:80%;
 	padding:22px;
 	position:relative;
+	color:white;
+	background-color:var(--bg-left);
 }
 .profileAvatar{
 	border:1px solid var(--border);
@@ -127,8 +129,10 @@
 	gap:20px;
 }
 .profileStatCard{
+	background-color:var(--bg-left);
 	border:1px solid var(--border);
 	border-radius:16px;
+	color:white;
 	height:120px;
 	width:160px;
 	display:flex;
@@ -171,11 +175,14 @@
 	transition:border-bottom-color .1s ease;
 	cursor:pointer;
 	padding:4px;
+	color:white;
 }
 .profileTab.active{
 	border-bottom:2px solid var(--orange);	
 }
 .profileOverviewCard{
+	color:white;
+	background-color:var(--bg-left);
 	height:80%;
 	display:flex;
 	flex-direction:column;
@@ -221,6 +228,7 @@
 	margin-left:10px;
 }
 .pAccContainer{
+	background-color:var(--bg-left);
 	height:32%;
 	border:1px solid var(--border);
 	border-radius:10px;
@@ -239,11 +247,13 @@
 	justify-content:space-evenly;
 }
 .pAccContent > input{
+	background-color:var(--input-bg);
 	border-radius:8px;
 	border:none;
 	padding:10px;
 	outline:1px solid transparent;
 	transition:outline-color .1s ease;
+	color:white;
 }
 .pAccContent > input:focus{
 	outline:1px solid var(--orange);
@@ -258,6 +268,49 @@
 }
 .pAccContent > button:hover{
 	opacity:.8;
+}
+.pNotiContainer{
+	background-color:var(--bg-left);
+	border:1px solid var(--border);
+	border-radius:10px;
+	height:64%;
+}
+.pNotiGrid{
+	height:100%;
+	display:grid;
+	grid-template:repeat(4,auto)/repeat(2,auto);
+	position:relative;
+}
+.pNotiBtns{
+	grid-row:1;
+	position:absolute;
+	left:20px;
+	top:20px;
+}
+.pNotiBtns > button{
+	border:none;
+	border-radius:4px;
+	font-size:14px;
+	font-family:var(--font);
+	color:white;
+	background:none;
+}
+.pNotiEmpty{
+	color:white;
+	font-family:var(--font);
+	font-weight:420;
+	grid-row:2;
+	grid-column:1/ span 2;
+	place-self:center;
+}
+.notiPageBtnContainer{
+	display:flex;
+	grid-column:2;
+	grid-row:4;
+	position:absolute;
+	right:80px;
+	bottom:20px;
+	gap:2em;
 }
 
 

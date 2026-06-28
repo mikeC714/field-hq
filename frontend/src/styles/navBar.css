@@ -53,6 +53,7 @@
 	font-size:14px;
 	font-family:var(--font);
 	font-weight:580;
+	color:white;
 }
 .navPopUpContainer{
 	position:relative;
@@ -79,7 +80,7 @@
 	align-items:center;
 	margin-top:10px;
 	width:80px;
-	height:80px;
+	height:40px;
 	border-radius:12px;
 	padding:0;
 }
@@ -104,9 +105,10 @@
 	justify-content:center;
 	align-items:center;
 	position:relative;
-	padding-left:4px;
+	padding-left:6px;
 	padding-right:6px;
 	transition: color .4s ease;
+	color:white;
 }
 .navPopBubble{
 	position:absolute;

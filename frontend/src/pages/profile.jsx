@@ -180,52 +180,54 @@ function Notifications() {
     const { notifications, paginated, isLoading, isError } = useNotiHook({notiPage, notiLimit, clear});
 
     return(
-        <div className="pNotiContainer">
-            <div className="pNotiBtns">
-                <button
-					disabled = {notifications?.length === 0 ? true : false}
-					onClick={() => setClear(true)}
-				>
-					Clear
-				</button>
-            </div>
-            <div className={`pNotiList ${notifications.length === 0 ? 'pNotiEmpty' : ''}`}>
-                {notifications?.length === 0 ? 
-                    <p>No Notifications</p> :
-                    notifications.map((noti) => {
-                        const { icon, style, color } = notiConfig[noti.type]
-                        return(
-                            <div key={noti.quoteId} className={`pNotis ${style}`} style={{borderLeft:`3.2px solid ${color}`}}>
-                                <span className="pNotiIcon" style={{color, background: `${color}20`}}>{icon}</span>
-                                <div className="pNotiContent">
-                                    <div className="pNotiHead">{noti.type}</div>
-                                    <div className="pNotiMid">
-                                        <p className='pNotiMsg'>{noti.message}</p>
-                                    </div>
-                                    <div className='pNotiLow'>
-                                        <p className='pNotiPrice'>${noti.total}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                    })
-                }
-            </div>
-            <div className='notiPageBtnContainer'>
-                <button
-                        disabled = {paginated?.prevPage ? false : true}
-                        onClick={() => setNotiPage(p => p -1)}
-                    >
-                        <ChevronLeft />
-                    </button>
-                    <button 
-                        disabled = {paginated?.nextPage ? false : true}
-                        onClick={() => setNotiPage(p => p +1)}
-                    >
-                        <ChevronRight />
-                    </button>
-            </div>
-        </div>
+		<div className='pNotiContainer'>
+			<div className="pNotiGrid">
+				<div className="pNotiBtns">
+					<button
+						disabled = {notifications?.length === 0 ? true : false}
+						onClick={() => setClear(true)}
+					>
+						Clear
+					</button>
+				</div>
+				<div className={`pNotiList ${notifications.length === 0 ? 'pNotiEmpty' : ''}`}>
+					{notifications?.length === 0 ? 
+						<p>No Notifications</p> :
+						notifications.map((noti) => {
+							const { icon, style, color } = notiConfig[noti.type]
+							return(
+								<div key={noti.quoteId} className={`pNotis ${style}`} style={{borderLeft:`3.2px solid ${color}`}}>
+									<span className="pNotiIcon" style={{color, background: `${color}20`}}>{icon}</span>
+									<div className="pNotiContent">
+										<div className="pNotiHead">{noti.type}</div>
+										<div className="pNotiMid">
+											<p className='pNotiMsg'>{noti.message}</p>
+										</div>
+										<div className='pNotiLow'>
+											<p className='pNotiPrice'>${noti.total}</p>
+										</div>
+									</div>
+								</div>
+							)
+						})
+					}
+				</div>
+				<div className='notiPageBtnContainer'>
+					<button
+							disabled = {paginated?.prevPage ? false : true}
+							onClick={() => setNotiPage(p => p -1)}
+						>
+							<ChevronLeft />
+						</button>
+						<button 
+							disabled = {paginated?.nextPage ? false : true}
+							onClick={() => setNotiPage(p => p +1)}
+						>
+							<ChevronRight />
+						</button>
+				</div>
+			</div>
+		</div>
     )
 } 
 
