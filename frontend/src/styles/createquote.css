@@ -83,9 +83,10 @@
 }
 .createQuoteContent{
 	display:grid;
-	grid-template: minmax(0, auto) 0.8fr / 0.70fr minmax(0, auto);
+	grid-template: .4fr 0.6fr / 0.70fr .4fr;
 }
 .cqLeft{
+	min-width:0;
 	grid-column:1;
 	grid-row:1/3;
 	height:100%;
@@ -242,11 +243,6 @@ input[type=number] {
 	font-family:var(--font);
 	font-size:13px;
 }
-.cqColSmallTotal{
-	justify-self:center;
-	font-size:14px;
-	align-self:center;
-}
 .cqColSmallTitle{
 	font-family:var(--font);
 	font-size:14px;
@@ -258,6 +254,17 @@ input[type=number] {
 .cqColSmallUnit{
 	justify-self:flex-end;
 }
+.cqColSmallTotal{
+	flex-grow:0;
+	flex-shrink:0;      
+	width:60px;         
+	min-width:60px;      
+	max-width:60px;
+	min-width:0;
+	justify-self:center;
+	font-size:14px;
+	align-self:center;
+}
 .cqTableRow{
 	position:relative;
 	display:flex;
@@ -265,6 +272,9 @@ input[type=number] {
 	margin-bottom: 10px;
 }
 .cqSmallContainer{
+	flex-grow:0;
+	flex-shrink:1;
+	min-width:0;
 	display:flex;
 	gap:20px;
 }
@@ -288,9 +298,10 @@ input[type=number] {
 }
 
 .cqRight{
+	min-width:0;
 	overflow-x:hidden;
-	width:50%;
-	height:80%;
+	width:58%;
+	height:88%;
 	justify-self:center;
 	display:grid;
 	grid-template-rows:repeat(3,auto);
@@ -329,11 +340,11 @@ input[type=number] {
 }
 .cqMarkupRow{
 	display:flex;
-	justify-content:space-between;
+	justify-content:space-evenly;
 	align-items:center;
 	gap:4px;
 	padding-right:4px;
-	width:20%;
+	width:30%;
 }
 .cqMarkupInput{
 	width:3.2em;
@@ -351,7 +362,7 @@ input[type=number] {
 }
 .cqMarkupPct{
 	font-size:13px;
-	color:var(--input-bg);
+	color:white;
 }
 .cqTotalRow{
 	border-top:1px solid var(--border);
