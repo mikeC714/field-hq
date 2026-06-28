@@ -117,8 +117,13 @@ import { AppError } from "../error/error.handler.js";
         const { customer, labor, materials, quote } = req.body;
 		
         const { quoteData, customerId } = await quoteService.createQuote(user, customer, quote, labor, materials);
+<<<<<<< HEAD
 
         const emailToken = Auth.signEmail({ id: user, quoteId:quoteData.id, customerId }, "1d")
+=======
+		console.log(quoteData, customerId);
+        const emailToken = Auth.signEmail({ id: user, quoteId: quoteData.id, customerId }, '1d')
+>>>>>>> b77fc8c0dc91d83f414c8678568922a9300db63d
         await tokenService.storeQuoteToken(quoteData.id, emailToken);
 
         return res.status(200).json({

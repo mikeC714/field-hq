@@ -2,14 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useRef } from 'react';
 import { useUserContext } from '../context/userContext.jsx';
 import { useAuth } from '../hooks/auth.hooks.jsx'
-import { Bell, LogOut} from 'lucide-react';
+import { LogOut, Menu } from "lucide-react";
 import logo from "../imgs/logo.svg";
 
 export function NavBar(){
     const { logoutMutation } = useAuth();
     const { nameInitials } = useUserContext();
     const navigate = useNavigate();
-
     return(
         <nav className='dashboardNav'>
             <div className='navLeft'>
@@ -29,17 +28,12 @@ export function NavBar(){
                 </button>
                 <NavHoverPopUp content={
                     <div className='navPopUpActions'>
-                            <button 
-                                className='navPopBtns' 
-                                onClick={() => navigate('/notifications')}
-                            >
-                                alerts
-                            </button>
                         <button
                             onClick={() => logoutMutation.mutate()}
-                            // disabled={logoutMutation.isPending}
+                            disabled={logoutMutation.isPending}
                             className='navPopBtns'   
                         >
+							<span className="navPopBubble"></span>
                             log out
                         </button>
                     </div>
@@ -104,17 +98,70 @@ function NavHoverPopUp({children, content}){
     function mouseLeave(){
         timeOutRef.current = setTimeout(() => {
             setIsVisible(false)
-        }, 300)
+        }, 400)
     }
 
     return(
         <div 
         className='navPopUpContainer'
-        onMouseEnter={mouseEnter}
-        onMouseLeave={mouseLeave}
+			onMouseEnter={mouseEnter}
+			onMouseLeave={mouseLeave}
         >
             { children }
             {isVisible && <div className='navPopUpContent'>{ content }</div>}
         </div>
     )
 }
+
+export function BurgerNav({setOpen, open, logout}){
+	const navigate = useNavigate();
+	return(
+		<>
+			<div className='burgerWrapper'>
+				<button 
+					className="burgerBtn"
+					onClick={() => setOpen(prev => !prev)}>
+					<Menu />
+				</button>
+			</div>
+			{open && (
+				<Hamburger> 
+						<ul className='burgerUl'> 
+							<li
+								className="burgerProfile"
+								onClick={() => navigate('/profile')}
+							>
+								<User size={20}/>
+							</li> 
+							<li 
+								className="burgerAlerts"
+								onClick={() => navigate('/alerts')}
+							>
+								<Bell size={20}/>	
+							</li>
+							<li 
+								className='burgerCq'
+								onClick={() => navigate('/create-quote')}
+							>
+								<ClipboardPen size={20} />
+							</li>
+							<li 
+								onClick={() => logout.mutate()}
+								className="hamburgerLogout"
+							>
+								<LogOut size={20} className='burgerLogout'/>	
+							</li>
+						</ul>
+				</Hamburger>
+			)}
+		</>
+	)
+}
+function Hamburger({ children }){
+	return(
+		<div className='burgerContainer'>
+			<nav className="burgerNav">{children}</nav>	
+		</div>
+	)
+}
+

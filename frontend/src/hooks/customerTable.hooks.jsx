@@ -4,7 +4,7 @@ import { apiFetch } from "../../utils/apiFetch.jsx";
 import { Loader } from "lucide-react";
 import config from "../config.js"
 
-export function useCustomerTableHook({activeFilter= '', searchFilter = '', page = 1, limit = 10}){
+export function useCustomerTableHook({activeFilter= '', searchFilter = '', page = 1, limit = 4}){
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['customers', activeFilter, page, limit], 
         queryFn: async() => await apiFetch(`${config.SERVER}/api/all-customers?filter=${activeFilter}&page=${page}&limit=${limit}`),
@@ -28,8 +28,6 @@ export function useCustomerTableHook({activeFilter= '', searchFilter = '', page 
 }, [data, searchFilter]);
 		
 	if(isLoading) return <Loader />
-
-
     return {
 		paginated: data?.paginated, 
         filteredData: filteredData || {},
