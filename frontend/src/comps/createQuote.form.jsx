@@ -63,9 +63,11 @@ export function CreateQuoteForm({ handleCustomerForm, handleMaterialForm, handle
                 <div className='cqTable'>
                     <div className='cqTableHeader'>
                         <span className='cqColDesc'>Description</span>
-                        <span className='cqColSmall'>Qty</span>
-                        <span className='cqColSmall'>Unit $</span>
-                        <span className='cqColSmall'>Total</span>
+						<div className='cqColSmallContainer'>
+							<span className='cqColSmallTitle cqColSmallQty'>Qty</span>
+							<span className='cqColSmallTitle cqColSmallUnit'>Unit $</span>
+							<span className='cqColSmallTitle cqColSmallTotal'>Total</span>
+						</div>
                     </div>
                     {materials.map((mats, matIndex) =>
                         <form key={mats.id} className='cqTableRow'>
@@ -94,7 +96,7 @@ export function CreateQuoteForm({ handleCustomerForm, handleMaterialForm, handle
                                     value={mats.unitCost} 
                                     onChange={(e) => handleMaterialForm(e, matIndex)} 
                                 />
-                                <p className='cqColSmall'>${mats.total}</p>
+                                <p className='cqColSmall cqColSmallTotal'>${mats.total}</p>
                             </div>
                             <button onClick={() => removeMatBtn(mats.id)}><X size={'16px'}/></button>
                         </form>
@@ -110,9 +112,11 @@ export function CreateQuoteForm({ handleCustomerForm, handleMaterialForm, handle
                 <div className='cqTable'>
                     <div className='cqTableHeader'>
                         <span className='cqColDesc'>Description</span>
-                        <span className='cqColSmall'>Hrs</span>
-                        <span className='cqColSmall'>Rate/hr</span>
-                        <span className='cqColSmall'>Total</span>
+					<div className='cqColSmallContainer'>
+                        <span className='cqColSmall cqColSmallHrs'>Hours</span>
+                        <span className='cqColSmall cqColSmallRate'>Rate</span>
+                        <span className='cqColSmall cqColSmallTotal'>Total</span>
+					</div>
                     </div>
                     {labor.map((lab,labIndex) =>
                         <form key={lab.id} className='cqTableRow'>
@@ -139,7 +143,7 @@ export function CreateQuoteForm({ handleCustomerForm, handleMaterialForm, handle
                                 value={lab.hourlyRate} 
                                 onChange={(e) => handleLaborForm(e, labIndex)} 
                             />
-                            <p className='cqColSmall'>${lab.total}</p>
+                            <p className='cqColSmall cqColSmallTotal'>${lab.total}</p>
 						</div>
                             <button onClick={() => removeLaborBtn(lab.id)}><X size={'16px'}/></button>
                         </form>
