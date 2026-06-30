@@ -10,13 +10,10 @@ export function AuthForm({ isAuth, onSubmit, isPending, onSwitch }) {
             {!isAuth && (
                 <div className="authInputGroup">
                     <label>Name</label>
-<<<<<<< HEAD
                     <div className="authInputWrapper authSignWrapper">
                         <User size={15} className="authSignIcon" />
-=======
                     <div className="authInputWrapper">
                         <User size={15} className="authInputIcon" />
->>>>>>> parent of 49992ad (Styling for 667 auth page looks good)
                         <input type="text" name="firstName" placeholder="First Name" required />
                         <input type="text" name='lastName' placeholder='Last Name' required/>
                     </div>
