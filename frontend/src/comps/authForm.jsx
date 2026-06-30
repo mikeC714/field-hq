@@ -8,43 +8,49 @@ export function AuthForm({ isAuth, onSubmit, isPending, onSwitch }) {
     return (
         <form className="authForm" onSubmit={onSubmit}>
             {!isAuth && (
-                <div className="authInputGroup authSignGroup">
+                <div className="authInputGroup">
                     <label>Name</label>
+<<<<<<< HEAD
                     <div className="authInputWrapper authSignWrapper">
                         <User size={15} className="authSignIcon" />
+=======
+                    <div className="authInputWrapper">
+                        <User size={15} className="authInputIcon" />
+>>>>>>> parent of 49992ad (Styling for 667 auth page looks good)
                         <input type="text" name="firstName" placeholder="First Name" required />
                         <input type="text" name='lastName' placeholder='Last Name' required/>
                     </div>
                 </div>
             )}
-			<div className="authInputs">
-				<div className="authInputGroup">
-					<label>Email address</label>
-					<div className="authInputWrapper">
-						<Mail size={15} className="authInputIcon" />
-						<input type="email" name="email" placeholder="name@company.com" required />
-					</div>
-				</div>
-				<div className="authInputGroup">
-					<div className="authLabelRow">
-						<label>Password</label>
-						{isAuth &&  <Link to="/forgot-password" className="authForgot">Forgot?</Link>}
-					</div>
-					<div className="authInputWrapper">
-						<Lock size={15} className="authInputIcon" />
-						<input
-							type={showPassword ? 'text' : 'password'}
-							name="password"
-							placeholder="••••••••"
-							minLength={8}
-							required
-						/>
-						<button type="button" className="authPasswordToggle" onClick={() => setShowPassword(!showPassword)}>
-							{showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
-						</button>
-					</div>
-				</div>
-		</div>
+
+            <div className="authInputGroup">
+                <label>Email address</label>
+                <div className="authInputWrapper">
+                    <Mail size={15} className="authInputIcon" />
+                    <input type="email" name="email" placeholder="name@company.com" required />
+                </div>
+            </div>
+
+            <div className="authInputGroup">
+                <div className="authLabelRow">
+                    <label>Password</label>
+                    {isAuth &&  <Link to="/forgot-password" className="authForgot">Forgot?</Link>}
+                </div>
+                <div className="authInputWrapper">
+                    <Lock size={15} className="authInputIcon" />
+                    <input
+                        type={showPassword ? 'text' : 'password'}
+                        name="password"
+                        placeholder="••••••••"
+                        minLength={8}
+                        required
+                    />
+                    <button type="button" className="authPasswordToggle" onClick={() => setShowPassword(!showPassword)}>
+                        {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                    </button>
+                </div>
+            </div>
+
             {isAuth && (
                 <label className="authRemember">
                     <input type="checkbox" name="remember" />
