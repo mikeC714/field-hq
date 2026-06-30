@@ -168,7 +168,7 @@
 	border:none;
 	width:120px;
 	background:none;
-	font-size:14px;
+	font-size:16px;
 	font-family:var(--font);
 	letter-spacing:.04em;
 	border-bottom:2px solid transparent;
@@ -355,7 +355,352 @@
 	font-size:16px;
 }
 
-
+@media(max-width:400px) and (min-width:360px){
+	#root{
+		padding:0;
+		margin:0;
+		overflow:hidden;
+		height:100%;
+	}
+	*,
+	body{
+		padding:0;
+		margin:0;
+	}
+	.profilePage{
+		height:100%;
+		display:grid;
+		grid-template-rows: auto 1fr;
+		background-color:var(--bg-right)
+	}
+	.profileHeader{
+		display:flex;
+		width:44%;
+		background-color:var(--bg-left);
+	}
+	.profileBody{
+		grid-row:2;
+		width:100%;
+		display:flex;
+		flex-direction:column;
+		justify-content:center;
+		grid-template-rows:repeat(2,auto) 1fr;
+	}
+	.profileHeaderCard{
+		grid-row:1;
+		justify-self:center;
+		display:flex;
+		justify-content:space-between;
+		align-items:center;
+		border:1px solid var(--border);
+		border-radius:12px;
+		width:40%;
+		height:80%;
+		padding:22px;
+		position:relative;
+		color:white;
+		background-color:var(--bg-left);
+	}
+	.profileAvatar{
+		border:1px solid var(--border);
+		border-radius:4em;
+		font-family:var(--font);
+		font-weight:600;
+		height:4em;
+		width:4em;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+	}
+	.profileHeaderLeft{		
+		height:100%;
+		gap:20px;
+		display:flex;
+		justify-content:space-evenly;
+		align-items:center;
+	}
+	.profileHeaderInfo{
+		display:flex;
+		height:100%;
+		justify-content:space-evenly;
+		flex-direction:column;
+		align-items:center;
+		font-family:var(--font);
+	}
+	.profileNameRow{
+		display:flex;
+		justify-content:space-evenly;
+		align-items:center;
+		gap:20px;
+	}
+	.profileName{
+		font-size:18px;
+		font-weight:420;
+		letter-spacing:4%;
+	}
+	.profileSubtitle{
+		font-size:14px;
+		letter-spacing:4%;
+	}
+	.profileActiveBadge{
+		border-radius:8px;
+		padding:6px;
+		width:6em;
+		text-align:center;
+		background-color: rgba(34,197,94,.12);
+		color: #4ade80; 
+		font-weight:560;
+		font-family:var(--font);
+		font-size:12px;
+	}
+	.editProfileBtn{
+		height:fit-content;
+		padding:10px;
+		border-radius:10px;
+		border:none;
+		background-color:var(--orange);
+		cursor:pointer;
+		transition:opacity .4s ease;
+	}
+	.editProfileBtn:hover{
+		opacity:.8;	
+	}
+	.profileStatsRow{
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		gap:20px;
+	}
+	.profileStatCard{
+		background-color:var(--bg-left);
+		border:1px solid var(--border);
+		border-radius:16px;
+		color:white;
+		height:120px;
+		width:160px;
+		display:flex;
+		flex-direction:column;
+		justify-content:space-evenly;
+		gap:22px;
+		padding:1em;
+		font-family:var(--font);
+	}
+	.profileStatValue{
+		font-size:1.6em;
+	}
+	.profileStatLabel{
+		font-size:14px;
+		letter-spacing:4%;
+	}
+	.profileTabSection{
+		justify-self:center;
+		width:46%;
+		display:grid;
+		grid-template-rows:auto 1fr;
+	}
+	.profileTabs{
+		grid-row:1;
+		width:100%;
+		display:flex;
+		justify-content:center;
+		gap:10em;
+		padding-top:1em;
+		padding-bottom:1em;
+	}
+	.profileTab{
+		border:none;
+		width:120px;
+		background:none;
+		font-size:14px;
+		font-family:var(--font);
+		letter-spacing:.04em;
+		border-bottom:2px solid transparent;
+		transition:border-bottom-color .1s ease;
+		cursor:pointer;
+		padding:4px;
+		color:white;
+	}
+	.profileTab.active{
+		border-bottom:2px solid var(--orange);	
+	}
+	.profileOverviewCard{
+		color:white;
+		background-color:var(--bg-left);
+		height:80%;
+		display:flex;
+		flex-direction:column;
+		border:1px solid var(--border);
+		border-radius:10px;
+		padding:12px;
+	}
+	.profileInfoSection{
+		height:80%;
+		padding:.8em;
+		display:flex;
+		flex-direction:column;
+	}
+	.profileSectionDivider{
+		border:1px solid var(--border);
+		width:100%;
+	}
+	.profileInfoGrid{
+		height:100%;
+		width:100%;
+		display:grid;
+		grid-template: repeat(2,auto) / repeat(2,auto);
+		padding:12px;
+	}
+	.profileInfoField{
+		height:100%;
+		display:flex;
+		flex-direction:column;
+		gap:12px;
+		padding:12px;
+		font-family:var(--font);
+	}
+	.profileSectionLabel{
+		font-family:var(--font);
+		font-weight:400;
+	}
+	.profileFieldLabel{
+		font-size:.8em;
+		color:var(--orange);
+	}
+	.profileFieldValue{
+		font-size:14px;
+		margin-left:10px;
+	}
+	.pAccContainer{
+		background-color:var(--bg-left);
+		height:32%;
+		border:1px solid var(--border);
+		border-radius:10px;
+		display:flex;
+		flex-direction:column;
+		justify-content:space-evenly;
+		align-items:center;
+	}
+	.pAccTxt{
+		color:var(--orange);
+		font-family:var(--font);
+	}
+	.pAccContent{
+		width:60%;
+		display:flex;
+		justify-content:space-evenly;
+	}
+	.pAccContent > input{
+		background-color:var(--input-bg);
+		border-radius:8px;
+		border:none;
+		padding:10px;
+		outline:1px solid transparent;
+		transition:outline-color .1s ease;
+		color:white;
+	}
+	.pAccContent > input:focus{
+		outline:1px solid var(--orange);
+	}
+	.pAccContent > button{
+		border:none;	
+		border-radius:6px;
+		background-color:var(--orange);
+		padding:4px;
+		cursor:pointer;
+		transition: opacity .9s ease;
+	}
+	.pAccContent > button:hover{
+		opacity:.8;
+	}
+	.pNotiContainer{
+		background-color:var(--bg-left);
+		border:1px solid var(--border);
+		border-radius:10px;
+		height:70%;
+	}
+	.pNotiGrid{
+		height:100%;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		position:relative;
+	}
+	.pNotiBtns{
+		grid-row:1;
+		position:absolute;
+		left:20px;
+		top:20px;
+	}
+	.pNotiBtns > button{
+		border:none;
+		border-radius:4px;
+		font-size:14px;
+		font-family:var(--font);
+		color:white;
+		background:none;
+	}
+	.pNotiEmpty{
+		color:white;
+		grid-column:1/-1;
+		grid-row:1/-1;
+		justify-self:center;
+		align-self:center;
+		text-align:center;
+		font-family:var(--font);
+	}
+	.notiPageBtnContainer{
+		display:flex;
+		grid-column:2;
+		grid-row:4;
+		position:absolute;
+		right:80px;
+		bottom:20px;
+		gap:2em;
+	}
+	.pNotiList{
+		height:100%;
+		width:100%;
+		display:grid;
+		grid-template: repeat(2,.42fr)/ repeat(2,1fr);
+	}
+	.pNotis{
+		align-self:center;
+		height:fit-content;
+		width:80%;
+		height:40%;
+		justify-self:center;
+		padding:10px;
+		border:1px solid var(--border);
+		border-radius:10px;
+		position:relative;
+	}
+	.pNotiIcon{
+		position:absolute;
+		right:16px;
+		height:1.4em;
+		width:1.4em;
+		padding:8px;
+		border-radius:20px;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+	}
+	.pNotiContent{
+		color:white;
+		width:100%;
+		height:100%;
+		font-family:var(--font);
+		display:flex;
+		flex-direction:column;
+		justify-content:space-evenly;
+	}
+	.pNotiHead{
+		font-size:16px;
+	}
+}
+@media(max-width:500px) and (min-width:401px){}
+@media(max-width:800px) and (min-width:701px){}
+@media (max-width:1024px) and (min-width:801px){}
 
 
 
