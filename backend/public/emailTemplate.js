@@ -1,9 +1,9 @@
-
 export const quoteEmailTemplate = ({ userInfo, customer, link, senderName, expiry }) => (
 	`
-<div style="font-family: Arial, sans-serif; max-width: 560px; margin: 0 auto; padding: 20px;">
+		<div style="font-family: Arial, sans-serif; max-width: 560px; margin: 0 auto; padding: 20px;">
 
   <div style="background-color: #1a1a2e; padding: 28px 40px; border-radius: 8px 8px 0 0; display: flex; align-items: center; gap: 10px;">
+    <div style="width: 32px; height: 32px; background-color: #f97316; border-radius: 8px;"></div>
     <span style="color: #ffffff; font-size: 17px; font-weight: 500;">Field HQ</span>
   </div>
 

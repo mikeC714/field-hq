@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NavBar, BurgerNav } from '../comps/navBar.jsx';
+import { NavBar } from '../comps/navBar.jsx';
 import { useQuickAccess } from '../hooks/quickAccess.hooks.jsx';
 import { useNotiHook } from '../hooks/notifications.hooks.jsx';
 import { useUserContext } from "../context/userContext.jsx";
@@ -234,12 +234,10 @@ function Notifications() {
 
 export function ProfilePage() {
     const [isEditing, setIsEditing] = useState(false);
-	const [open, setOpen] = useState(false);
     const [currView, setCurrView] = useState('overview');
-	const [userConfig, setUserConfig] = useState({})
-	const { logoutMutation } = useAuth();
     const { data, isLoading, isError } = useQuickAccess();
     const {  created_at, nameInitials, userId, email } = useUserContext()
+    const [userConfig, setUserConfig] = useState({})
 
 
 	const user = JSON.parse(localStorage.getItem("user"));
@@ -282,11 +280,6 @@ export function ProfilePage() {
     return (
         <div className='profilePage'>
 			<header className="profileHeader">
-				<BurgerNav 
-					logout={logoutMutation}
-					setOpen={setOpen}
-					open={open}
-				/>
 				<NavBar />
 			</header>
             <div className='profileBody'>

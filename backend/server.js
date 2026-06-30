@@ -15,6 +15,8 @@ import helmet from "helmet";
 const PORT = process.env.PORT
 const app = express();
 
+
+
 app.use(express.json())
 app.use(cookieParser())
 app.use(helmet());
@@ -41,6 +43,7 @@ app.use((err, req, res, next) => {
 	}
 	return res.status(err.statusCode || status).json({ error: err.message })
 })
+
 app.listen(PORT, () => {
     console.log(`Server is running smooth on PORT: ${PORT}`)
 })

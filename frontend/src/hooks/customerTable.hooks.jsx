@@ -9,15 +9,11 @@ export function useCustomerTableHook({activeFilter= '', searchFilter = '', page 
 	let limit = 11;
 	const desktop = useMediaQuery('(max-width:1024px)');
 	const tablet = useMediaQuery('(max-width:820px)');
-	const lMobile = useMediaQuery('(max-width:500px) and (min-width:401px)');
-	const mMobile = useMediaQuery('(max-width:400px)');
-	const sMobile = useMediaQuery('(max-width:375px) and (min-width:360px)');
+	const mobile = useMediaQuery('(max-width:500px)');
 
 	if(desktop) limit = 11;
 	if(tablet) limit = 8;
-	if(lMobile) limit = 3;
-	if(mMobile) limit = 3
-	if(sMobile) limit = 2;
+	if(mobile) limit = 2;
 
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['customers', activeFilter, page, limit], 
@@ -26,19 +22,20 @@ export function useCustomerTableHook({activeFilter= '', searchFilter = '', page 
     })
     const filteredData = useMemo(() => {
         let result = data?.cusData ?? [];
-		   if (searchFilter.trim() !== '') {
-				const search = searchFilter.toLowerCase().trim();
-				result = result.filter((cus) =>{
-					return(
-						cus.first_name?.toLowerCase().includes(search) ||
-						cus.last_name?.toLowerCase().includes(search) ||
-						cus.quote.some(qt => qt.job?.some(job => job.description?.toLowerCase().includes(search)),
-					)
+
+       if (searchFilter.trim() !== '') {
+            const search = searchFilter.toLowerCase().trim();
+            result = result.filter((cus) =>{
+                return(
+                    cus.first_name?.toLowerCase().includes(search) ||
+                    cus.last_name?.toLowerCase().includes(search) ||
+                    cus.quote.some(qt => qt.job?.some(job => job.description?.toLowerCase().includes(search)),
 				)
-			}
-		);
-	}       return result;
-	}, [data, searchFilter]);
+            )
+        }
+    );
+}       return result;
+}, [data, searchFilter]);
 		
 	if(isLoading) return <Loader />
     return {

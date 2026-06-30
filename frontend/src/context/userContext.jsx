@@ -27,8 +27,6 @@ export function UserProvider({children}){
 		}
     });
 
-	if(isLoading) window.location.reload();
-
     const firstName = data?.user?.first_name ?? "";
     const lastName = data?.user?.last_name ?? "";
     const email = data?.user?.email;

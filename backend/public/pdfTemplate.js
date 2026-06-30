@@ -117,12 +117,11 @@ export async function pdf({ quote, materials, labor, user, customer, expiry }) {
 
         // ── Totals ────────────────────────────────────────────
         const totalsY = labRowY + 16;
-		const subTotal = data.subTotal.toFixed(2);
 
         doc.fillColor('#666666').fontSize(13).font('Helvetica')
             .text('Subtotal', 350, totalsY, { width: 100 });
         doc.fillColor('#333333')
-            .text(String(subTotal), 455, totalsY, { width: 100, align: 'right' });
+            .text(String(data.subTotal), 455, totalsY, { width: 100, align: 'right' });
 
 
         doc.moveTo(350, totalsY + 20).lineTo(565, totalsY + 20)

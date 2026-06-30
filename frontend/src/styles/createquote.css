@@ -23,40 +23,6 @@
 	background:var(--bg-right);
 	color:white;
 }
-.overlay{
-	position:fixed;
-	inset:0;
-	z-index:9999;
-	background:rgba(0,0,0,.6);
-	display:flex;
-	justify-content:center;
-	align-items:center;
-}
-.cqSuccess{
-	font-family:var(--font);
-}
-.cqSuccessContainer{
-	display:flex;
-	justify-content:center;
-	align-items:center;
-}
-.cqCheck{
-	height:2em;
-	width:2em;
-	padding:10px;
-	border-radius:2em;
-	background-color: rgba(34,197,94,.12);
-	color: #4ade80; 
-}
-.cqLoader{
-	height:2em;
-	width:2em;
-	animation:spin 1s linear;
-}
-@keyframes spin{
-	0%{ transform: rotate(0deg); }
-	100%{ transform: rotate(360deg); }
-}
 .createQuoteNav{
 	grid-row:1;
 	width:100%;
@@ -251,7 +217,7 @@ input[type=number] {
 	background:var(--orange);
 }
 .cqTableHeader{
-	width:90.6%;
+	width:92%;
 	display:grid;
 	grid-template-columns:repeat(2,auto);
 	margin-bottom:8px;
@@ -266,7 +232,7 @@ input[type=number] {
 	justify-self:flex-end;
 	align-self:center;
 	display:grid;
-	grid-template-columns:.20fr .28fr .32fr;
+	grid-template-columns:.34fr .24fr .4fr;
 	column-gap:10px;
 	align-items:center;
 }
@@ -275,14 +241,15 @@ input[type=number] {
 	text-align:center;
 	padding:0;
 	font-family:var(--font);
-	font-size:13.2px;
+	font-size:13px;
 }
 .cqColSmallTitle{
 	font-family:var(--font);
 	font-size:14px;
 }
 .cqColSmallQty{
-	justify-self:flex-start;	
+	padding-right:10px;
+	justify-self:flex-end;	
 }
 .cqColSmallUnit{
 	justify-self:flex-end;
@@ -290,17 +257,18 @@ input[type=number] {
 .cqColSmallTotal{
 	flex-grow:0;
 	flex-shrink:0;      
+	width:60px;         
 	min-width:60px;      
 	max-width:60px;
 	min-width:0;
+	justify-self:center;
 	font-size:14px;
 	align-self:center;
-	justify-self:flex-end;
 }
 .cqTableRow{
 	position:relative;
 	display:flex;
-	gap:22px;
+	gap:18px;
 	margin-bottom: 10px;
 }
 .cqSmallContainer{
@@ -308,10 +276,10 @@ input[type=number] {
 	flex-shrink:1;
 	min-width:0;
 	display:flex;
-	gap:14px;
-	margin-left:10px;
+	gap:20px;
 }
 .cqColSmallHrs{
+	justify-self:center;
 	font-size:14px;
 }
 .cqColSmallRate{
@@ -328,6 +296,7 @@ input[type=number] {
 	cursor:pointer;
 	color:white;
 }
+
 .cqRight{
 	min-width:0;
 	overflow-x:hidden;
