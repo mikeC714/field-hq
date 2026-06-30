@@ -118,13 +118,8 @@ import { AppError } from "../error/error.handler.js";
 		
         const { quoteId, customerId } = await quoteService.createQuote(user, customer, quote, labor, materials);
 
-<<<<<<< HEAD
-        const emailToken = Auth.signEmail({ id: user, quoteId: quoteData.id, customerId }, '1d')
-        await tokenService.storeQuoteToken(quoteData.id, emailToken);
-=======
         const emailToken = Auth.signEmail({ id: user, quoteId, customerId })
         await tokenService.storeQuoteToken(quoteId, emailToken);
->>>>>>> parent of e97a698 (ready to merge dev)
 
         return res.status(200).json({
             success: true,
