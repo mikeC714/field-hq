@@ -7,17 +7,15 @@ import { AppError, AuthenticationError } from "../error/error.handler.js";
 import { catchAsync } from "../utils/catchAsync.js";
 
 	export const handleSending = catchAsync(async(req, res) => { 
-		const userId = req.user;
         const { user, customer, labor, materials, quote } = req.body;
-		const { quoteData, customerId } = await quoteService.createQuote(userId, customer, quote, labor, materials);
+		const { quoteData, customerId } = await quoteService.createQuote(user.userId, customer, quote, labor, materials);
 
-		const emailToken = Auth.signEmail({ quoteId: quoteData.id, customerId }, "2d")
+		const emailToken = Auth.signEmail({ id:user.userId quoteId: quoteData.id, customerId }, "2d")
 		const expiry = await tokenService.storeQuoteToken(quoteData.id, emailToken);
 		const link = `${process.env.FRONTEND_URL}/quote/acceptance?token=${emailToken}`;
 
-        const userInfo = await userService.getUserById(user);
         await sendQuoteEmail({ 
-			userInfo, 
+			user, 
 			quote:{ 
 				data: quote, 
 				created_at: quoteData.created_at
@@ -35,10 +33,10 @@ import { catchAsync } from "../utils/catchAsync.js";
     export const handleAcceptance = catchAsync(async(req, res) => {
 		console.log("fired");
         const token = req.query.token;
-        if(!token) return res.status(400).json({message: "Invalid quote token."});
-		console.log(token);
+        if(!token) return res.redirect(302, ${process.env.FRONTEND_URL/404});
+
        const valid = Auth.verifyEmail(token);
-		console.log("valid")
+
         const status = "APPROVED";
         await quoteService.changeQuoteStatus(valid.payload.quoteId, status);
 	

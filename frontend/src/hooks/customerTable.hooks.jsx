@@ -19,7 +19,6 @@ export function useCustomerTableHook({activeFilter= '', searchFilter = '', page 
 	if(lMobile) limit = 3;
 	if(mMobile) limit = 3
 	if(sMobile) limit = 2;
-
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['customers', activeFilter, page, limit], 
         queryFn: async() => await apiFetch(`${config.SERVER}/api/customers?filter=${activeFilter}&page=${page}&limit=${limit}`),

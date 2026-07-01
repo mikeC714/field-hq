@@ -193,6 +193,11 @@
 }
 .customerDeleteBtnMobile{
 	display: none;
+	position:absolute;
+	transition: visibility .1s ease opacity 2s ease;
+	height:2em;
+	width:2em;
+	z-index:99999;
 }
 .customerDeleteBtn:hover{
 	opacity:.8;
@@ -210,9 +215,9 @@
 .customerDataRow:hover .customerDeleteBtn{
 	visibility:visible;
 }
-/* .customerDataRow:active{ */
-/* 	pointer-events: none; */
-/* } */
+.customerDataRow:active{
+	pointer-events: none;
+}
 .trLeft{
 	width:19%;
 	display:grid;
