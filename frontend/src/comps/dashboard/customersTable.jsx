@@ -59,7 +59,7 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
                 </div>
                 <div className="tableBody">
                     { data?.length > 0 ? 
-                    data.map((customer, customerIndex ) =>
+                    data.map((customer, customerIndex) =>
                         [...customer.quote]
                             .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
                             .map(quote =>
@@ -68,11 +68,9 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
 									className="customerDataRow"
 									onClick={() => handleVisbility(quote.id)}
 								>
-								{visible === quote.id && (
-									<button 
-										className='customerDeleteBtn'
-										onClick={(e) => {
-											console.log("clicked")
+								{visible === quote.id && (<button 
+										className='customerDeleteBtnMobile'
+										onClick={() => {
 											handleDelete(quote.id)
 										}}
 										>
@@ -81,13 +79,12 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
 								)}
 									<button 
 										className='customerDeleteBtn'
-										onClick={(e) => {
-											console.log("clicked")
+										onClick={() => {
 											handleDelete(quote.id)
-										}}
-										>
-											<Trash2 size={20} />
-										</button>
+										}}	
+									>
+										<Trash2 size={20} />
+									</button>
                                         <div className="trLeft">
 											<div className="customerJobId">QT-{String(customerIndex + 1).padStart(3,0)}</div>
 												<div className="customerNameNAdd">

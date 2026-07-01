@@ -8,7 +8,7 @@ export function useCreateQuote(){
   const queryClient = useQueryClient();
   
     return useMutation({
-        mutationFn: async (data) => await apiFetch(`${config.SERVER}/api/create-quote`, 'POST', data),
+        mutationFn: async (data) => await apiFetch(`${config.SERVER}/api/quote/create`, 'POST', data),
             onError: () => {
 				setTimeout(() => {
 				}, 5000)

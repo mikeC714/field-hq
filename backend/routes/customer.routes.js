@@ -6,8 +6,8 @@ import { monitorQuotes } from "../middleware/quote.middleware.js";
 const customerRouter = express.Router();
 
 customerRouter.use(verifyToken);
-customerRouter.get('/all-customers', monitorQuotes, getAllUserCustomers);
-customerRouter.get('/customer-info', getCustomerInfo);
-customerRouter.get('/customer-status', getCustomerStatus);
+customerRouter.get('/customers', monitorQuotes, getAllUserCustomers);
+customerRouter.get('/customer/info', getCustomerInfo);
+customerRouter.get('/customer/status', getCustomerStatus);
 
 export default customerRouter;

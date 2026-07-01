@@ -22,7 +22,7 @@ export function useCustomerTableHook({activeFilter= '', searchFilter = '', page 
 
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['customers', activeFilter, page, limit], 
-        queryFn: async() => await apiFetch(`${config.SERVER}/api/all-customers?filter=${activeFilter}&page=${page}&limit=${limit}`),
+        queryFn: async() => await apiFetch(`${config.SERVER}/api/customers?filter=${activeFilter}&page=${page}&limit=${limit}`),
         staleTime: 1000 * 60 * 10,
 		retry:0
     })
@@ -45,7 +45,7 @@ export function useCustomerTableHook({activeFilter= '', searchFilter = '', page 
 	useEffect(() => {
 		queryClient.prefetchQuery({
 			queryKey:['customers', activeFilter, page + 1, limit],
-			queryFn: async() => await apiFetch(`${config.SERVER}/api/all-customers?filter=${activeFilter}&page=${page + 1}&limit=${limit}`),
+			queryFn: async() => await apiFetch(`${config.SERVER}/api/customers?filter=${activeFilter}&page=${page + 1}&limit=${limit}`),
 			retry:0
 		});
 	},[data, page, limit, activeFilter, queryClient])
@@ -64,7 +64,7 @@ export function useCustomerDelete(){
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (quoteID) => apiFetch(`${config.SERVER}/api/delete-quote`, 'DELETE', quoteID),
+        mutationFn: (quoteId) => apiFetch(`${config.SERVER}/api/quote/delete`, 'DELETE', {quoteId}),
         onSuccess:() => {
             queryClient.invalidateQueries({ queryKey: ['customers'] })
             queryClient.invalidateQueries({ queryKey: ['quickAccess'] })

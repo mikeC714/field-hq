@@ -132,6 +132,7 @@ import { AppError } from "../error/error.handler.js";
 		const user = req.user;
         if(!user) throw new AppError("User not found.", 404);
 		const { quoteId } = req.body;
+		console.log("DELETE QUOTE HIT", quoteId)
         await quoteService.deleteQuote(quoteId, user);
 
         return res.status(200).json({ message: `Quote ${quoteId} was successfully deleted.` });
