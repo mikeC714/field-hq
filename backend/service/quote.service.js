@@ -55,6 +55,7 @@ export default {
     async changeQuoteStatus(quoteId, status){
         if(!quoteId) throw new AppError("Quote not found.", 404);
         try{    
+			console.log("CHANGING STATUS")
             await db.query(
                 `UPDATE quotes 
                 SET status = $1::quote_status_type
@@ -112,6 +113,8 @@ export default {
     async deleteQuote(quoteId, userId){
 		if(!userId) throw new AppError("User not found.", 404);
         try{
+			console.log(quoteId);
+			console.log(userId);
             return await db.query(
                 `DELETE FROM quotes WHERE user_id = $1 AND id = $2`,
                 [userId, quoteId]
