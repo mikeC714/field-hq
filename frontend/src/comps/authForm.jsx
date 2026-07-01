@@ -4,20 +4,21 @@ import { Link } from "react-router-dom";
 
 export function AuthForm({ isAuth, onSubmit, isPending, onSwitch }) {
     const [showPassword, setShowPassword] = useState(false);
-
     return (
         <form className="authForm" onSubmit={onSubmit}>
             {!isAuth && (
                 <div className="authInputGroup">
                     <label>Name</label>
-                    <div className="authInputWrapper">
-                        <User size={15} className="authInputIcon" />
-                        <input type="text" name="firstName" placeholder="First Name" required />
-                        <input type="text" name='lastName' placeholder='Last Name' required/>
-                    </div>
+                    <div className="authInputWrapper authSignWrapper">
+							<User size={15} className="authSignIcon" />
+						<div className="authInputWrapper">
+							<User size={15} className="authInputIcon" />
+							<input type="text" name="firstName" placeholder="First Name" required />
+							<input type="text" name='lastName' placeholder='Last Name' required/>
+						</div>
+					</div>
                 </div>
-            )}
-
+			)}
             <div className="authInputGroup">
                 <label>Email address</label>
                 <div className="authInputWrapper">
@@ -45,25 +46,21 @@ export function AuthForm({ isAuth, onSubmit, isPending, onSwitch }) {
                     </button>
                 </div>
             </div>
-
             {isAuth && (
                 <label className="authRemember">
                     <input type="checkbox" name="remember" />
                     <span>Keep me signed in</span>
                 </label>
             )}
-
             <button className="authSubmitBtn" type="submit" disabled={isPending}>
                 {isPending ? 'Signing in...' : isAuth ? 'Sign In' : 'Sign Up'}
             </button>
-
             <p className="authSwitch">
                 {isAuth ? "Don't have an account?" : 'Already have an account?'}{' '}
                 <button type="button" onClick={onSwitch}>
                     {isAuth ? 'Create one now' : 'Sign in'}
                 </button>
             </p>
-
-        </form>
-    );
+		</form>
+	)
 }

@@ -30,7 +30,7 @@ export function useAcceptQuote(){
 	const queryClient = useQueryClient();
 
 	const { mutate, isSuccess, isError } = useMutation({
-		mutationFn: async () => await apiFetchNoCreds(`${config.SERVER}/api/quote-acceptance`, 'PUT', { token }),
+		mutationFn: async () => await apiFetchNoCreds(`${config.SERVER}/api/quote/acceptance?token=${token}`, 'GET'),
 		onSuccess:() => {
 			queryClient.invalidateQueries({ queryKey: ['quickAccess'] });
 			queryClient.invalidateQueries({ queryKey: ['customers'] });

@@ -52,11 +52,11 @@ export function Authentication() {
                         <span className="mockDot mockDotGreen" />
                     </div>
                     <div className="mockStats">
-                        <div className="mockStatCard">
+                        <div className="mockStatCard mockStatAccent">
                             <span className="mockStatLabel">Active Jobs</span>
                             <span className="mockStatValue">24</span>
                         </div>
-                        <div className="mockStatCard">
+                        <div className="mockStatCard mockStatAccent">
                             <span className="mockStatLabel">Pending Quotes</span>
                             <span className="mockStatValue">12</span>
                         </div>

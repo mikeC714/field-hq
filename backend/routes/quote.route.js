@@ -8,6 +8,11 @@ import cors from "cors";
 const quoteRouter = express.Router();
 quoteRouter.get('/quote/acceptance', cors({ origin: process.env.FRONTEND_URL, credentials:false }), handleAcceptance);
 quoteRouter.use(verifyToken);
+
+
+quoteRouter.use(verifyToken);
+quoteRouter.put('/quote/acceptance', handleAcceptance);
+quoteRouter.get('/customer-quote', getCustomerQuoteInfo);
 quoteRouter.post('/quote/send', authLimiter, handleSending);
 quoteRouter.get('/customer-quote', getCustomerQuoteInfo);
 quoteRouter.post('/create-quote', createCustomerQuote);

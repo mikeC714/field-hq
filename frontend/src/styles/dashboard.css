@@ -1,0 +1,1451 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+:root {
+	--orange: #eea12d;
+	--bg-left: #141414;
+	--bg-right: #0d0d0d;
+	--border:  #4d4b4ba2;
+	--text: #f0f0f0;
+	--text-muted: #888;
+	--input-bg: #1e1e1e;
+	--font: "Montserrat", sans-serif;
+	--skin:    #2a2a2a;
+	--stroke:  var(--orange);
+	--mid:     #1e1e1e;
+	--signbg:  #111111;
+	--font: 'Montserrat', sans-serif;
+}
+#root{
+	padding:0;
+	margin:0;
+	overflow:hidden;
+	height:100vh;
+}
+*, body{
+	padding:0;
+	margin:0;
+}
+.dashboardPage{
+	height:100vh;
+	display:grid;
+	grid-template-rows: repeat(3,auto) 1fr;
+	background-color:var(--bg-right);
+}
+.dashboardBody{
+	grid-row:4;
+	height:100%;
+	position:relative;
+}
+.dashboardHeader{
+	grid-row:1;
+	display:flex;
+	justify-content:space-between;
+	align-items:flex-start;
+	padding:.6em;
+	background-color:var(--bg-left);
+}
+.burgerWrapper{
+	display:none;
+}
+.quickAccessContainer{
+	grid-row:2;
+	margin:40px;
+}
+.statCardsGrid{
+	display:flex;
+	justify-content:space-evenly;
+	align-items:center;
+}
+.statCardWrapper{
+	background:var(--bg-left);
+	height:8em;
+	width:20em;
+	border-radius:12px;
+	padding:12px;
+}
+.statCard{
+	height:100%;
+	display:flex;
+	flex-direction:column;
+	justify-content:space-between;
+	font-family:var(--font);
+	padding-left:12px;
+	color:white;
+}
+.statCardTitle{
+	font-weight:440;
+	font-size:.8em;
+	letter-spacing:1px;
+}
+.statCardSubtitle{
+	font-weight:440;
+	font-size:.8em;
+	letter-spacing:1px;
+}
+.statCardValue{
+	font-weight:400;
+	font-size:2.2em;
+}
+.filterRow{
+	grid-row:3;
+	width:100%;
+	height:auto;
+	display:flex;
+	align-items:center;
+	justify-content:space-evenly;
+	margin-bottom:1em;
+}
+.statusBtnsContainer{
+	display:flex;
+	gap:8px;
+	width:80%;	
+}
+.statusBtns{
+	height:2em;
+	width:fit-content;
+	padding-left:10px;
+	padding-right:10px;
+	border-radius:10px;
+	text-align:center;
+	border:1px solid var(--border);
+	font-weight:400;
+	background: transparent;
+	cursor:pointer;
+	color:white;
+}
+.statusBtns.active{
+	background:var(--orange);
+}
+.searchInput{
+	height:2.4em;
+	padding-left: 8px;
+	border-radius:12px;
+	border:1px solid var(--border);
+	outline:transparent;
+	background-color:var(--input-bg);
+	color:white;
+}
+.searchInput:focus{
+	outline:1px solid var(--orange);
+}
+.customerTableContainer{
+	grid-row:4;
+	height:100%;
+	width:100%;
+	display:flex;
+	padding:0;
+	margin:0;
+}
+.customerTable{
+	display:grid;
+	grid-template-rows: auto 1fr;
+	height:70%;
+	width:100%;
+	border:1px solid var(--border);
+	border-radius:10px;
+}
+.tableHead{
+	width:100%;
+	border-bottom:1px solid var(--border);
+	padding:10px;
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	color:white;
+}
+.thLeft{
+	width:24%;
+	display:flex;
+	align-items:center;
+	justify-content:space-evenly;
+	font-family: var(--font);
+	font-size:13px;
+}
+.thRight{
+	width:76%;
+	display:flex;
+	align-items:center;
+	justify-content:space-evenly;
+	font-family: var(--font);
+	font-size:13px;
+}
+.tableBody{
+	height:100%;
+	background-color:var(--bg-left);
+	position:relative;
+	color:white;
+}
+.tableBody > p{
+	position:absolute;
+	top:50%;
+	left:50%;
+	font-family:var(--font);
+}
+.customerDeleteBtn{
+	cursor:pointer;
+	color:red;
+	border:none;
+	background:none;
+	position:absolute;
+	transition: visibility .1s ease opacity 2s ease;
+	height:2em;
+	width:2em;
+	z-index:99999;
+}
+.customerDeleteBtn:hover{
+	opacity:.8;
+}
+.customerDataRow{
+	position:relative;
+	width:100%;
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	border-bottom:1px solid var(--border);
+	padding:10px;
+	cursor:pointer;
+}
+.customerDataRow:hover .customerDeleteBtn{
+	visibility:visible;
+}
+.customerDataRow:active{
+	pointer-events: none;
+}
+.trLeft{
+	width:19%;
+	display:grid;
+	grid-template-columns:.5fr .64fr;
+	font-family:var(--font);
+}
+.customerJobId{
+	justify-self:flex-end;
+	align-self:center;
+	font-size:14px;
+	font-weight:520;
+	letter-spacing:1px;
+}
+.customerNameNAdd{
+	grid-column:2;
+	width:28%;
+	justify-self:flex-end;
+	padding-right:32px;
+	display:flex;
+	justify-content:flex-start;
+	text-align:flex-end;
+	flex-direction:column;
+}
+.customerNameTxt{
+	color:var(--orange);
+	font-size:13px;
+	font-weight:420;
+	letter-spacing:3%;
+}
+.customerAddressTxt{
+	font-size:11px;
+}
+.quoteJobDescriptionTxt{
+	width:6.4%;	
+	display:flex;
+	justify-content:flex-end;
+	font-family:var(--font);
+	font-size:14px;
+	letter-spacing:4%;
+}
+.trRight{
+	width:47%;
+	font-family:var(--font);
+	font-size:14px;
+	letter-spacing:2%;
+	display:grid;
+	align-items:center;
+	grid-template-columns:.52fr auto 1fr;
+}
+.quoteTotalTxt{
+	grid-column:1;
+}
+.quoteStatus{
+	grid-column:2;
+	font-size:12px;
+	border-radius:12px;
+	height:fit-content;
+	width:fit-content;
+	justify-self:center;
+	align-self:center;
+	padding:8px;
+	font-family:var(--font);
+	font-size:11px;
+	font-weight: 400;
+}
+.quoteStatus.sentStatusStyle{
+	background-color: rgba(59,120,246,.25);
+	color: #38bdf8; 
+	font-weight:560;
+	font-family:var(--font);
+}
+.quoteStatus.pendingStatusStyle{
+	background-color: rgba(234,179,8,.12);
+	color: #facc15; 
+	font-weight:560;
+	font-family:var(--font);
+}
+.quoteStatus.approvedStatusStyle{
+	background-color: rgba(34,197,94,.12);
+	color: #4ade80; 
+	font-weight:560;
+	font-family:var(--font);
+}
+.quoteStatus.unpaidStatusStyle{
+	background-color: rgba(239,69,69,.12);
+	color: #f87171; 
+	font-weight:560;
+	font-family:var(--font);
+}
+.quoteStatus.draftStatusStyle{
+	background-color: rgba(143,168,184,.12);
+	color: #cbd5e1; 
+	font-weight:560;
+	font-family:var(--font);
+}
+.quoteStatus.completedStatusStyle{
+	background-color: rgba(147,51,234,.12);
+	color: #a78bfa; 
+	font-weight:560;
+	font-family:var(--font);
+}
+.pageBtnContainer{
+	cursor:pointer;
+	position:absolute;
+	bottom:4%;
+	right:4%;
+	display:flex;
+	gap:40px;
+}
+.quoteCreatedAtTxt{
+	grid-column:3;
+	justify-self:center;
+}
+.pageBtnContainer > button{
+	height:2.2rem;
+	width:2.2rem;
+	border-radius:6px;
+}
+.pageBtnContainer > button:hover{
+	cursor:pointer;
+}
+.pageBtnContainer > button:disabled{
+	cursor:default;
+}
+@media(max-width:400px) and (min-width:360px){
+	#root{
+		padding:0;
+		margin:0;
+		height:100vh;
+	}
+	body{
+		padding:0;
+		margin:0;
+	}
+	.dashboardPage{
+		height:100%;
+		display: grid;
+		grid-template-rows: fit-content 1fr;
+		background-color:var(--bg-right);
+	}
+	.dashboardBody{
+		height: 100%;
+		row-gap:4px;
+		overflow-x: hidden;
+		display:grid;
+		grid-template-rows:.3fr auto 1fr;
+	}
+	.quickAccessContainer{
+		grid-row: 1;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+	}
+	.statCardsGrid{
+		display:grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
+		column-gap:2em;
+		row-gap:1em;
+	}
+	.statCardWrapper{
+		height: 80%;
+		width: 100%;
+		align-self:center;
+		justify-self:center;
+		display: flex;
+		justify-content: flex-start;
+		border:none;
+		background-color: var(--input-bg);
+		border-radius: 8px;
+	}
+	.statCard{
+		width: 100%;
+		height: 100%;
+		display:flex;
+		justify-content:space-between;
+		flex-direction: column;
+	}
+	.statCardTitle{
+		font-family:var(--font);
+		font-size: 9px;
+		font-weight:500;
+		letter-spacing:1px;
+		margin:0;
+	}
+	.statCardValue{
+		margin:0;
+		font-family:var(--font);
+		font-size: 20px;
+		padding-left: 10px;
+	}
+	.statCardSubtitle{
+		margin:0;
+		font-family:var(--font);
+		font-weight: 540;
+		letter-spacing:1px;
+		font-size: 9px;
+	}
+	.filterRow{
+		grid-row:2;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+	}
+	.searchInput{
+		width: 80%;
+		background-color:var(--input-bg);
+		height: 2.6em;
+		border-radius:10px;
+		outline:none;
+		padding-left:10px;
+		border: 1px solid transparent;
+		transition: border-color .2s ease;
+	}
+	.searchInput:focus{
+		border-color: var(--orange);	
+	}
+	.statusBtnsContainer{
+		display:none;
+	}
+	.customerTableContainer{
+		grid-row: 3;
+		width:100%;
+		display:flex;
+		overflow:hidden;
+	}
+	.customerTable{
+		height:100%;
+		width:100%;
+		padding-top:10px;
+		padding-bottom:12px;
+		background-color:none;
+		border:none;
+	}
+	.tableHead{
+		display:none;
+		width: 100%;
+	}
+	.tableBody{
+		height:100%;
+		display:flex;
+		justify-content:space-evenly;
+		align-items:center;
+		flex-direction:column;
+		position:relative;
+		background:none;
+		gap:20px;
+	}
+	.tableBody > p{
+		grid-row:2/4;
+		font-family:var(--font);
+		align-self:center;
+		justify-self:center;
+	}
+	.customerDataRow{
+		display:flex;
+		justify-content:space-evenly;
+		align-items:center;
+		background:var(--bg-left);
+		border:2px solid var(--border);
+		border-radius:1em;
+		width:90%;
+		padding:8px;
+		margin:0;
+		position:relative;
+	}
+	.quoteJobDescriptionTxt{
+		display:none;
+	}
+	.trLeft{
+		position: relative;
+		display:flex;
+		flex-direction:column;
+		gap:12px;
+		width:38%;
+		font-family:var(--font);
+	}
+	.customerNameNAdd{
+		align-self:center;
+		display:flex;
+		justify-content:center;
+		width:fit-content;
+		align-items:center;
+		flex-direction:column;
+	}
+	.customerNameTxt{
+		color:var(--orange);
+		font-size:14px;
+	}
+	.customerAddressTxt{
+		font-size: 12px;
+	}
+	.customerJobId{
+		justify-self:flex-start;
+		width:60%;
+		font-family:var(--font);
+		font-size:13px;
+	}
+	.trRight{
+		height:100%;
+		width:fit-content;
+		grid-template-rows: repeat(3, auto);
+		display:flex;
+		flex-direction:column;
+		gap:8px;
+		font-family:var(--font);
+	}
+	.quoteTotalTxt{
+		align-self:center;
+		justify-self:center;	
+		font-size: 13px;
+		color:var(--orange);
+	}
+	.customerDeleteBtn{
+		position:absolute;
+		visibility:hidden;
+	}
+	.quoteStatus{
+		border-radius:12px;
+		height:fit-content;
+		width:fit-content;
+		padding:8px;
+		align-self:center;
+		justify-self:center;	
+		font-family:var(--font);
+		font-size:11px;
+		font-weight: 400;
+	}
+	.quoteStatus.sentStatusStyle{
+		background-color: rgba(59,120,246,.25);
+		color: #38bdf8; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.pendingStatusStyle{
+		background-color: rgba(234,179,8,.12);
+		color: #facc15; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.approvedStatusStyle{
+		background-color: rgba(34,197,94,.12);
+		color: #4ade80; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.unpaidStatusStyle{
+		background-color: rgba(239,69,69,.12);
+		color: #f87171; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.draftStatusStyle{
+		background-color: rgba(143,168,184,.12);
+		color: #cbd5e1; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.completedStatusStyle{
+		background-color: rgba(147,51,234,.12);
+		color: #a78bfa; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteCreatedAtTxt{
+		font-size: 13px;
+	}
+	.pageBtnContainer{
+		position:absolute;
+		left:52%;
+		transform: translate(-50%);
+		bottom:6px;
+		display:flex;
+		gap:4em;
+	}
+	.pageBtnContainer > button{
+		cursor:pointer;
+	}
+}
+@media(max-width: 500px) and (min-width: 401px){
+	#root{
+		padding:0;
+		margin:0;
+		height:100vh;
+	}
+	body{
+		padding:0;
+		margin:0;
+	}
+	.dashboardPage{
+		height:100%;
+		display: grid;
+		grid-template-rows: fit-content 1fr;
+		background-color:var(--bg-right);
+	}
+	.dashboardBody{
+		height: 100%;
+		row-gap:4px;
+		overflow-x: hidden;
+		display:grid;
+		grid-template-rows:.3fr auto 1fr;
+	}
+	.quickAccessContainer{
+		grid-row: 1;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+	}
+	.statCardsGrid{
+		display:grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
+		column-gap:2em;
+		row-gap:1em;
+	}
+	.statCardWrapper{
+		height: 80%;
+		width: 100%;
+		align-self:center;
+		justify-self:center;
+		display: flex;
+		justify-content: flex-start;
+		border:none;
+		background-color: var(--input-bg);
+		border-radius: 8px;
+	}
+	.statCard{
+		width: 100%;
+		height: 100%;
+		display:flex;
+		justify-content:space-between;
+		flex-direction: column;
+	}
+	.statCardTitle{
+		font-family:var(--font);
+		font-size: 9px;
+		font-weight:500;
+		letter-spacing:1px;
+		margin:0;
+	}
+	.statCardValue{
+		margin:0;
+		font-family:var(--font);
+		font-size: 20px;
+		padding-left: 10px;
+	}
+	.statCardSubtitle{
+		margin:0;
+		font-family:var(--font);
+		font-weight: 540;
+		letter-spacing:1px;
+		font-size: 9px;
+	}
+	.filterRow{
+		grid-row:2;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+	}
+	.searchInput{
+		width: 80%;
+		background-color:var(--input-bg);
+		height: 2.6em;
+		border-radius:10px;
+		outline:none;
+		padding-left:10px;
+		border: 1px solid transparent;
+		transition: border-color .2s ease;
+	}
+	.searchInput:focus{
+		border-color: var(--orange);	
+	}
+	.statusBtnsContainer{
+		display:none;
+	}
+	.customerTableContainer{
+		grid-row: 3;
+		width:100%;
+		display:flex;
+		overflow:hidden;
+	}
+	.customerTable{
+		height:100%;
+		width:100%;
+		padding-top:10px;
+		padding-bottom:12px;
+		background-color:none;
+		border:none;
+	}
+	.tableHead{
+		display:none;
+		width: 100%;
+	}
+	.tableBody{
+		height:100%;
+		display:flex;
+		justify-content:space-evenly;
+		align-items:center;
+		flex-direction:column;
+		position:relative;
+		background:none;
+		gap:20px;
+	}
+	.tableBody > p{
+		grid-row:2/4;
+		font-family:var(--font);
+		align-self:center;
+		justify-self:center;
+	}
+	.customerDataRow{
+		display:flex;
+		justify-content:space-evenly;
+		align-items:center;
+		background:var(--bg-left);
+		border:2px solid var(--border);
+		border-radius:1em;
+		width:90%;
+		padding:8px;
+		margin:0;
+		position:relative;
+	}
+	.quoteJobDescriptionTxt{
+		display:none;
+	}
+	.trLeft{
+		position: relative;
+		display:flex;
+		flex-direction:column;
+		gap:12px;
+		width:38%;
+		font-family:var(--font);
+	}
+	.customerNameNAdd{
+		align-self:center;
+		display:flex;
+		justify-content:center;
+		width:fit-content;
+		align-items:center;
+		flex-direction:column;
+	}
+	.customerNameTxt{
+		color:var(--orange);
+		font-size:14px;
+	}
+	.customerAddressTxt{
+		font-size: 12px;
+	}
+	.customerJobId{
+		justify-self:flex-start;
+		width:60%;
+		font-family:var(--font);
+		font-size:13px;
+	}
+	.trRight{
+		height:100%;
+		width:fit-content;
+		grid-template-rows: repeat(3, auto);
+		display:flex;
+		flex-direction:column;
+		gap:8px;
+		font-family:var(--font);
+	}
+	.quoteTotalTxt{
+		align-self:center;
+		justify-self:center;	
+		font-size: 13px;
+		color:var(--orange);
+	}
+	.customerDeleteBtn{
+		position:absolute;
+		visibility:hidden;
+	}
+	.quoteStatus{
+		border-radius:12px;
+		height:fit-content;
+		width:fit-content;
+		padding:8px;
+		align-self:center;
+		justify-self:center;	
+		font-family:var(--font);
+		font-size:11px;
+		font-weight: 400;
+	}
+	.quoteStatus.sentStatusStyle{
+		background-color: rgba(59,120,246,.25);
+		color: #38bdf8; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.pendingStatusStyle{
+		background-color: rgba(234,179,8,.12);
+		color: #facc15; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.approvedStatusStyle{
+		background-color: rgba(34,197,94,.12);
+		color: #4ade80; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.unpaidStatusStyle{
+		background-color: rgba(239,69,69,.12);
+		color: #f87171; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.draftStatusStyle{
+		background-color: rgba(143,168,184,.12);
+		color: #cbd5e1; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.completedStatusStyle{
+		background-color: rgba(147,51,234,.12);
+		color: #a78bfa; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteCreatedAtTxt{
+		font-size: 13px;
+	}
+	.pageBtnContainer{
+		position:absolute;
+		left:54%;
+		transform: translate(-50%);
+		bottom:6px;
+		display:flex;
+		gap:4em;
+	}
+	.pageBtnContainer > button{
+		cursor:pointer;
+	}
+}
+@media(max-width:800px) and (min-width:700px){
+	#root{
+		padding:0;
+		margin:0;
+		height:100vh;
+	}
+	body{
+		padding:0;
+		margin:0;
+	}
+	.dashboardPage{
+		height:100%;
+		display: grid;
+		grid-template-rows: auto 1fr;
+		background-color:var(--bg-right);
+	}
+	.dashboardBody{
+		display:grid;
+		grid-template-rows:auto auto 1fr;
+		height: 100%;
+		width:100%;
+		row-gap:18px;
+		overflow-x: hidden;
+	}
+	.quickAccessContainer{
+		grid-row: 1;
+		display:flex;
+		align-items:center;
+		justify-content:center;
+		width:100%;
+		padding-top:10px;
+		margin-bottom:10px;
+	}
+	.statCardsGrid{
+		margin-top:10px;
+		width:100%;
+		place-items:center;
+		gap:10px;
+		display:grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
+	}
+	.statCardWrapper{
+		height: 100%;
+		width: 80%;
+		display: flex;
+		padding-left:10px;
+		justify-content: flex-start;
+		border:none;
+		background-color: var(--input-bg);
+		border-radius: 8px;
+	}
+	.statCard{
+		width: 100%;
+		height: 100%;
+		display:flex;
+		padding: 10px 10px 20px 24px;
+		justify-content:flex-start;
+		flex-direction: column;
+	}
+	.statCardTitle{
+		font-family:var(--font);
+		font-size: 9px;
+		font-weight:500;
+		letter-spacing:1px;
+		margin:0;
+	}
+	.statCardValue{
+		margin:0;
+		font-family:var(--font);
+		font-size: 2rem;
+		padding-left: 10px;
+	}
+	.statCardSubtitle{
+		margin:0;
+		font-family:var(--font);
+		font-weight: 540;
+		letter-spacing:1px;
+		font-size: 9px;
+	}
+	.filterRow{
+		grid-row:2;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+	}
+	.searchInput{
+		width: 60%;
+		background-color:var(--input-bg);
+		height: 2.6em;
+		border-radius:10px;
+		outline:none;
+		padding-left:10px;
+		border: 1px solid transparent;
+		transition: border-color .2s ease;
+	}
+	.searchInput:focus{
+		border-color: var(--orange);	
+	}
+	.statusBtnsContainer{
+		display:none;
+	}
+	.customerTableContainer{
+		grid-row: 3;
+		width:100%;
+		padding:20px;
+		display:grid;
+		grid-template-rows:auto 1fr;
+		margin:0;
+		padding:0;
+		border:1px solid var(--border);
+		border-radius:12px;
+	}
+	.customerTable{
+		grid-row:2;
+		width:100%;
+		display:grid;
+		grid-auto-rows:min-content;
+		align-content:start;
+		padding:0;
+		margin:0;
+	}
+	.tableHead{
+		grid-row:1;
+		width: 100%;
+		display:flex;
+		justify-content:space-between;
+		padding-top:10px;
+		padding-bottom:10px;
+		border-bottom:1px solid var(--border);
+		font-family:var(--font);
+		font-size:12px;
+	}
+	.thLeft{
+		flex: .7;
+		display:flex;
+		justify-content:center;
+		gap:20px;
+	}
+	.thRight{
+		flex:2.1;
+		justify-content:space-evenly;
+		align-items:center;
+		display:flex;
+	}
+	.tableBody{
+		height:100%;
+		width:100%;
+		display:grid;
+		grid-template-rows: repeat(12,auto); 
+		position:relative;
+	}
+	.tableBody > p{
+		grid-row:2/4;
+		font-family:var(--font);
+		align-self:center;
+		justify-self:center;
+	}
+	.customerDataRow{
+		cursor:pointer;
+		justify-self:center;
+		display:grid;
+		grid-template-columns: repeat(6,auto);
+		border-bottom:2px solid var(--border);
+		border-radius:1em;
+		height:fit-content;
+		width:100%;
+		padding:10px;
+		margin:0;
+		position:relative;
+	}
+	.quoteJobDescriptionTxt{
+		grid-column:3;
+		justify-self:center;
+		align-self:center;
+		font-family:var(--font);
+		font-size:13px;
+	}
+	.trLeft{
+		grid-column: 1 / 2;
+		position: relative;
+		display:grid;
+		grid-template-columns:repeat(2,auto);
+		gap:16px;
+		width:100%;
+		font-family:var(--font);
+	}
+	.customerNameNAdd{
+		grid-column:2;
+		display:flex;
+		width:fit-content;
+		justify-content:space-between;
+		align-items:center;
+		flex-direction:column;
+		gap:10px;
+	}
+	.customerNameTxt{
+		color:var(--orange);
+		font-size:12.6px;
+	}
+	.customerAddressTxt{
+		font-size: 12px;
+	}
+	.customerJobId{
+		grid-column:1;
+		align-self:center;
+		justify-self:center;
+		font-family:var(--font);
+		font-size:13px;
+	}
+	.trRight{
+		grid-column: 5 / 7;
+		display:grid;
+		grid-template-columns: repeat(3,auto);
+		position:relative;
+		row-gap:10px;
+		height:100%;
+		width:96%;
+		font-family:var(--font);
+	}
+	.customerDeleteBtn{
+		z-index:100;
+		position: absolute;
+		right:12px;
+		top:14px;
+		border:none;
+		background:none;
+		color: rgba(255,0,0,.8);
+		cursor:pointer;
+	}
+	.quoteTotalTxt{
+		grid-column:1;
+		align-self:center;
+		justify-self:flex-start;	
+		font-size: 13px;
+		color:var(--orange);
+	}
+	.quoteStatus{
+		grid-column:2;
+		border-radius:12px;
+		height:fit-content;
+		width:fit-content;
+		margin-right:6px;
+		padding:8px;
+		align-self:center;
+		justify-self:flex-end;	
+		font-family:var(--font);
+		font-size:11px;
+		font-weight: 400;
+	}
+	.quoteStatus.sentStatusStyle{
+		background-color: rgba(59,120,246,.25);
+		color: #38bdf8; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.pendingStatusStyle{
+		background-color: rgba(234,179,8,.12);
+		color: #facc15; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.approvedStatusStyle{
+		background-color: rgba(34,197,94,.12);
+		color: #4ade80; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.unpaidStatusStyle{
+		background-color: rgba(239,69,69,.12);
+		color: #f87171; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.draftStatusStyle{
+		background-color: rgba(143,168,184,.12);
+		color: #cbd5e1; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.completedStatusStyle{
+		background-color: rgba(147,51,234,.12);
+		color: #a78bfa; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteCreatedAtTxt{
+		font-size: 13px;
+		justify-self:center;
+		align-self:center;
+	}
+	.pageBtnContainer{
+		position:absolute;
+		left:50%;
+		transform: translate(-50%);
+		bottom:20px;
+		display:flex;
+		gap:4em;
+	}
+	.pageBtnContainer > button{
+		cursor:pointer;
+	}
+}
+@media(max-width:1024px) and (min-width:900px){
+	#root{
+		padding:0;
+		margin:0;
+		height:100vh;
+	}
+	body{
+		padding:0;
+		margin:0;
+	}
+	.dashboardPage{
+		height:100%;
+		display: grid;
+		grid-template-rows: auto 1fr;
+		background-color:var(--bg-right);
+	}
+	.dashboardBody{
+		display:grid;
+		grid-template-rows:auto auto 1fr;
+		height: 100%;
+		width:100%;
+		row-gap:18px;
+		overflow-x: hidden;
+	}
+	.quickAccessContainer{
+		grid-row: 1;
+		display:flex;
+		align-items:center;
+		justify-content:center;
+		width:100%;
+		padding-top:10px;
+		margin-bottom:10px;
+	}
+	.statCardsGrid{
+		margin-top:10px;
+		width:100%;
+		place-items:center;
+		gap:10px;
+		display:grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
+	}
+	.statCardWrapper{
+		height: 100%;
+		width: 80%;
+		display: flex;
+		padding-left:10px;
+		justify-content: flex-start;
+		border:none;
+		background-color: var(--input-bg);
+		border-radius: 8px;
+	}
+	.statCard{
+		width: 100%;
+		height: 100%;
+		display:flex;
+		padding: 10px 10px 20px 24px;
+		justify-content:flex-start;
+		flex-direction: column;
+	}
+	.statCardTitle{
+		font-family:var(--font);
+		font-size: 9px;
+		font-weight:500;
+		letter-spacing:1px;
+		margin:0;
+	}
+	.statCardValue{
+		margin:0;
+		font-family:var(--font);
+		font-size: 2rem;
+		padding-left: 10px;
+	}
+	.statCardSubtitle{
+		margin:0;
+		font-family:var(--font);
+		font-weight: 540;
+		letter-spacing:1px;
+		font-size: 9px;
+	}
+	.filterRow{
+		grid-row:2;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+	}
+	.searchInput{
+		width: 60%;
+		background-color:var(--input-bg);
+		height: 2.6em;
+		border-radius:10px;
+		outline:none;
+		padding-left:10px;
+		border: 1px solid transparent;
+		transition: border-color .2s ease;
+	}
+	.searchInput:focus{
+		border-color: var(--orange);	
+	}
+	.statusBtnsContainer{
+		display:none;
+	}
+	.customerTableContainer{
+		grid-row: 3;
+		width:100%;
+		padding:20px;
+		display:grid;
+		grid-template-rows:auto 1fr;
+		margin:0;
+		padding:0;
+		border:1px solid var(--border);
+		border-radius:12px;
+	}
+	.customerTable{
+		grid-row:2;
+		width:100%;
+		display:grid;
+		grid-auto-rows:min-content;
+		align-content:start;
+		padding:0;
+		margin:0;
+	}
+	.tableHead{
+		grid-row:1;
+		width: 100%;
+		display:flex;
+		justify-content:space-between;
+		padding-top:10px;
+		padding-bottom:10px;
+		border-bottom:1px solid var(--border);
+		font-family:var(--font);
+		font-size:12px;
+	}
+	.thLeft{
+		flex: .7;
+		display:flex;
+		justify-content:center;
+		gap:20px;
+	}
+	.thRight{
+		flex:2.1;
+		justify-content:space-evenly;
+		align-items:center;
+		display:flex;
+	}
+	.tableBody{
+		height:100%;
+		width:100%;
+		display:grid;
+		grid-template-rows: repeat(12,auto); 
+		position:relative;
+	}
+	.tableBody > p{
+		grid-row:2/4;
+		font-family:var(--font);
+		align-self:center;
+		justify-self:center;
+	}
+	.customerDataRow{
+		cursor:pointer;
+		justify-self:center;
+		display:grid;
+		grid-template-columns: repeat(6,auto);
+		border-bottom:2px solid var(--border);
+		border-radius:1em;
+		height:fit-content;
+		width:100%;
+		padding:10px;
+		margin:0;
+		position:relative;
+	}
+	.quoteJobDescriptionTxt{
+		grid-column:3;
+		justify-self:center;
+		align-self:center;
+		font-family:var(--font);
+		font-size:13px;
+	}
+	.trLeft{
+		grid-column: 1 / 2;
+		position: relative;
+		display:grid;
+		grid-template-columns:repeat(2,auto);
+		gap:16px;
+		width:100%;
+		font-family:var(--font);
+	}
+	.customerNameNAdd{
+		grid-column:2;
+		display:flex;
+		width:fit-content;
+		justify-content:space-between;
+		align-items:center;
+		flex-direction:column;
+		gap:10px;
+	}
+	.customerNameTxt{
+		color:var(--orange);
+		font-size:12.6px;
+	}
+	.customerAddressTxt{
+		font-size: 12px;
+	}
+	.customerJobId{
+		grid-column:1;
+		align-self:center;
+		justify-self:center;
+		font-family:var(--font);
+		font-size:13px;
+	}
+	.trRight{
+		grid-column: 5 / 7;
+		display:grid;
+		grid-template-columns:repeat(3,auto);
+		position:relative;
+		row-gap:10px;
+		height:100%;
+		width:96%;
+		font-family:var(--font);
+	}
+	.customerDeleteBtn{
+		z-index:100;
+		position: absolute;
+		right:12px;
+		top:14px;
+		border:none;
+		background:none;
+		color: rgba(255,0,0,.8);
+		cursor:pointer;
+	}
+	.quoteTotalTxt{
+		grid-column:1;
+		align-self:center;
+		justify-self:flex-start;	
+		font-size: 13px;
+		color:var(--orange);
+	}
+	.quoteStatus{
+		grid-column:2;
+		border-radius:12px;
+		height:fit-content;
+		width:fit-content;
+		margin-right:6px;
+		padding:8px;
+		align-self:center;
+		justify-self:flex-end;	
+		font-family:var(--font);
+		font-size:11px;
+		font-weight: 400;
+	}
+	.quoteStatus.sentStatusStyle{
+		background-color: rgba(59,120,246,.25);
+		color: #38bdf8; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.pendingStatusStyle{
+		background-color: rgba(234,179,8,.12);
+		color: #facc15; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.approvedStatusStyle{
+		background-color: rgba(34,197,94,.12);
+		color: #4ade80; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.unpaidStatusStyle{
+		background-color: rgba(239,69,69,.12);
+		color: #f87171; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.draftStatusStyle{
+		background-color: rgba(143,168,184,.12);
+		color: #cbd5e1; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteStatus.completedStatusStyle{
+		background-color: rgba(147,51,234,.12);
+		color: #a78bfa; 
+		font-weight:560;
+		font-family:var(--font);
+	}
+	.quoteCreatedAtTxt{
+		font-size: 13px;
+		justify-self:center;
+		align-self:center;
+	}
+	.pageBtnContainer{
+		position:absolute;
+		left:50%;
+		transform: translate(-50%);
+		display:flex;
+		gap:4em;
+	}
+	.pageBtnContainer > button{
+		cursor:pointer;
+	}
+}
