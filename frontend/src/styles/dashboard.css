@@ -181,10 +181,18 @@
 	font-family:var(--font);
 }
 .customerDeleteBtn{
+	visibility:hidden;
+	position:absolute;
 	cursor:pointer;
 	color:red;
 	border:none;
 	background:none;
+	height:2em;
+	width:2em;
+	transition: visibility 1s ease opacity .1s ease;
+}
+.customerDeleteBtnMobile{
+	display: none;
 	position:absolute;
 	transition: visibility .1s ease opacity 2s ease;
 	height:2em;

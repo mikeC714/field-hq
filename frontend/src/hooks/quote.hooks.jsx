@@ -8,7 +8,7 @@ export function useCreateQuote(){
   const queryClient = useQueryClient();
   
     return useMutation({
-        mutationFn: async (data) => await apiFetch(`${config.SERVER}/api/create-quote`, 'POST', data),
+        mutationFn: async (data) => await apiFetch(`${config.SERVER}/api/quote/create`, 'POST', data),
             onError: () => {
 				setTimeout(() => {
 				}, 5000)
@@ -28,6 +28,8 @@ export function useAcceptQuote(){
 	const [searchParams] = useSearchParams(); 
 	const token = searchParams.get("token");
 	const queryClient = useQueryClient();
+	console.log("FIRED");
+	console.log(token);
 
 	const { mutate, isSuccess, isError } = useMutation({
 		mutationFn: async () => await apiFetchNoCreds(`${config.SERVER}/api/quote/acceptance?token=${token}`, 'GET'),
@@ -39,7 +41,6 @@ export function useAcceptQuote(){
 
 	useEffect(() => {
 		if(token) mutate(token);
-	},[])
-
+	},[mutate,token])
 	return { isSuccess, isError };
 }
