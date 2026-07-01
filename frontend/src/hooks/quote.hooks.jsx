@@ -28,9 +28,11 @@ export function useAcceptQuote(){
 	const [searchParams] = useSearchParams(); 
 	const token = searchParams.get("token");
 	const queryClient = useQueryClient();
+	console.log("FIRED");
+	console.log(token);
 
 	const { mutate, isSuccess, isError } = useMutation({
-		mutationFn: async () => await apiFetchNoCreds(`${config.SERVER}/api/quote-acceptance`, 'PUT', { token }),
+		mutationFn: async () => await apiFetchNoCreds(`${config.SERVER}/api/quote/acceptance?token=${token}`, 'GET'),
 		onSuccess:() => {
 			queryClient.invalidateQueries({ queryKey: ['quickAccess'] });
 			queryClient.invalidateQueries({ queryKey: ['customers'] });
@@ -39,7 +41,6 @@ export function useAcceptQuote(){
 
 	useEffect(() => {
 		if(token) mutate(token);
-	},[])
-
+	},[mutate,token])
 	return { isSuccess, isError };
 }

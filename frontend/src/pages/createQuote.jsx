@@ -3,11 +3,13 @@ import { useEmailHook } from '../hooks/email.hooks.jsx';
 import { useCreateQuote } from "../hooks/quote.hooks.jsx";
 import { CreateQuoteForm } from '../comps/createQuote.form.jsx';
 import { CqNavBar } from '../comps/navBar.jsx'
+import { useUserContext } from '../context/userContext.jsx';
 import { Send, Loader, Check } from 'lucide-react';
 
 export function CreateQuote(){
 	const idRef = useRef(0);
 	const {mutate:sendEmail, isSuccess: emailSuccess, isPending: isSendingEmail, isError: emailErr} = useEmailHook();
+	const user = useUserContext();
 	const {mutate, isSuccess, isPending, isError} = useCreateQuote();
     const [userMarkup, setUserMarkup] = useState("");
 	const [materials, setMaterials] = useState([
@@ -44,6 +46,7 @@ export function CreateQuote(){
 			if(!val.trim()) throw new Error("Missing Customer Input. Please fill all input fields.");
 		}
 			sendEmail({
+				user,
 				customer: customerInfo,
 				quote: { 
 					status: "SENT", 
@@ -224,34 +227,36 @@ export function CreateQuote(){
                 </div>
                 <div className='cqRight'>
                     <p className='cqSummaryTitle'>SUMMARY</p>
-                    <div className='cqSummaryRow'>
-                        <span className='cqSummaryLabel'>Subtotal</span>
-                        <span className='cqSummaryValue'>${subTotal.toLocaleString()}</span>
-                    </div>
-                    <div className='cqSummaryRow'>
-                        <span className='cqSummaryLabel'>Markup</span>
-                        <div className='cqMarkupRow'>
-                            <input
-                                className='cqMarkupInput'
-                                type='number'
-                                value={userMarkup}
-                                placeholder='0'
-                                onChange={(e) => setUserMarkup(e.target.value)}
-                            />
-                            <span className='cqMarkupPct'>%</span>
-                            <span className='cqMarkupDifference'>${markUpDiff}</span>
-                        </div>
-                    </div>
-                    <div className='cqTotalRow'>
-                        <span className='cqTotalLabel'>Total</span>
-                        <span className='cqTotalValue'>${total.toFixed(2)}</span>
-                    </div>
+					<div className="cqCalc">
+						<div className='cqSubtotalRow'>
+							<span className='cqSummaryLabel'>Subtotal</span>
+							<span className='cqSummaryValue'>${subTotal.toLocaleString()}</span>
+						</div>
+						<div className='cqMarkupContainer'>
+							<span className='cqSummaryLabel'>Markup</span>
+							<div className='cqMarkupRow'>
+								<input
+									className='cqMarkupInput'
+									type='number'
+									value={userMarkup}
+									placeholder='0'
+									onChange={(e) => setUserMarkup(e.target.value)}
+								/>
+								<span className='cqMarkupPct'>%</span>
+								<span className='cqMarkupDifference'>${markUpDiff}</span>
+							</div>
+						</div>
+					<div className='cqTotalRow'>
+						<span className='cqTotalLabel'>Total</span>
+						<span className='cqTotalValue'>${total.toFixed(2)}</span>
+					</div>
+					</div>
                     <button 
                         className='cqSendToCustomerBtn'
                         onClick={() => {
                             handleSendQuote()
                         }}>
-                        SEND TO CUSTOMER <Send size={14} />
+                        SEND TO CUSTOMER <Send  size={14} />
                     </button>
                 </div>
 

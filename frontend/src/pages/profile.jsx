@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NavBar } from '../comps/navBar.jsx';
+import { NavBar, BurgerNav } from '../comps/navBar.jsx';
 import { useQuickAccess } from '../hooks/quickAccess.hooks.jsx';
 import { useNotiHook } from '../hooks/notifications.hooks.jsx';
 import { useUserContext } from "../context/userContext.jsx";
@@ -180,69 +180,73 @@ function Notifications() {
     const { notifications, paginated, isLoading, isError } = useNotiHook({notiPage, notiLimit, clear});
 
     return(
-        <div className="pNotiContainer">
-            <div className="pNotiBtns">
-                <button
-					disabled = {notifications?.length === 0 ? true : false}
-					onClick={() => setClear(true)}
-				>
-					Clear
-				</button>
-            </div>
-            <div className={`pNotiList ${notifications.length === 0 ? 'pNotiEmpty' : ''}`}>
-                {notifications?.length === 0 ? 
-                    <p>No Notifications</p> :
-                    notifications.map((noti) => {
-                        const { icon, style, color } = notiConfig[noti.type]
-                        return(
-                            <div key={noti.quoteId} className={`pNotis ${style}`} style={{borderLeft:`3.2px solid ${color}`}}>
-                                <span className="pNotiIcon" style={{color, background: `${color}20`}}>{icon}</span>
-                                <div className="pNotiContent">
-                                    <div className="pNotiHead">{noti.type}</div>
-                                    <div className="pNotiMid">
-                                        <p className='pNotiMsg'>{noti.message}</p>
-                                    </div>
-                                    <div className='pNotiLow'>
-                                        <p className='pNotiPrice'>${noti.total}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                    })
-                }
-            </div>
-            <div className='notiPageBtnContainer'>
-                <button
-                        disabled = {paginated?.prevPage ? false : true}
-                        onClick={() => setNotiPage(p => p -1)}
-                    >
-                        <ChevronLeft />
-                    </button>
-                    <button 
-                        disabled = {paginated?.nextPage ? false : true}
-                        onClick={() => setNotiPage(p => p +1)}
-                    >
-                        <ChevronRight />
-                    </button>
-            </div>
-        </div>
+		<div className='pNotiContainer'>
+			<div className="pNotiGrid">
+				<div className="pNotiBtns">
+					<button
+						disabled = {notifications?.length === 0 ? true : false}
+						onClick={() => setClear(true)}
+					>
+						Clear
+					</button>
+				</div>
+				<div className='pNotiList'>
+					{notifications?.length === 0 ? 
+						<p className='pNotiEmpty'>No Notifications</p> :
+						notifications.map((noti) => {
+							const { icon, style, color } = notiConfig[noti.type]
+							return(
+								<div key={noti.quoteId} className={`pNotis ${style}`} style={{borderLeft:`3.2px solid ${color}`}}>
+									<span className="pNotiIcon" style={{color, background: `${color}20`}}>{icon}</span>
+									<div className="pNotiContent">
+										<div className="pNotiHead">{noti.type}</div>
+										<div className="pNotiMid">
+											<p className='pNotiMsg'>{noti.message}</p>
+										</div>
+										<div className='pNotiLow'>
+											<p className='pNotiPrice'>${noti.total}</p>
+										</div>
+									</div>
+								</div>
+							)
+						})
+					}
+				</div>
+				<div className='notiPageBtnContainer'>
+					<button
+							disabled = {paginated?.prevPage ? false : true}
+							onClick={() => setNotiPage(p => p -1)}
+						>
+							<ChevronLeft />
+						</button>
+						<button 
+							disabled = {paginated?.nextPage ? false : true}
+							onClick={() => setNotiPage(p => p +1)}
+						>
+							<ChevronRight />
+						</button>
+				</div>
+			</div>
+		</div>
     )
 } 
 
 
 export function ProfilePage() {
     const [isEditing, setIsEditing] = useState(false);
+	const [open, setOpen] = useState(false);
     const [currView, setCurrView] = useState('overview');
+	const [userConfig, setUserConfig] = useState({})
+	const { logoutMutation } = useAuth();
     const { data, isLoading, isError } = useQuickAccess();
     const {  created_at, nameInitials, userId, email } = useUserContext()
-    const [userConfig, setUserConfig] = useState({})
 
 
 	const user = JSON.parse(localStorage.getItem("user"));
     useEffect(() => {
         if (!userId) return;
         const saved = localStorage.getItem(`userConfig`);
-        setUserConfig(saved ? JSON.parse(saved) : {
+		 setUserConfig(saved ? JSON.parse(saved) : {
           phoneNumber: "",
           location: "",
           department: "",
@@ -277,7 +281,14 @@ export function ProfilePage() {
 
     return (
         <div className='profilePage'>
-            <NavBar />
+			<header className="profileHeader">
+				<BurgerNav 
+					logout={logoutMutation}
+					setOpen={setOpen}
+					open={open}
+				/>
+				<NavBar />
+			</header>
             <div className='profileBody'>
                 <div className='profileHeaderCard'>
                     <div className='profileHeaderLeft'>
