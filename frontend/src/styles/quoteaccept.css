@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+	--orange: #eea12d;
+	--bg-left: #141414;
+	--bg-right: #0d0d0d;
+	--border:  #4d4b4ba2;
+	--text: #f0f0f0;
+	--text-muted: #888;
+	--input-bg: #1e1e1e;
+	--font: "Montserrat", sans-serif;
+	--skin:    #2a2a2a;
+	--stroke:  var(--orange);
+	--mid:     #1e1e1e;
+	--signbg:  #111111;
+	--font: 'Montserrat', sans-serif;
+	merge
+}
+#root{
+	padding:0;
+	margin:0;
+}
+.qtAPage{
+	height:100vh;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	font-family:var(--font);
+	font-weight:500;
+	background:var(--bg-left);
+	color:white;
+}
+.qtAMsgContainer{
+	height:100%;
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	gap:200px;
+}
+.qtAMsg{
+	font-size:18px;
+}
+.frownFaceContainer{
+	height:10em;
+	width:10em;
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+}
+.frownFaceEyes{
+	height:2em;
+	display:flex;
+	justify-content:space-evenly;
+	gap:2em;
+	margin-bottom:2em;
+}
+.eye1{
+	content:'';
+	height:2em;
+	width:2em;
+	background:white;
+	border-radius:22px;
+}
+.eye2{
+	content:'';
+	height:2em;
+	width:2em;
+	background:white;
+	border-radius:22px;
+}
+.frownFaceMouth{
+	content:'';
+	height:4em;
+	width:9em;
+	border:4px solid white;
+	border-bottom:0;
+	border-radius:100px 100px 0 0;
+	box-sizing:border-box;
+}
+

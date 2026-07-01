@@ -13,13 +13,13 @@
 		--mid:     #1e1e1e;
 		--signbg:  #111111;
 		--font: 'Montserrat', sans-serif;
+		merge
 	}
 	*,
 	body{
 		margin:0;
 		padding:0;
 	}
-
 	.authPage{
 		height: 100vh;
 		display: flex;

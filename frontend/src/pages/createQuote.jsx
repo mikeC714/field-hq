@@ -3,11 +3,13 @@ import { useEmailHook } from '../hooks/email.hooks.jsx';
 import { useCreateQuote } from "../hooks/quote.hooks.jsx";
 import { CreateQuoteForm } from '../comps/createQuote.form.jsx';
 import { CqNavBar } from '../comps/navBar.jsx'
+import { useUserContext } from '../context/userContext.jsx';
 import { Send, Loader, Check } from 'lucide-react';
 
 export function CreateQuote(){
 	const idRef = useRef(0);
 	const {mutate:sendEmail, isSuccess: emailSuccess, isPending: isSendingEmail, isError: emailErr} = useEmailHook();
+	const user = useUserContext();
 	const {mutate, isSuccess, isPending, isError} = useCreateQuote();
     const [userMarkup, setUserMarkup] = useState("");
 	const [materials, setMaterials] = useState([
@@ -44,6 +46,7 @@ export function CreateQuote(){
 			if(!val.trim()) throw new Error("Missing Customer Input. Please fill all input fields.");
 		}
 			sendEmail({
+				user,
 				customer: customerInfo,
 				quote: { 
 					status: "SENT", 

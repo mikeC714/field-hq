@@ -4,7 +4,9 @@ import './styles/auth.css';
 import './styles/profile.css';
 import './styles/dashboard.css';
 import './styles/createquote.css';
-import './styles/navBar.css'
+import './styles/navBar.css';
+import './styles/404.css';
+import './styles/quoteaccept.css';
 
 
 import { App } from './App.jsx'

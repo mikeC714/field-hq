@@ -72,8 +72,8 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
 									<button 
 										className='customerDeleteBtn'
 										onClick={(e) => {
-											e.stopPropagation();
-											handleDelete({ quoteId: quote?.id })
+											console.log("clicked")
+											handleDelete(quote.id)
 										}}
 										>
 											<Trash2 size={20} />
@@ -82,8 +82,8 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
 									<button 
 										className='customerDeleteBtn'
 										onClick={(e) => {
-											e.stopPropagation();
-											handleDelete({ quoteId: quote?.id })
+											console.log("clicked")
+											handleDelete(quote.id)
 										}}
 										>
 											<Trash2 size={20} />

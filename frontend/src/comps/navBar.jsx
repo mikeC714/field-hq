@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useRef } from 'react';
 import { useUserContext } from '../context/userContext.jsx';
 import { useAuth } from '../hooks/auth.hooks.jsx'
-import { LogOut, Menu } from "lucide-react";
+import { LogOut, Menu, User, Bell, ClipboardPen } from "lucide-react";
 import logo from "../imgs/logo.svg";
 
 export function NavBar(){
