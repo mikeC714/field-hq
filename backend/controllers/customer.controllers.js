@@ -118,7 +118,7 @@ import { AppError } from "../error/error.handler.js";
 		
         const { quoteData, customerId } = await quoteService.createQuote(user, customer, quote, labor, materials);
 
-        const emailToken = Auth.signEmail({ id: user, quoteId:quoteData.id, customerId }, "1d")
+        const emailToken = Auth.signEmail({ id: user, quoteId: quoteData.id, customerId }, '1d')
         await tokenService.storeQuoteToken(quoteData.id, emailToken);
 
         return res.status(200).json({
@@ -128,9 +128,9 @@ import { AppError } from "../error/error.handler.js";
     })
 
     export const deleteCustomerQuote = catchAsync(async(req,res) => {
+		console.log("hit");
 		const user = req.user;
         if(!user) throw new AppError("User not found.", 404);
-
 		const { quoteId } = req.body;
         await quoteService.deleteQuote(quoteId, user);
 

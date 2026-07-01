@@ -50,7 +50,7 @@ export default {
 
     async storeQuoteToken(quoteId, token){
         if(!quoteId) throw new AppError("Failed to provide quote id.", 400);
-        if(!token) throw new AppError("Failed to provide valid token.", 401);
+        if(!token) throw new AppError("Failed to provide valid token.", 400);
         try{
 			const encrypted = encrypt(token);
             const results = await db.query(
