@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from '../hooks/auth.hooks.jsx';
 import { AuthForm } from '../comps/authForm.jsx';
 import logo from "../imgs/logo.svg";
-import { useNavigate } from "react-router-dom";
 
 export function Authentication() {
     const [isAuth, setAuth] = useState(true);
