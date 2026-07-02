@@ -1,11 +1,11 @@
 import { AuthenticationError } from "../error/error.handler.js";
-import QuoteService from "../service/quote.service.js";
+import quoteService from "../service/quote.service.js";
 
 export async function monitorQuotes(req, res, next){
+	const user = req.user;
+	if(!user) throw new AuthenticationError("Unauthorized user. Failed to provide user ID");
     try{
-		const user = req.user;
-		if(!user) throw new AuthenticationError("Unauthorized user. Failed to provide user ID");
-        await QuoteService.monitorQuotes(user);
+        await quoteService.monitorQuotes(user);
         next();
     }catch(err){
         next(err);

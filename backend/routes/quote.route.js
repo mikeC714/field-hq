@@ -3,6 +3,7 @@ import { getCustomerQuoteInfo, createCustomerQuote, deleteCustomerQuote } from "
 import { handleSending, handleAcceptance } from "../controllers/email.controller.js";
 import { authLimiter } from '../middleware/ratelimiter.js';
 import { verifyToken } from '../middleware/auth.middleware.js';
+import { monitorQuotes } from '../middleware/quote.middleware.js';
 import cors from "cors";
 
 const quoteRouter = express.Router();
@@ -10,9 +11,8 @@ quoteRouter.get('/quote/acceptance', cors({ origin: process.env.FRONTEND_URL, cr
 
 
 quoteRouter.use(verifyToken);
-quoteRouter.get('/quote/customer', getCustomerQuoteInfo);
+quoteRouter.get('/quote/customer', monitorQuotes, getCustomerQuoteInfo);
 quoteRouter.post('/quote/send', authLimiter, handleSending);
-quoteRouter.get('/quote/customer', getCustomerQuoteInfo);
 quoteRouter.post('/quote/create', createCustomerQuote);
 quoteRouter.delete('/quote/delete', deleteCustomerQuote);
 export default quoteRouter;

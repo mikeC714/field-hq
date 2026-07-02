@@ -36,7 +36,7 @@ export default {
                 if(qt.status === 'APPROVED'){
                     notis.push({
                         type: "Approved",
-                        message: `${customer.first_name}, ${customer.last_name} has been approved.`,
+                        message: `${customer.first_name}, ${customer.last_name} has approved their quote.`,
                         quoteId: qt.id,
                         total:qt.total,
                     })
