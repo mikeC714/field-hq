@@ -1,1 +1,294 @@
-for the 404
+:root {
+  --orange:     #eea12d;
+  --bg-left:    #141414;
+  --bg-right:   #0d0d0d;
+  --border:     #4d4b4ba2;
+  --text:       #f0f0f0;
+  --text-muted: #888;
+  --input-bg:   #1e1e1e;
+  --font:       "Montserrat", sans-serif;
+
+  --skin:    #2a2a2a;
+  --stroke:  var(--orange);
+  --signbg:  #111111;
+}
+
+/* ── Page shell ───────────────────────────────────────── */
+.p404-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--bg-left), var(--bg-right));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font);
+}
+
+.p404-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 3rem;
+}
+
+/* ── Illustration wrapper ─────────────────────────────── */
+.p404-illustration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* ── Hair ─────────────────────────────────────────────── */
+.p404-hair {
+  display: flex;
+  gap: 8px;
+  margin-bottom: -10px;
+  position: relative;
+  z-index: 2;
+}
+
+.p404-hairTuft {
+  background: var(--input-bg);
+  border: 3px solid var(--orange);
+  border-bottom: none;
+}
+
+.p404-hairTuft--l {
+  width: 30px; height: 38px;
+  border-radius: 15px 15px 0 0;
+  transform: rotate(-10deg) translateY(6px);
+}
+.p404-hairTuft--c {
+  width: 38px; height: 48px;
+  border-radius: 19px 19px 0 0;
+}
+.p404-hairTuft--r {
+  width: 30px; height: 38px;
+  border-radius: 15px 15px 0 0;
+  transform: rotate(10deg) translateY(6px);
+}
+
+/* ── Head ─────────────────────────────────────────────── */
+.p404-head {
+  width: 190px;
+  height: 175px;
+  background: var(--skin);
+  border: 3.5px solid var(--orange);
+  border-radius: 95px 95px 76px 76px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+}
+
+/* ── Glasses ──────────────────────────────────────────── */
+.p404-glasses {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 50px;
+}
+
+.p404-glassLens {
+  width: 62px;
+  height: 62px;
+  border: 3.5px solid var(--orange);
+  border-radius: 50%;
+  background: #1a1a1a;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.p404-glassInner {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #252525;
+}
+
+.p404-glassBridge {
+  width: 14px;
+  height: 3.5px;
+  background: var(--orange);
+  margin-top: -4px;
+}
+
+/* ── Nose ─────────────────────────────────────────────── */
+.p404-nose {
+  width: 18px;
+  height: 12px;
+  border: 3px solid var(--orange);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  margin-top: 8px;
+}
+
+/* ── Moustache ────────────────────────────────────────── */
+.p404-moustache {
+  display: flex;
+  gap: 4px;
+  margin-top: 7px;
+}
+
+.p404-moustachePuff {
+  width: 38px;
+  height: 20px;
+  background: var(--orange);
+  border-radius: 50%;
+}
+
+.p404-moustachePuff--l { border-radius: 50% 30% 50% 50%; }
+.p404-moustachePuff--r { border-radius: 30% 50% 50% 50%; }
+
+/* ── Neck ─────────────────────────────────────────────── */
+.p404-neck {
+  width: 62px;
+  height: 36px;
+  background: var(--skin);
+  border-left: 3.5px solid var(--orange);
+  border-right: 3.5px solid var(--orange);
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.p404-collar {
+  position: absolute;
+  bottom: 0;
+  width: 104px;
+  height: 18px;
+  background: var(--input-bg);
+  border: 3px solid var(--border);
+  border-radius: 6px 6px 0 0;
+}
+
+.p404-tie {
+  position: absolute;
+  top: 6px;
+  width: 20px;
+  height: 68px;
+  background: var(--orange);
+  clip-path: polygon(20% 0%, 80% 0%, 100% 40%, 50% 100%, 0% 40%);
+  z-index: 2;
+}
+
+/* ── Torso ────────────────────────────────────────────── */
+.p404-torso {
+  width: 280px;
+  height: 190px;
+  background: var(--input-bg);
+  border: 3.5px solid var(--border);
+  border-radius: 18px 18px 34px 34px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Arms ─────────────────────────────────────────────── */
+.p404-armL,
+.p404-armR {
+  position: absolute;
+  top: 16px;
+  width: 38px;
+  height: 124px;
+  background: var(--input-bg);
+  border: 3.5px solid var(--border);
+  border-radius: 19px;
+}
+
+.p404-armL {
+  left: -38px;
+  transform: rotate(8deg);
+  transform-origin: top center;
+}
+
+.p404-armR {
+  right: -38px;
+  transform: rotate(-8deg);
+  transform-origin: top center;
+}
+
+.p404-handL,
+.p404-handR {
+  width: 34px;
+  height: 34px;
+  background: var(--skin);
+  border: 3.5px solid var(--orange);
+  border-radius: 50%;
+  position: absolute;
+  bottom: -17px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ── Sign ─────────────────────────────────────────────── */
+.p404-signWrap {
+  position: relative;
+  z-index: 3;
+}
+
+.p404-sign {
+  width: 220px;
+  height: 170px;
+  background: var(--signbg);
+  border: 3.5px solid var(--orange);
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 6px 6px 0 rgba(238, 161, 45, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.p404-signInner {
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.p404-signText {
+  font-size: 5rem;
+  font-weight: 900;
+  color: var(--orange);
+  letter-spacing: -4px;
+  font-family: var(--font);
+  line-height: 1;
+}
+
+/* ── Copy ─────────────────────────────────────────────── */
+.p404-message {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.p404-link {
+  display: inline-block;
+  padding: 0.65rem 2rem;
+  border: 1.5px solid var(--orange);
+  color: var(--orange);
+  border-radius: 24px;
+  font-size: 0.82rem;
+  font-family: var(--font);
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 0.2s, color 0.2s;
+}
+
+.p404-link:hover {
+  background: var(--orange);
+  color: var(--bg-left);
+}

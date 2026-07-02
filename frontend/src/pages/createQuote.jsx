@@ -67,29 +67,32 @@ export function CreateQuote(){
 
 
     function handleSaveQuote() {
-      mutate({
-        customer: customerInfo,
-        quote: { status: status ,markup: Number(userMarkup), total: Number(total.toFixed(2)) },
-        labor: labor.map(l => ({
-            ...l,
-            hours: Number(l.hours),
-            hourlyRate: Number(l.hourlyRate)
-        })),
-        materials: materials.map(m => ({
-            ...m,
-            quantity: Number(m.quantity),
-            unitCost: Number(m.unitCost)
-        })),
-      })
+		for(const [_, val] of Object.entries(customerInfo)){
+			if(!val.trim()) throw new Error("Missing Customer Input. Please fill all input fields.");
+		}
+		mutate({
+		customer: customerInfo,
+		quote: { status: status ,markup: Number(userMarkup), total: Number(total.toFixed(2)) },
+		labor: labor.map(l => ({
+			...l,
+			hours: Number(l.hours),
+			hourlyRate: Number(l.hourlyRate)
+		})),
+		materials: materials.map(m => ({
+			...m,
+			quantity: Number(m.quantity),
+			unitCost: Number(m.unitCost)
+		})),
+		})
     } 
 
-  function handleCustomerForm(e) {
-    const { name, value } = e.target
-    setCustomerInfo(prev => ({
-        ...prev,
-        [name]: value
-    }))
-  }
+	  function handleCustomerForm(e) {
+		const { name, value } = e.target
+		setCustomerInfo(prev => ({
+			...prev,
+			[name]: value
+		}))
+	  }
 
     function handleMaterialForm(e, index) {
         const { name, value} = e.target
