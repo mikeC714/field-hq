@@ -1,0 +1,91 @@
+:root {
+	--orange: #eea12d;
+	--bg-left: #141414;
+	--bg-right: #0d0d0d;
+	--border:  #4d4b4ba2;
+	--text: #f0f0f0;
+	--text-muted: #888;
+	--input-bg: #1e1e1e;
+	--font: "Montserrat", sans-serif;
+	--skin:    #2a2a2a;
+	--stroke:  var(--orange);
+	--mid:     #1e1e1e;
+	--signbg:  #111111;
+	--font: 'Montserrat', sans-serif;
+}
+
+#root{
+	margin:0;
+	padding:0;
+}
+.forgotPage{
+	height:100%;
+	display:flex;
+	flex-direction:column;
+	background:var(--bg-left);
+}
+.forgotPage > header{
+	color:white;
+}
+.forgotContainer{
+	height:100%;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+.forgotFormContainer{
+	border:1px solid var(--border);
+	border-radius:22px;
+	height:14em;
+	padding:2em;
+}
+.forgotForm{
+	height:100%;
+	display:flex;
+	flex-direction:column;
+	justify-content:space-evenly;
+}
+.forgotFormTxt{
+	height:40%;
+	color:white;
+	display:flex;
+	flex-direction:column;
+	text-align:center;
+	font-family:var(--font);
+}
+.forgotFormTxt > h2{
+	color:var(--orange);
+}
+.forgotEmailForm{
+	display:flex;
+	justify-content:center;
+	gap:2em;
+}
+.forgotEmailForm > input{
+	background:var(--input-bg);
+	color:white;
+	padding:10px;
+	border:none;
+	border-radius:10px;
+	height:2em;
+	width:20em;
+	outline: 1px solid transparent;
+	transition: outline-color .2s ease;
+	font-family:var(--font);
+}
+.forgotEmailForm > input:focus{
+	outline: 1px solid var(--orange);
+}
+.forgotEmailForm > button{
+	background:var(--orange);
+	border:none;
+	border-radius:8px;
+	padding:10px;	
+	height:3em;
+	font-family:var(--font);
+	cursor:pointer;
+	transition: opacity .4s ease;
+}
+.forgotEmailForm > button:hover{
+	opacity:.8;
+}

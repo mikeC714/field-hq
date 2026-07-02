@@ -7,6 +7,7 @@ import './styles/createquote.css';
 import './styles/navBar.css';
 import './styles/404.css';
 import './styles/quoteaccept.css';
+import './styles/pass-forgot.css';
 
 import { App } from './App.jsx'
 

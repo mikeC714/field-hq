@@ -30,7 +30,7 @@ const resend = new Resend(process.env.RESEND_KEY)
 	};
 
 	export async function sendPassReset(userEmail, token){
-		const link = `${process.env.FRONTEND_URL}/reset-password?token=${token}`;
+		const link = `${process.env.FRONTEND_URL}/auth/reset-password?token=${token}`;
 		try{
 			const { error } = await resend.emails.send({
 				from:`noreply@field-hq.com`,

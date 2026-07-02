@@ -14,17 +14,17 @@ export const quoteEmailTemplate = ({ userInfo, customer, link, senderName, expir
     <p style="margin: 0 0 16px; font-size: 11px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: #999993;">How to accept</p>
 
     <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px;">
-      <div style="width: 28px; height: 28px; min-width: 28px; border-radius: 50%; background-color: #fff4ed; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: #f97316;">1</div>
+      <div style="width: 28px; height: 28px; min-width: 28px; border-radius: 50%; background-color: #fff4ed; display: flex; align-items: center; justify-content: center; text-align:center; font-size: 13px; font-weight: 500; color: #f97316;">1</div>
       <p style="margin: 0; font-size: 14px; color: #666660; line-height: 1.6; padding-top: 4px;"><strong style="color: #1a1a1a; font-weight: 500;">Open the attached PDF</strong> — it has a full breakdown of the work and pricing.</p>
     </div>
 
     <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px;">
-      <div style="width: 28px; height: 28px; min-width: 28px; border-radius: 50%; background-color: #fff4ed; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: #f97316;">2</div>
+      <div style="width: 28px; height: 28px; min-width: 28px; border-radius: 50%; background-color: #fff4ed; display: flex; align-items: center; justify-content: center; text-align:center; font-size: 13px; font-weight: 500; color: #f97316;">2</div>
       <p style="margin: 0; font-size: 14px; color: #666660; line-height: 1.6; padding-top: 4px;"><strong style="color: #1a1a1a; font-weight: 500;">Review the details</strong> — check the scope, start date, and total cost.</p>
     </div>
 
     <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 28px;">
-      <div style="width: 28px; height: 28px; min-width: 28px; border-radius: 50%; background-color: #fff4ed; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: #f97316;">3</div>
+      <div style="width: 28px; height: 28px; min-width: 28px; border-radius: 50%; background-color: #fff4ed; display: flex; align-items: center; justify-content: center; text-align:center; font-size: 13px; font-weight: 500; color: #f97316;">3</div>
       <p style="margin: 0; font-size: 14px; color: #666660; line-height: 1.6; padding-top: 4px;"><strong style="color: #1a1a1a; font-weight: 500;">Press the button below</strong> — once you're happy, hit accept and ${senderName} will be in touch.</p>
     </div>
 

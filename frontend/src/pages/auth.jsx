@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from '../hooks/auth.hooks.jsx';
 import { AuthForm } from '../comps/authForm.jsx';
 import logo from "../imgs/logo.svg";
+import { useNavigate } from "react-router-dom";
 
 export function Authentication() {
     const [isAuth, setAuth] = useState(true);
@@ -109,6 +110,7 @@ export function Authentication() {
 export function ForgotPassword(){
 	const [email, setEmail] = useState('');
 	const { sendResetPassword } = useAuth();
+	const navigate = useNavigate();
 	
 	function handleSubmit(e){
 		e.preventDefault();
@@ -123,26 +125,31 @@ export function ForgotPassword(){
 				{sendResetPassword.isError && (
 					<p>Something went wrong. Please try again.</p>
 				)}
-				<header className="forgotHeader">
-					<div className="authLogo">
-						<img className="authLogoIcon" src={logo} />
-						<span>FIELD HQ</span>
-					</div>
-				</header>
-				<div className="forgotFormContainer">
-					<div className="forgotForm">
-						<div className="forgotFormTxt">
-							<h2>Forgot your password?</h2>
-							<p>That's fine happens to the best of us.</p>
-							<p>Just enter the email used for you account and follows the given instructions within the email.</p>
+					<header className="forgotHeader">
+						<div 
+							className="authLogo" 
+							onClick={() => navigate('/auth')}	
+						>
+							<img className="authLogoIcon" src={logo} />
+							<span>FIELD HQ</span>
 						</div>
-						<form  className="forgotEmailForm" onSubmit={handleSubmit}>
-							<input type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Email Address" />
-							<button type="submit" disabled={sendResetPassword.isPending}>
-								{sendResetPassword.isPending ? 'sending...' : 'Send Link'}
-							</button>
-						</form>
-					</div>
+					</header>
+		<div className="forgotContainer"	>
+					<div className="forgotFormContainer">
+						<div className="forgotForm">
+							<div className="forgotFormTxt">
+								<h2>Forgot your password?</h2>
+								<p>That's fine happens to the best of us.</p>
+								<p>Just enter the email used for you account and follows the given instructions within the email.</p>
+							</div>
+							<form  className="forgotEmailForm" onSubmit={handleSubmit}>
+								<input type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Email Address" />
+								<button type="submit" disabled={sendResetPassword.isPending}>
+									{sendResetPassword.isPending ? 'sending...' : 'Send Link'}
+								</button>
+							</form>
+						</div>
+				</div>
 			</div>
 		</div>	
 	)

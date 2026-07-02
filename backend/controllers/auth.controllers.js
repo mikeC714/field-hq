@@ -138,8 +138,8 @@ import bcrypt from "bcrypt";
 
 	export const passwordReset = catchAsync(async(req,res) => {
 		const { newPassword, token } = req.body;
-		if(!token) res.redirect(302, "/404");
-		if(!newPassword) throw new AppError("Missing field. Please fill all provided fields.", 404);
+		if(!token) res.redirect(302, `${process.env.FRONTEND_URL}/404`);
+		if(!newPassword) throw new AppError("Missing field. Please fill all provided fields.", 400);
 		
 		const decode = Auth.verifyEmail(token);
 		await userService.updatePassword(decode.id, newPassword);	
