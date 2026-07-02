@@ -12,3 +12,7 @@ export const cache = new Redis({
     connectionName: "cache",
     noDelay: true,
 });
+
+cache.on('error', (err) => console.log(err));
+cache.on('connect', () => console.log('connected'));
+cache.on('data', (data) => console.log(data));

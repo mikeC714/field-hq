@@ -5,6 +5,7 @@ import Auth from "../auth/auth.js";
 import tokenService from "../service/db/token.service.js";
 import { catchAsync } from "../utils/catchAsync.js";
 import { AppError } from "../error/error.handler.js";
+import { cache } from "../config/redis.config.js";
 
 	export const getCustomerInfo = catchAsync(async(req,res) => {
         const user = req.user;
@@ -29,8 +30,7 @@ import { AppError } from "../error/error.handler.js";
         const page  = parseInt(req.query.page)  || 1;
         const limit = parseInt(req.query.limit) || 15;
         const offset = (page - 1) * limit;
-      
-
+		
 	    const customers = await customerService.getAllCustomerInfo(user);
 		if(!customers || customers.length === 0){
 			return{
@@ -52,7 +52,7 @@ import { AppError } from "../error/error.handler.js";
 
 	    const { quoteDetails, total } = await quoteService.getQuoteInfo(customers, user, filter, limit, offset);
         const  data = await jobService.getJobInfo(quoteDetails); 
-		const cusData = customers.map(cus => {
+		const customerData = customers.map(cus => {
 			return{
 		    	...cus,
 		    	quote: quoteDetails.filter(qt => qt.customer_id === cus.id).map(qts => {
@@ -62,12 +62,20 @@ import { AppError } from "../error/error.handler.js";
 				}
 		    	})
 			}
-	    	});
-       
-        const totalPages = Math.ceil(total / limit);      
+		});
+		
+		const totalPages = Math.ceil(total / limit);      
+
+		await cache.set(`${user}`, JSON.stringify(customerData), 'EX', 1800)
+
+		let cached = await cache.get(`${user}`);
+		if(cached && cached !== null){
+			cached = JSON.parse(cached);
+		};
+
         return res.status(200).json({
             success: true,
-            cusData,
+            cusData: cached === null ? customerData : cached,
             paginated: {
     	       total,
                 page,
