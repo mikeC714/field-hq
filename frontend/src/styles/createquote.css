@@ -32,8 +32,13 @@
 	justify-content:center;
 	align-items:center;
 }
+.overlay > p{
+	font-family:var(--font);
+	font-size:14px;
+}
 .cqSuccess{
 	font-family:var(--font);
+	font-size:14px;
 }
 .cqSuccessContainer{
 	display:flex;
@@ -251,7 +256,7 @@ input[type=number] {
 	background:var(--orange);
 }
 .cqTableHeader{
-	width:90.6%;
+	width:96%;
 	display:grid;
 	grid-template-columns:repeat(2,auto);
 	margin-bottom:8px;
@@ -266,7 +271,7 @@ input[type=number] {
 	justify-self:flex-end;
 	align-self:center;
 	display:grid;
-	grid-template-columns:.20fr .28fr .32fr;
+	grid-template-columns:.20fr .22fr .32fr;
 	column-gap:10px;
 	align-items:center;
 }
@@ -282,7 +287,7 @@ input[type=number] {
 	font-size:14px;
 }
 .cqColSmallQty{
-	justify-self:flex-start;	
+	justify-self:center;	
 }
 .cqColSmallUnit{
 	justify-self:flex-end;
@@ -295,7 +300,7 @@ input[type=number] {
 	min-width:0;
 	font-size:14px;
 	align-self:center;
-	justify-self:flex-end;
+	justify-self:center;
 }
 .cqTableRow{
 	position:relative;

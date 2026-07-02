@@ -10,7 +10,6 @@ export function AuthForm({ isAuth, onSubmit, isPending, onSwitch }) {
                 <div className="authInputGroup authSignGroup">
                     <label>Name</label>
                     <div className="authInputWrapper authSignWrapper">
-
                         <User size={15} className="authSignIcon" />
                         <input type="text" name="firstName" placeholder="First Name" required />
                         <input type="text" name='lastName' placeholder='Last Name' required/>
@@ -44,58 +43,22 @@ export function AuthForm({ isAuth, onSubmit, isPending, onSwitch }) {
 						</button>
 					</div>
 				</div>
-		</div>
-							<User size={15} className="authSignIcon" />
-						<div className="authInputWrapper">
-							<User size={15} className="authInputIcon" />
-							<input type="text" name="firstName" placeholder="First Name" required />
-							<input type="text" name='lastName' placeholder='Last Name' required/>
-						</div>
-					</div>
-                </div>
+			</div>
+			{isAuth && (
+				<label className="authRemember">
+					<input type="checkbox" name="remember" />
+					<span>Keep me signed in</span>
+				</label>
 			)}
-            <div className="authInputGroup">
-                <label>Email address</label>
-                <div className="authInputWrapper">
-                    <Mail size={15} className="authInputIcon" />
-                    <input type="email" name="email" placeholder="name@company.com" required />
-                </div>
-            </div>
-
-            <div className="authInputGroup">
-                <div className="authLabelRow">
-                    <label>Password</label>
-                    {isAuth &&  <Link to="/forgot-password" className="authForgot">Forgot?</Link>}
-                </div>
-                <div className="authInputWrapper">
-                    <Lock size={15} className="authInputIcon" />
-                    <input
-                        type={showPassword ? 'text' : 'password'}
-                        name="password"
-                        placeholder="••••••••"
-                        minLength={8}
-                        required
-                    />
-                    <button type="button" className="authPasswordToggle" onClick={() => setShowPassword(!showPassword)}>
-                        {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
-                    </button>
-                </div>
-            </div>
-            {isAuth && (
-                <label className="authRemember">
-                    <input type="checkbox" name="remember" />
-                    <span>Keep me signed in</span>
-                </label>
-            )}
-            <button className="authSubmitBtn" type="submit" disabled={isPending}>
-                {isPending ? 'Signing in...' : isAuth ? 'Sign In' : 'Sign Up'}
-            </button>
-            <p className="authSwitch">
-                {isAuth ? "Don't have an account?" : 'Already have an account?'}{' '}
-                <button type="button" onClick={onSwitch}>
-                    {isAuth ? 'Create one now' : 'Sign in'}
-                </button>
-            </p>
+			<button className="authSubmitBtn" type="submit" disabled={isPending}>
+				{isPending ? 'Signing in...' : isAuth ? 'Sign In' : 'Sign Up'}
+			</button>
+			<p className="authSwitch">
+				{isAuth ? "Don't have an account?" : 'Already have an account?'}{' '}
+				<button type="button" onClick={onSwitch}>
+					{isAuth ? 'Create one now' : 'Sign in'}
+				</button>
+			</p>
 		</form>
 	)
 }

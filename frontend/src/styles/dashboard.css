@@ -181,18 +181,20 @@
 	font-family:var(--font);
 }
 .customerDeleteBtn{
-	visibility:hidden;
 	position:absolute;
+	visibility:hidden;
 	cursor:pointer;
 	color:red;
 	border:none;
 	background:none;
 	height:2em;
 	width:2em;
+	z-index:99999;
 	transition: visibility 1s ease opacity .1s ease;
 }
 .customerDeleteBtnMobile{
 	display: none;
+	visibility:hidden;
 	position:absolute;
 	transition: visibility .1s ease opacity 2s ease;
 	height:2em;
@@ -215,9 +217,6 @@
 .customerDataRow:hover .customerDeleteBtn{
 	visibility:visible;
 }
-.customerDataRow:active{
-	pointer-events: none;
-}
 .trLeft{
 	width:19%;
 	display:grid;
@@ -230,6 +229,7 @@
 	font-size:14px;
 	font-weight:520;
 	letter-spacing:1px;
+	width:fit-content;
 }
 .customerNameNAdd{
 	grid-column:2;

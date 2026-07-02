@@ -116,27 +116,22 @@ import { AppError } from "../error/error.handler.js";
 		if(!user) throw new AppError("User not found.", 404);
         const { customer, labor, materials, quote } = req.body;
 		
-        const { quoteId, customerId } = await quoteService.createQuote(user, customer, quote, labor, materials);
+        const { quoteData, customerId } = await quoteService.createQuote(user, customer, quote, labor, materials);
 
-
-        const emailToken = Auth.signEmail({ id: user, quoteId: quoteData.id, customerId }, '1d')
+        const emailToken = Auth.signEmail({ id: user, quoteId: quoteData.id, customerId }, "2d")
         await tokenService.storeQuoteToken(quoteData.id, emailToken);
-
-        const emailToken = Auth.signEmail({ id: user, quoteId, customerId })
-        await tokenService.storeQuoteToken(quoteId, emailToken);
 
         return res.status(200).json({
             success: true,
-			      id: quoteId,
+			      id: quoteData.id,
         });
     })
 
     export const deleteCustomerQuote = catchAsync(async(req,res) => {
-		console.log("hit");
 		const user = req.user;
         if(!user) throw new AppError("User not found.", 404);
 		const { quoteId } = req.body;
-		console.log("DELETE QUOTE HIT", quoteId)
+		console.log(quoteId)
         await quoteService.deleteQuote(quoteId, user);
 
         return res.status(200).json({ message: `Quote ${quoteId} was successfully deleted.` });

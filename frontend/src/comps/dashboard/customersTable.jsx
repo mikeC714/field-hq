@@ -37,10 +37,10 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
 	)
     }*/
 
-	function handleVisbility(id){
-		setVisible(prev => (prev === id ? null : id));
-		console.log("clicked");
-	}
+	// function handleVisbility(id){
+	// 	setVisible(prev => (prev === id ? null : id));
+	// 	console.log("clicked");
+	// }
 
     return(
         <div className="customerTableContainer">
@@ -66,12 +66,11 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
                                 <div 
 									key={quote.id} 
 									className="customerDataRow"
-									onClick={() => handleVisbility(quote.id)}
 								>
 								{visible === quote.id && (
 									<button 
-										className='customerDeleteBtn'
-										onClick={(e) => {
+										className='customerDeleteBtnMobile'
+										onClick={() => {
 											handleDelete(quote?.id)
 										}}
 										>
@@ -81,12 +80,14 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
 									<button 
 										className='customerDeleteBtn'
 										onClick={() => {
-											handleDelete(quote.id)
+											console.log(quote.id)
+											console.log("clicked")
+											handleDelete(quote?.id)
 										}}	
 									>
 										<Trash2 size={20} />
 									</button>
-                   <div className="trLeft">
+							   <div className="trLeft">
 											<div className="customerJobId">QT-{String(customerIndex + 1).padStart(3,0)}</div>
 												<div className="customerNameNAdd">
 													<span className='customerNameTxt'>{customer?.first_name}  {customer?.last_name}</span>
