@@ -1,5 +1,5 @@
 import JobService from "./job.service.js";
-import db from "../config/postgresql.config.js";
+import { db } from "../config/postgresql.config.js";
 import { AppError } from "../error/error.handler.js";
 
 

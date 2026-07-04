@@ -23,7 +23,7 @@ export const allJobData = catchAsync(async(req,res) => {
 			completedJobs: [],
 			unpaidJobs: [],
 			activeJobs: [],
-			monthlyTotal: 0
+			monthlyTotal
 		})
 	}
 

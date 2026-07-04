@@ -1,11 +1,13 @@
+import { db, test_db } from "../config/postgresql.config.js";
 import quoteService from "../service/quote.service.js";
 import jobService from "../service/job.service.js";
 import customerService from "../service/customer.service.js";
 import Auth from "../auth/auth.js";
-import tokenService from "../service/db/token.service.js";
+import { TokenService } from "../service/db/token.service.js";
 import { catchAsync } from "../utils/catchAsync.js";
 import { AppError } from "../error/error.handler.js";
 import { cache } from "../config/redis.config.js";
+const tokenService = new TokenService(test_db);
 
 	export const getCustomerInfo = catchAsync(async(req,res) => {
         const user = req.user;
@@ -126,7 +128,7 @@ import { cache } from "../config/redis.config.js";
 		
         const { quoteData, customerId } = await quoteService.createQuote(user, customer, quote, labor, materials);
 
-        const emailToken = Auth.signEmail({ id: user, quoteId: quoteData.id, customerId }, "2d")
+        const emailToken = Auth.signEmail({ id: user, quoteId: quoteData.id, customerId }, "1d")
         await tokenService.storeQuoteToken(quoteData.id, emailToken);
 
         return res.status(200).json({
@@ -139,7 +141,6 @@ import { cache } from "../config/redis.config.js";
 		const user = req.user;
         if(!user) throw new AppError("User not found.", 404);
 		const { quoteId } = req.body;
-		console.log(quoteId)
         await quoteService.deleteQuote(quoteId, user);
 
         return res.status(200).json({ message: `Quote ${quoteId} was successfully deleted.` });

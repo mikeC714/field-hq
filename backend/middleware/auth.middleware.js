@@ -1,10 +1,11 @@
 import Auth from "../auth/auth.js";
-import tokenService from "../service/db/token.service.js";
-import userService from "../service/db/user.service.js";
+import { db } from "../config/postgresql.config.js";
+import { TokenService } from "../service/db/token.service.js";
 import { Mutex } from "async-mutex";
 import { cache } from "../config/redis.config.js";
 import { decrypt } from "../utils/encrypt.js";
 import { AuthenticationError } from "../error/error.handler.js";
+const tokenService = new TokenService(db);
 
 const mutex = new Mutex();
 

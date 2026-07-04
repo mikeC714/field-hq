@@ -1,11 +1,14 @@
 import Auth from "../auth/auth.js";
-import userService from "../service/db/user.service.js";
-import tokenService from "../service/db/token.service.js";
+import { db, test_db} from "../config/postgresql.config.js"
+import { UserService } from "../service/db/user.service.js";
+import { TokenService } from "../service/db/token.service.js";
 import { decrypt } from "../utils/encrypt.js";
 import { catchAsync } from "../utils/catchAsync.js";
 import { AppError, AuthenticationError } from "../error/error.handler.js";
 import { validateEmail } from "../utils/emailValidator.js";
 import bcrypt from "bcrypt";
+const userService = new UserService(test_db); 
+const tokenService = new TokenService(test_db);
 	
 	export const login = catchAsync(async (req, res) => {
         const { email, password } = req.body;

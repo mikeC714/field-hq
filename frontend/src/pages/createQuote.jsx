@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react';
-import { useEmailHook } from '../hooks/email.hooks.jsx';
-import { useCreateQuote } from "../hooks/quote.hooks.jsx";
+import { useSendQuote, useCreateQuote } from "../hooks/quote.hooks.jsx";
 import { CreateQuoteForm } from '../comps/createQuote.form.jsx';
 import { CqNavBar } from '../comps/navBar.jsx'
 import { useUserContext } from '../context/userContext.jsx';
@@ -8,7 +7,7 @@ import { Send, Loader, Check } from 'lucide-react';
 
 export function CreateQuote(){
 	const idRef = useRef(0);
-	const {mutate:sendEmail, isSuccess: emailSuccess, isPending: isSendingEmail, isError: emailErr} = useEmailHook();
+	const {mutate:sendEmail, isSuccess: emailSuccess, isPending: isSendingEmail, isError: emailErr} = useSendQuote();
 	const user = useUserContext();
 	const {mutate, isSuccess, isPending, isError} = useCreateQuote();
     const [userMarkup, setUserMarkup] = useState("");

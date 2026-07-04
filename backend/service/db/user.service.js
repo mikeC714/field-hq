@@ -1,13 +1,15 @@
 import bcrypt from "bcrypt";
-import db from "../../config/postgresql.config.js";
 import { AppError } from "../../error/error.handler.js";
 import { encrypt } from "../../utils/encrypt.js";
 
-export default {
+export class UserService{
+	constructor(db){
+		this.db = db;
+	}
 	async storeNewUser(firstName, lastName, email, password){
         if(!firstName || !lastName || !email || !password) throw new AppError("Missing field. Please try again.", 400);
         try{
-            const results = await db.query(
+            const results = await this.db.query(
                 "INSERT INTO users (first_name, last_name, email, password) VALUES ($1, $2, $3, $4) RETURNING id, first_name, last_name, email",
                 [firstName, lastName, email, password]
             );
@@ -16,12 +18,11 @@ export default {
         }catch(err){
             throw err;
         }
-    },
-
+    }
     async getUser(email){
         if(!email) throw new AppError("Invalid credentials.", 400);
         try{
-            const results = await db.query(
+            const results = await this.db.query(
                 `SELECT 
                     id, 
                     first_name, 
@@ -35,12 +36,11 @@ export default {
         }catch(err){
         	throw err;
 		}
-    },
-
+    }
     async getUserById(user){
         if(!user) throw new AppError("User not found.", 404);
         try{
-            const results = await db.query(
+            const results = await this.db.query(
                 "SELECT id, first_name, last_name, email, created_at FROM users WHERE id = $1",
                 [user]
             );
@@ -48,24 +48,22 @@ export default {
         }catch(err){
             throw err;
         }
-    },
-
+    }
     async deleteUser(userId){
         if(!userId) throw new AppError("User not found.", 404);
         try{
-            await db.query(
+            await this.db.query(
                 `DELETE FROM users WHERE id = $1`,
                 [userId]
             );
         }catch(err){
             throw err;
         }
-    },
-
+    }
     async flagUser(userId){
         if(!userId) throw new AppError("User not found.", 404);
         try{
-            await db.query(
+            await this.db.query(
                 "UPDATE users SET is_flagged = $1 WHERE id = $2",
                 [true, userId]
             )
@@ -75,13 +73,12 @@ export default {
            SET UP MESSAGING ONCE FLAG USER IS TRIGGERED SEND EMAIL TO USER ABOUT ACCOUNT BEING FLAGGED 
            FOR SUSPICIOUS ACITVITY 
         }*/
-    },
-
+    }
     async validatePassword(userId, password){
         if(!userId) throw new AppError("User not found.", 404);
         if(!password) throw new AppError("Missing field. Please try again.", 400);
         try{
-            const pass = await db.query(
+            const pass = await this.db.query(
                 `SELECT password FROM users WHERE id = $1`,
                 [userId]
             );
@@ -94,13 +91,12 @@ export default {
         }catch(err){
             throw err;
         }
-    },
-
+    }
 	async updatePassword(userId, password){
 		if(!userId) throw new AppError("User not found.", 404);
 		try{
 			const safe = encrypt(password);
-			await db.query(
+			await this.db.query(
 				`UPDATE users
 				SET password = $1
 				WHERE id = $2

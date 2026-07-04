@@ -1,4 +1,4 @@
-import db from "../config/postgresql.config.js";
+import {db} from "../config/postgresql.config.js";
 
 export default {
 	async getNotis(user, customerDetails, limit, offset){

@@ -1,4 +1,4 @@
-import db from "../config/postgresql.config.js";
+import {db} from "../config/postgresql.config.js";
 import { AppError } from "../error/error.handler.js";
 
 export default {    

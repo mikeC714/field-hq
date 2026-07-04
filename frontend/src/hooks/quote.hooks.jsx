@@ -24,6 +24,21 @@ export function useCreateQuote(){
 
 }
 
+export function useSendQuote(){
+	return useMutation({
+		mutationFn: async (quote) => await apiFetch(`${config.SERVER}/api/quote/send`, "POST", quote),
+		retry: false,
+		onSuccess:(() => {
+			setTimeout(() => {
+				window.location.reload();
+			}, 3000)
+		}),
+		onError: (() => {
+			setTimeout(() => window.location.reload(), 5000);
+		})
+	});
+}
+
 export function useAcceptQuote(){
 	const [searchParams] = useSearchParams(); 
 	const token = searchParams.get("token");
@@ -44,3 +59,4 @@ export function useAcceptQuote(){
 	},[mutate,token])
 	return { isSuccess, isError };
 }
+
