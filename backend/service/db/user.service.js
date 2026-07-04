@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { AppError } from "../../error/error.handler.js";
+import { AppError, AuthenticationError } from "../../error/error.handler.js";
 import { encrypt } from "../../utils/encrypt.js";
 
 export class UserService{
@@ -16,6 +16,7 @@ export class UserService{
             
             return results.rows[0]; 
         }catch(err){
+			if(err.code === "23505") throw new AuthenticationError("Invalid credentials", 409);
             throw err;
         }
     }
@@ -85,7 +86,7 @@ export class UserService{
 			if(!pass.rows[0]) throw new AppError("Invalid credentials.", 401);
 
             const valid = await bcrypt.compare(password, pass.rows[0].password);
-            if(!valid) throw new AppError("Invalid credentials.", 401)
+            if(!valid) throw new AppError("Invalid password dumbass.", 401)
 
             return true
         }catch(err){

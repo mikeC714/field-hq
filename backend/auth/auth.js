@@ -40,7 +40,6 @@ class Auth{
         
     verifyEmail = (token) => {
         try{
-			console.log("VERIFYING")
             return jwt.verify(token, this.#emailSecret);
         }catch(err){
             throw err;

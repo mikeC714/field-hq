@@ -23,7 +23,7 @@
     "validator": "^13.15.35"
   },
   "scripts": {
-    "test": "node --env-file=.env --test testing/**/*.test.js",
+	"test": "node --env-file=.env --test",
     "start": "node server.js",
     "dev": "node --watch --env-file=.env server.js"
   },

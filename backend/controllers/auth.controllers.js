@@ -44,6 +44,7 @@ const tokenService = new TokenService(test_db);
 
         return res.status(200).json({ 
             user: {
+				id:user.id,
                 firstName: user.first_name,
                 lastName: user.last_name
             }
@@ -62,7 +63,6 @@ const tokenService = new TokenService(test_db);
 		const safePass = await bcrypt.hash(password, salt);
        
 		const user = await userService.storeNewUser(firstName, lastName, email, safePass);
-		if(!user) throw new AppError("Invalid Credentials.", 401);
 
         const token = Auth.sign({id: user.id });
         const refreshToken = Auth.signRefresh({id: user.id});
@@ -83,6 +83,7 @@ const tokenService = new TokenService(test_db);
 
         return res.status(201).json({
             user:{
+				id:user.id,
                 firstName: user.first_name,
                 lastName: user.last_name
             }
@@ -121,7 +122,6 @@ const tokenService = new TokenService(test_db);
         Auth.verifyRefresh(decryptedRefresh);
 
         const valid = await userService.validatePassword(user, password);
-        if(!valid) throw new AppError("Invalid credentials. Please try again.", 401);
 
         await userService.deleteUser(user);
             

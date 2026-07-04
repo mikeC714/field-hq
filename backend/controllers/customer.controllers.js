@@ -125,7 +125,9 @@ const tokenService = new TokenService(test_db);
 		const user = req.user;
 		if(!user) throw new AppError("User not found.", 404);
         const { customer, labor, materials, quote } = req.body;
+		if(customer.length === 0||labor.length === 0||materials.length === 0||quote.length === 0) throw new AppError("Failed to provided needed fields to create quote")
 		
+
         const { quoteData, customerId } = await quoteService.createQuote(user, customer, quote, labor, materials);
 
         const emailToken = Auth.signEmail({ id: user, quoteId: quoteData.id, customerId }, "1d")
