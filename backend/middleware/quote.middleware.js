@@ -1,5 +1,7 @@
+import { db } from "../config/postgresql.config.js";
 import { AuthenticationError } from "../error/error.handler.js";
-import quoteService from "../service/quote.service.js";
+import { QuoteService } from "../service/quote.service.js";
+const quoteService = new QuoteService(db)
 
 export async function monitorQuotes(req, res, next){
 	const user = req.user;

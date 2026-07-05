@@ -11,6 +11,7 @@ export function CreateQuote(){
 	const user = useUserContext();
 	const {mutate, isSuccess, isPending, isError} = useCreateQuote();
     const [userMarkup, setUserMarkup] = useState("");
+
 	const [materials, setMaterials] = useState([
         {
             description: "",
@@ -70,18 +71,18 @@ export function CreateQuote(){
 			if(!val.trim()) throw new Error("Missing Customer Input. Please fill all input fields.");
 		}
 		mutate({
-		customer: customerInfo,
-		quote: { status: status ,markup: Number(userMarkup), total: Number(total.toFixed(2)) },
-		labor: labor.map(l => ({
-			...l,
-			hours: Number(l.hours),
-			hourlyRate: Number(l.hourlyRate)
-		})),
-		materials: materials.map(m => ({
-			...m,
-			quantity: Number(m.quantity),
-			unitCost: Number(m.unitCost)
-		})),
+			customer: customerInfo,
+			quote: { status: status ,markup: Number(userMarkup), total: Number(total.toFixed(2)) },
+			labor: labor.map(l => ({
+				...l,
+				hours: Number(l.hours),
+				hourlyRate: Number(l.hourlyRate)
+			})),
+			materials: materials.map(m => ({
+				...m,
+				quantity: Number(m.quantity),
+				unitCost: Number(m.unitCost)
+			})),
 		})
     } 
 

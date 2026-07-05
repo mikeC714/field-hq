@@ -1,14 +1,16 @@
-import {db} from "../config/postgresql.config.js";
 import { AppError } from "../error/error.handler.js";
 
-export default {    
+export class QuoteService{
+	constructor(db){
+		this.db = db
+	}
     async getQuoteInfo(customers, userId, filter, limit, offset){
         if(!userId) throw new AppError("User not found.", 404);
         const cusIds = customers.map(c => c.id);
         try{
             const results = filter !== "ALL" ? 
             (
-                await db.query(
+                await this.db.query(
                 `SELECT
                     id,
                     customer_id,
@@ -26,7 +28,7 @@ export default {
                 `, [userId, filter, cusIds, limit, offset]
             )
             ):(
-                await db.query(
+                await this.db.query(
                     `SELECT
                         id,
                         customer_id, 
@@ -50,13 +52,12 @@ export default {
         }catch(err){
         	throw err;
 		}
-    },
+    }
 
     async changeQuoteStatus(quoteId, status){
         if(!quoteId) throw new AppError("Quote not found.", 404);
         try{    
-			console.log("CHANGING STATUS")
-            await db.query(
+            await this.db.query(
                 `UPDATE quotes 
                 SET status = $1::quote_status_type
                 WHERE id = $2
@@ -65,18 +66,18 @@ export default {
         }catch(err){
         	throw err;
 		}
-    },
+    }
 
     async createQuote(user, customer, quote, labor, materials){
         try{
-            const customerData = await db.query(
+            const customerData = await this.db.query(
                 `INSERT INTO customers 
                     (user_id, first_name, last_name, phone, email, address)
                 VALUES($1, $2, $3, $4, $5, $6)
                 RETURNING id`, 
                 [user, customer.firstName, customer.lastName, customer.phone, customer.email, customer.address]
             );
-            const quoteData = await db.query(
+            const quoteData = await this.db.query(
                 `INSERT INTO quotes
                     (user_id, customer_id, status, markup, total)
                 VALUES($1, $2, $3, $4, $5)    
@@ -86,14 +87,14 @@ export default {
 
             await Promise.all([
                     labor.map(labVals => 
-                        db.query(
+                        this.db.query(
                         `INSERT INTO labor
                             (quote_id, description, hours, hourly_rate, total)
                         VALUES($1, $2, $3, $4, $5)
                         `, [quoteData?.rows[0]?.id, labVals.description, labVals.hours, labVals.hourlyRate, labVals.total]
                     )),
                     materials.map(matVals =>
-                        db.query( 
+                       this.db.query( 
                         `INSERT INTO materials
                             (quote_id, description, quantity, unit_cost, total)
                         VALUES($1, $2, $3, $4, $5)
@@ -109,13 +110,12 @@ export default {
         }catch(err){
         	throw err;
 		}
-    },
+    }
+
     async deleteQuote(quoteId, userId){
 		if(!userId) throw new AppError("User not found.", 404);
         try{
-			console.log(quoteId);
-			console.log(userId);
-            return await db.query(
+            return await this.db.query(
                 `DELETE FROM quotes WHERE user_id = $1 AND id = $2`,
                 [userId, quoteId]
             );
@@ -123,12 +123,12 @@ export default {
         	throw err;
 		}
         
-    },
+    }
 
     async monitorQuotes(userId){
         if(!userId) throw new AppError("User not found.", 404);
         try{
-            const results  = await db.query(
+            const results  = await this.db.query(
                 `SELECT 
                     id,
                     status,
@@ -148,7 +148,7 @@ export default {
 
             const qtIds = quotes.map(qt => qt.id); 
 
-            await db.query(
+            await this.db.query(
                 `UPDATE quotes
                     SET status = 'UNPAID'
                     WHERE id = ANY($1::uuid[])

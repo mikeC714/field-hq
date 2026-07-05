@@ -3,10 +3,11 @@ import { db, test_db } from "../config/postgresql.config.js";
 import { TokenService } from "../service/db/token.service.js";
 import { sendPassReset, sendQuoteEmail } from "../service/email.service.js";
 import { UserService } from "../service/db/user.service.js";
-import quoteService from "../service/quote.service.js";
+import { QuoteService } from "../service/quote.service.js";
 import { AppError, AuthenticationError } from "../error/error.handler.js";
 import { catchAsync } from "../utils/catchAsync.js";
 import { encrypt, decrypt } from "../utils/encrypt.js";
+const quoteService = new QuoteService(test_db)
 const userService = new UserService(test_db);
 const tokenService = new TokenService(test_db);
 
@@ -39,7 +40,6 @@ const tokenService = new TokenService(test_db);
 
     export const handleQuoteAcceptance = catchAsync(async(req, res) => {
         const status = "APPROVED";
-		console.log("fired");
 		const token = req.query.token;
 		if(!token) return res.redirect(302, `${process.env.FRONTEND_URL}/404`);
 

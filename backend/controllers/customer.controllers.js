@@ -1,5 +1,5 @@
 import { db, test_db } from "../config/postgresql.config.js";
-import quoteService from "../service/quote.service.js";
+import { QuoteService } from "../service/quote.service.js";
 import jobService from "../service/job.service.js";
 import customerService from "../service/customer.service.js";
 import Auth from "../auth/auth.js";
@@ -7,6 +7,7 @@ import { TokenService } from "../service/db/token.service.js";
 import { catchAsync } from "../utils/catchAsync.js";
 import { AppError } from "../error/error.handler.js";
 import { cache } from "../config/redis.config.js";
+const quoteService = new QuoteService(test_db);
 const tokenService = new TokenService(test_db);
 
 	export const getCustomerInfo = catchAsync(async(req,res) => {
@@ -125,9 +126,9 @@ const tokenService = new TokenService(test_db);
 		const user = req.user;
 		if(!user) throw new AppError("User not found.", 404);
         const { customer, labor, materials, quote } = req.body;
-		if(customer.length === 0||labor.length === 0||materials.length === 0||quote.length === 0) throw new AppError("Failed to provided needed fields to create quote")
-		
-
+		for(const [_, val] of Object.entries(customer)){
+			if(val.length === 0) throw new AppError("Missing Customer Input. Please fill all input fields.", 400);
+		}
         const { quoteData, customerId } = await quoteService.createQuote(user, customer, quote, labor, materials);
 
         const emailToken = Auth.signEmail({ id: user, quoteId: quoteData.id, customerId }, "1d")
