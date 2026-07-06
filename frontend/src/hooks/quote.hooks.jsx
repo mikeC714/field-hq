@@ -45,7 +45,6 @@ export function useAcceptQuote(){
 	const queryClient = useQueryClient();
 
 	const {
-		quote,
 		isLoading,
 		isSuccess, 
 		isError 
@@ -68,8 +67,6 @@ export function useAcceptQuote(){
 			queryClient.invalidateQueries({ queryKey: ['customers'] });
 		}
 	})
-	if(isAcceptPending) console.log("Pending acceptance");
-	if(isAcceptError) console.log("Failed acceptance");
 	
 	useEffect(() => {
 		if(!isLoading && !isError && !isAcceptError && !isAcceptSuccess){

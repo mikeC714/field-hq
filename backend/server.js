@@ -39,8 +39,6 @@ app.use((err, req, res, next) => {
 	if(err instanceof AppError){
 		return res.status(err.statusCode).json({ error: err.message })
 	}
-	console.log(err);
-	console.log(err.message)
 	return res.status(err.statusCode || status).json({ error: err.message })
 })
 app.listen(PORT, () => {

@@ -5,7 +5,6 @@ import { verifyToken } from '../middleware/auth.middleware.js';
 
 const jobRouter = express.Router();
 
-jobRouter.use(verifyToken);
-jobRouter.get("/quick-access", allJobData);
+jobRouter.get("/quick-access", verifyToken, allJobData);
 
 export default jobRouter;

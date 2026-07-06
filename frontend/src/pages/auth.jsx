@@ -171,25 +171,43 @@ export function ForgotPassword(){
 
 export function ResetPassword(){
 	const [password, setPassword] = useState("");
-	const { resetPassword } = useAuth();
+	const { resetPasswordPatch, resetPasswordGet } = useAuth();
+	const { mutate, isSuccess, isPending, isError } = resetPasswordPatch();
+	const { isError: getErr, isLoading: getLoading } = resetPasswordGet();
+
 
 	function handleSubmit(e){
 		e.preventDefault();
-		resetPassword(password);
+		mutate(password);
 	};
 
 	return(
 		<div>
-			{resetPassword.isSuccess && (
-				<p>Password reset successfully.</p>
+			{isSuccess && (
+				<div className="overlay">
+					<div className="resetMsg">
+						<p>Password reset successfully.</p>
+					</div>
+				</div>
 			)}
-			{resetPassword.isError && (
-				<p>Something went wrong. Please try again.</p>
+			{isError || getErr (
+				<div className="overlay">
+					<div className="resetMsg">
+						<p>Something went wrong. Please try again.</p>
+					</div>
+				</div>
 			)}
+			{isPending || getLoading (
+				<div className="overlay">
+					<div className="resetLoader">
+						<Loader />
+					</div>
+				</div>
+			)}	
 			<form onSubmit={handleSubmit}>
 				<input type="password" onChange={(e) => setPassword(e.target.value)} placeholder="New password" />
-				<button type="submit" disabled={resetPassword.isPending}>
-					{resetPassword.isPending ? 'Resetting...' : 'Reset Password'}
+				<button type="submit" disabled={isPending}>
+					{isPending ? 'Resetting...' : 'Reset Password'}
 				</button>
 			</form>
 		</div>
