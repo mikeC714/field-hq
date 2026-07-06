@@ -7,8 +7,8 @@ import { catchAsync } from "../utils/catchAsync.js";
 import { AppError, AuthenticationError } from "../error/error.handler.js";
 import { validateEmail } from "../utils/emailValidator.js";
 import bcrypt from "bcrypt";
-const userService = new UserService(test_db); 
-const tokenService = new TokenService(test_db);
+const userService = new UserService(db); 
+const tokenService = new TokenService(db);
 	
 	export const login = catchAsync(async (req, res) => {
         const { email, password } = req.body;

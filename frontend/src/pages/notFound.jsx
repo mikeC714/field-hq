@@ -46,8 +46,6 @@ export function NotFound() {
           </div>
         </div>
         <p className="p404-message">This page doesn't exist.</p>
-        <Link to="/dashboard" className="p404-link">Go home</Link>
-
       </div>
     </div>
   );

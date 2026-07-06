@@ -41,6 +41,7 @@ export class TokenService{
                 "SELECT token FROM tokens WHERE user_id = $1",
                 [id]
             );
+			console.log(results)
 			const decrypted = decrypt(results.rows[0].token);
 			return token = decrypted;
         }catch(err){
@@ -56,6 +57,7 @@ export class TokenService{
                 "INSERT INTO quote_tokens (quote_id, token) VALUES($1, $2) RETURNING expires_at::date::text,token",
                 [quoteId, encrypted]
             );
+			console.log(results)
 
 		return {
 			expiry:results.rows[0].expires_at,
@@ -75,6 +77,8 @@ export class TokenService{
                 AND quote_id = $2
                 `, [id, quoteId]
             )
+			console.log(results)
+
 			const decrypted = decrypt(results.rows[0].token);
             return token = decrypted;
         }catch(err){

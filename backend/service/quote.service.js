@@ -159,5 +159,18 @@ export class QuoteService{
         	throw err;
 		}
     }
+	async getQuoteById(id){
+		if(!id) throw new AppError("Failed to provide quote Id. Please provide quote Id inorder to get quote.", 400);
+		try{
+			const results = await this.db.query(
+				`SELECT * FROM quotes
+					WHERE id = $1
+				`,[id]
+			)
+			return results.rows;
+		}catch(err){
+			throw err;
+		}
+	}
 }
 

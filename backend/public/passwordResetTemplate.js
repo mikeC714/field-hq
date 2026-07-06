@@ -1,4 +1,4 @@
-export const passwordResetEmailTemplate = ({ resetUrl }) => (
+export const passwordResetEmailTemplate = (resetUrl) => (
   `
   <!DOCTYPE html>
   <html lang="en" style="margin: 0; padding: 0; box-sizing: border-box;">

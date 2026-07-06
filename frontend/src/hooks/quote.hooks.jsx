@@ -1,4 +1,4 @@
-import {  useMutation, useQueryClient } from "@tanstack/react-query";
+import {  useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom"
 import { apiFetch, apiFetchNoCreds } from "../../utils/apiFetch.jsx";
@@ -43,20 +43,47 @@ export function useAcceptQuote(){
 	const [searchParams] = useSearchParams(); 
 	const token = searchParams.get("token");
 	const queryClient = useQueryClient();
-	console.log("FIRED");
-	console.log(token);
 
-	const { mutate, isSuccess, isError } = useMutation({
-		mutationFn: async () => await apiFetchNoCreds(`${config.SERVER}/api/quote/acceptance?token=${token}`, 'GET'),
+	const {
+		quote,
+		isLoading,
+		isSuccess, 
+		isError 
+	} = useQuery({
+		queryKey:['quoteAccept', token],
+		queryFn: async () => await apiFetchNoCreds(`${config.SERVER}/api/quote/acceptance?token=${token}`, 'GET'),
+		enabled: !!token,
+		retry:false
+	})
+	
+	const {
+		mutate,
+		isPending: isAcceptPending,
+		isSuccess: isAcceptSuccess,
+		isError: isAcceptError
+	} = useMutation({
+		mutationFn: async() => await apiFetchNoCreds(`${config.SERVER}/api/quote/acceptance?token=${token}`, 'POST'),
 		onSuccess:() => {
 			queryClient.invalidateQueries({ queryKey: ['quickAccess'] });
 			queryClient.invalidateQueries({ queryKey: ['customers'] });
 		}
 	})
-
+	if(isAcceptPending) console.log("Pending acceptance");
+	if(isAcceptError) console.log("Failed acceptance");
+	
 	useEffect(() => {
-		if(token) mutate(token);
-	},[mutate,token])
-	return { isSuccess, isError };
+		if(!isLoading && !isError && !isAcceptError && !isAcceptSuccess){
+			mutate()	
+		}
+	},[isLoading, isAcceptPending])
+
+	return { 
+		mutate,
+		isAcceptPending,
+		isAcceptError,
+		isAcceptSuccess,
+		isSuccess, 
+		isError 
+	};
 }
 

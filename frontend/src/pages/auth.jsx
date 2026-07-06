@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../hooks/auth.hooks.jsx';
 import { AuthForm } from '../comps/authForm.jsx';
+import { Loader } from "lucide-react";
 import logo from "../imgs/logo.svg";
 
 export function Authentication() {
@@ -120,10 +121,22 @@ export function ForgotPassword(){
 	return(
 		 <div className="forgotPage">
 				{sendResetPassword.isSuccess && (
-					<p>Reset link was sent successfully via email.</p>
+					<div className="overlay">
+						<p>Reset link was sent successfully via email.</p>
+					</div>
+				)}
+				{sendResetPassword.isPending && (
+					<div className="overlay">
+						<Loader className='cqLoader'/>
+					</div>
 				)}
 				{sendResetPassword.isError && (
-					<p>Something went wrong. Please try again.</p>
+					<div className="overlay">
+						<p className="forgotPassErr">
+							<span><CircleX /></span>
+							Something went wrong. Please try again.
+						</p>
+					</div>
 				)}
 					<header className="forgotHeader">
 						<div 

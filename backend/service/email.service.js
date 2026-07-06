@@ -30,13 +30,13 @@ const resend = new Resend(process.env.RESEND_KEY)
 	};
 
 	export async function sendPassReset(userEmail, token){
-		const link = `${process.env.FRONTEND_URL}/auth/reset-password?token=${token}`;
+		const link = `${process.env.FRONTEND_URL}/reset-password?token=${token}`;
 		try{
 			const { error } = await resend.emails.send({
 				from:`noreply@field-hq.com`,
 				to: userEmail,
 				subject: 'Password Reset',
-				html:  passwordResetEmailTemplate({ link }),
+				html:  passwordResetEmailTemplate(link),
 			});
 			if(error) throw error;
 		}catch(err){

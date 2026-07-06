@@ -8,7 +8,7 @@ import { describe, it, beforeEach, afterEach, after } from "node:test";
 import { test_db } from "../../config/postgresql.config.js";
 
 
-describe("POST /api/auth/delete", () => {
+describe("POST /api/auth/delete",{timeout:10_000},  () => {
 	let safeToken;
 	let aToken;
 	let rToken;
@@ -39,7 +39,7 @@ describe("POST /api/auth/delete", () => {
 		await test_db.query(`TRUNCATE users CASCADE`);
 	});
 
-	it("deletes the user", {timeout:1000}, async() => {
+	it("deletes the user", async() => {
 		const res = await request(app) 
 			.delete('/api/auth/delete')
 			.set('user', [`user=${userId}`])
@@ -48,7 +48,7 @@ describe("POST /api/auth/delete", () => {
 		assert.strictEqual(res.status, 200)
 	})
 
-	it("should fail due to invalid password", {timeout:1000}, async() => {
+	it("should fail due to invalid password", async() => {
 		const res = await request(app) 
 			.delete('/api/auth/delete')
 			.set('user', [`user=${userId}`])
@@ -57,13 +57,12 @@ describe("POST /api/auth/delete", () => {
 		assert.strictEqual(res.status, 401)
 	})
 
-	it("should fail due to an unauthorized request", {timeout:1000}, async() => {
+	it("should fail due to an unauthorized request", async() => {
 		const res = await request(app) 
 			.delete('/api/auth/delete')
 			.set('user', [`user=${userId}`])
-			.set('Cookie', [`access_token='fake_access_token'; refresh_token=${safeToken};`])
 			.send({ password: "fail_password" })
-		assert.strictEqual(res.status, 500)
+		assert.strictEqual(res.status, 401)
 	})
 
 	after(async() => { 

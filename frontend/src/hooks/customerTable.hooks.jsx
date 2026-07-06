@@ -68,7 +68,6 @@ export function useCustomerDelete(){
             queryClient.invalidateQueries({ queryKey: ['customers'] })
             queryClient.invalidateQueries({ queryKey: ['quickAccess'] })
         },
-        onError: (err) => console.log(err.message)
 	})
 }
 
