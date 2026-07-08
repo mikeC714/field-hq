@@ -10,11 +10,10 @@ const quoteRouter = express.Router();
 
 quoteRouter.get('/quote/acceptance', cors({ origin: process.env.FRONTEND_URL, credentials:false }), handleQuoteAcceptance);
 quoteRouter.post('/quote/acceptance', cors({ origin: process.env.FRONTEND_URL, credentials:false }), handleQuoteAcceptanceConfirm);
-quoteRouter.use(verifyToken);
-quoteRouter.get('/quote/customer', monitorQuotes, getCustomerQuoteInfo);
-quoteRouter.post('/quote/send', authLimiter, handleSending);
-quoteRouter.post('/quote/create', authLimiter, createCustomerQuote);
-quoteRouter.delete('/quote/delete', deleteCustomerQuote);
+quoteRouter.get('/quote/customer', monitorQuotes,  verifyToken, getCustomerQuoteInfo);
+quoteRouter.post('/quote/send', authLimiter, verifyToken, handleSending);
+quoteRouter.post('/quote/create', authLimiter, verifyToken, createCustomerQuote);
+quoteRouter.delete('/quote/delete', verifyToken, deleteCustomerQuote);
 export default quoteRouter;
 
 

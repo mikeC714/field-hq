@@ -84,17 +84,16 @@ const tokenService = new TokenService(db);
 
 
 	export const handlePasswordReset = catchAsync(async(req,res) => {
-		const { newPass, token } = req.body;
-		if(!newPass) return res.status(400).json({ message: "Failed to provide input requirements.Please try again." });
+		const token = req.query.token;
 		if(!token) return res.redirect(302, `${process.env.FRONTEND_URL}/404`);
 
 		const decrypted = decrypt(token);
 		const valid = Auth.verifyEmail(decrypted);
 		if(valid.payload.purpose !== "password_reset") return res.redirect(302, `${process.env.FRONTEND_URL}/404`);
+		console.log(valid);
 
-		const user = await userService.getUserById(valid.payload.userId);
-		const same = await bcyrpt.compare(newPass, user.password);
-		if(same) return res.status(400).json({ error:"Your new password cannot be the same as the current. Please try again with a new unique password." });
+		const user = await userService.getUserById(valid.payload.id);
+		if(!user) return res.status(401).json({ error:"Unauthorized user" });
 		return res.status(200).json({ success:true });
 	}) 
 
@@ -105,8 +104,9 @@ const tokenService = new TokenService(db);
 
 		const decrypted = decrypt(token);
 		const valid = Auth.verifyEmail(decrypted);
+		console.log(valid);
 		
-		await userService.updatePassword(valid.payload.userId, newPass);	
+		await userService.updatePassword(valid.payload.id, newPass);	
 		return res.status(200);
 	}) 
 

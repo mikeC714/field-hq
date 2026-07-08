@@ -49,25 +49,22 @@ export function useAuth() {
 
 	const resetPasswordPatch = useMutation({
 		mutationFn: (password) => apiFetchNoCreds(`${config.SERVER}/api/auth/reset-password`, 'PATCH', { token, password }),
-		onSuccess:() => {
-			navigate("/auth")
-		}
+		onSuccess:(() => console.log("GOOD JOB"))
 	})
 	
 	const resetPasswordGet = useQuery({
 		queryKey:['resetPassword', token],
-		queryFn: async() => apiFetchNoCreds(`${config.SERVER}/api/auth/reset-password?token=${token}`, 'GET', {token})
+		queryFn: async() => apiFetchNoCreds(`${config.SERVER}/api/auth/reset-password?token=${token}`, 'GET'),
+		enabled: !!token,
+		retry:false
 	})
 
 	const sendResetPassword = useMutation({
 		mutationFn: async (email) => await apiFetch(`${config.SERVER}/api/auth/forgot-password`, 'POST', { email }),
 		onSuccess: () => {
-			navigate("/auth");
-		},
-		onError:() => {
 			setTimeout(() => {
-				window.target.reload();
-			},3000)
+				navigate("/auth")
+			}, 2000)
 		}
 	})
 	    return { loginMutation, signupMutation, logoutMutation, resetPasswordGet, resetPasswordPatch, sendResetPassword, deleteMutation };

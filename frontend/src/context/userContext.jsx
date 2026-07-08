@@ -26,6 +26,7 @@ export function UserProvider({children}){
 			localStorage.removeItem("user");
 		}
     });
+
     const firstName = data?.user?.first_name ?? "";
     const lastName = data?.user?.last_name ?? "";
     const email = data?.user?.email;
@@ -41,7 +42,7 @@ export function UserProvider({children}){
         userId,
         created_at, 
         isLoading 
-    }), [email, firstName, lastName, created_at, userId, isLoading])
+    }), [data, isLoading])
 
     
     return(

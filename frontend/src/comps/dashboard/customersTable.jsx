@@ -107,7 +107,6 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
                     <button
                         disabled = {page?.prevPage ? false : true}
                         onClick={() => {
-							console.log("PAGE MINUS 1")
 							setPage(p => p -1)}}
                     >
                         <ArrowLeft size={18}/>
@@ -115,7 +114,6 @@ export function CustomerTable({ data, page, setPage, handleDelete, visible, setV
                     <button 
                         disabled = {page?.nextPage ? false : true }
                         onClick={() => {
-							console.log("PAGE PLUS 1")
 							setPage(p => p +1)}}
                     >
                         <ArrowRight size={18}/>
