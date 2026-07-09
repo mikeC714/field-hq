@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { apiFetch, apiFetchNoCreds } from '../../utils/apiFetch.jsx';
 import config from "../config.js"
@@ -44,29 +44,30 @@ export function useAuth() {
     const deleteMutation = useMutation({
         mutationFn: (credentials) => apiFetch(`${config.SERVER}/api/auth/delete`, `DELETE`, credentials),
         onSuccess: () => navigate("/auth"),
-        onError: (error) => console.error(error.message)
         
     })
-  
-	const resetPassword = useMutation({
-		mutationFn: (password) => apiFetchNoCreds(`${config.SERVER}/api/auth/reset-password?token=${token}`, 'PATCH', { token, password }),
-		onSuccess:() => {
-			setTimeout(() => {
-				navigate("/auth")
-			},4000)
-		},
-		onError:(err) => { throw err; }
+
+	const resetPasswordPatch = useMutation({
+		mutationFn: (password) => apiFetchNoCreds(`${config.SERVER}/api/auth/reset-password`, 'PATCH', { token, password }),
+		onSuccess:(() => console.log("GOOD JOB"))
+	})
+	
+	const resetPasswordGet = useQuery({
+		queryKey:['resetPassword', token],
+		queryFn: async() => apiFetchNoCreds(`${config.SERVER}/api/auth/reset-password?token=${token}`, 'GET'),
+		enabled: !!token,
+		retry:false
 	})
 
 	const sendResetPassword = useMutation({
 		mutationFn: async (email) => await apiFetch(`${config.SERVER}/api/auth/forgot-password`, 'POST', { email }),
 		onSuccess: () => {
 			setTimeout(() => {
-				navigate("/auth");
-			}, 4000)
+				navigate("/auth")
+			}, 2000)
 		}
 	})
-	    return { loginMutation, signupMutation, logoutMutation, resetPassword, sendResetPassword, deleteMutation };
+	    return { loginMutation, signupMutation, logoutMutation, resetPasswordGet, resetPasswordPatch, sendResetPassword, deleteMutation };
 }
 
 

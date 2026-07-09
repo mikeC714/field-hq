@@ -5,3 +5,4 @@ package.json
 
 
 /generated/prisma
+.DS_Store

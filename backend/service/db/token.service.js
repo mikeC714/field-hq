@@ -56,7 +56,6 @@ export class TokenService{
                 "INSERT INTO quote_tokens (quote_id, token) VALUES($1, $2) RETURNING expires_at::date::text,token",
                 [quoteId, encrypted]
             );
-
 		return {
 			expiry:results.rows[0].expires_at,
 			token:results.rows[0].token

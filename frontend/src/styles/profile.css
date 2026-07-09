@@ -137,8 +137,8 @@
 	border:1px solid var(--border);
 	border-radius:16px;
 	color:white;
-	height:120px;
-	width:160px;
+	height:140px;
+	width:200px;
 	display:flex;
 	flex-direction:column;
 	justify-content:space-evenly;

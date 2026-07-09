@@ -92,3 +92,72 @@
 .forgotEmailForm > button:hover{
 	opacity:.8;
 }
+.forgotPassErr{
+	display:flex;
+	justify-content:center;
+	gap:10px;
+}
+
+
+
+.resetOverlay{
+	background:var(--bg-left);
+	opacity:1;
+}
+.resetPassPage{
+	height:100vh;
+	background:var(--bg-right);
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+.resetFormContainer{
+	height:40rem;
+	width:40em;
+	border:1px solid white;
+	border-radius:14px;
+	display:flex;
+	flex-direction:column;
+	justify-content:space-evenly;
+	align-items:center;
+	font-family:var(--font);
+}
+.resetFormHeader{
+	color:white;	
+	text-align:center;
+}
+.resetForm{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+	width:100%;
+	gap:4em;
+}
+.resetForm > input{
+	background:var(--bg-right);
+	color:white;
+	padding:.6em;
+	font-size:14px;
+	height:2em;
+	width:40%;
+	border-radius:8px;
+	border:none;
+	transition: outline-color .1s ease;
+}
+.resetForm > input:focus{
+	outline:var(--orange);
+}
+.resetForm > button{
+	padding:1.2em;
+	border:none;
+	border-radius:10px;
+	background:var(--orange);
+	font-weight:500;
+	font-size:13px;
+}
+.resetMsg{
+	color:white;
+	font-family:var(--font);
+}
+

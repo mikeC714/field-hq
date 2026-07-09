@@ -7,8 +7,8 @@ import { catchAsync } from "../utils/catchAsync.js";
 import { AppError, AuthenticationError } from "../error/error.handler.js";
 import { validateEmail } from "../utils/emailValidator.js";
 import bcrypt from "bcrypt";
-const userService = new UserService(test_db); 
-const tokenService = new TokenService(test_db);
+const userService = new UserService(db); 
+const tokenService = new TokenService(db);
 	
 	export const login = catchAsync(async (req, res) => {
         const { email, password } = req.body;
@@ -123,12 +123,12 @@ const tokenService = new TokenService(test_db);
 
         const valid = await userService.validatePassword(user, password);
 
-        await userService.deleteUser(user);
+        if(valid) await userService.deleteUser(user);
             
         res.clearCookie("access_token");
         res.clearCookie("refresh_token");
 
-         return res.status(200).json({ message: "User deleted" });
+		return res.status(200).json({ message: "User deleted" });
     });
 
 	export const currUser = catchAsync(async(req,res) => {
@@ -139,16 +139,5 @@ const tokenService = new TokenService(test_db);
         return res.status(200).json({ user });
 	});
 
-	export const passwordReset = catchAsync(async(req,res) => {
-		const { newPassword, token } = req.body;
-		if(!token) res.redirect(302, `${process.env.FRONTEND_URL}/404`);
-		if(!newPassword) throw new AppError("Missing field. Please fill all provided fields.", 400);
-		
-		const decode = Auth.verifyEmail(token);
-		await userService.updatePassword(decode.id, newPassword);	
-
-		return res.status(200).json({ message: "Reset was successful" })
-	})
-    
 
 

@@ -7,8 +7,8 @@ import { TokenService } from "../service/db/token.service.js";
 import { catchAsync } from "../utils/catchAsync.js";
 import { AppError } from "../error/error.handler.js";
 import { cache } from "../config/redis.config.js";
-const quoteService = new QuoteService(test_db);
-const tokenService = new TokenService(test_db);
+const quoteService = new QuoteService(db);
+const tokenService = new TokenService(db);
 
 	export const getCustomerInfo = catchAsync(async(req,res) => {
         const user = req.user;
@@ -78,7 +78,7 @@ const tokenService = new TokenService(test_db);
 
         return res.status(200).json({
             success: true,
-            cusData: cached === null ? customerData : cached,
+            cusData: cached !== null && cached.length !== 0 ? cached : customerData,
             paginated: {
     	       total,
                 page,

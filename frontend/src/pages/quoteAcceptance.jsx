@@ -1,12 +1,12 @@
-import { Check, X } from "lucide-react";
+import { Check, X, Loader } from "lucide-react";
 import { useAcceptQuote } from "../hooks/quote.hooks.jsx";
 
 export function QuoteAcceptance(){
-	const { isSuccess, isError } = useAcceptQuote();
+	const {isAcceptPending, isAcceptError, isAcceptSuccess, isError} = useAcceptQuote();
 
 	return (
 		<div className="qtAPage">
-			{isSuccess && 
+			{isAcceptSuccess && 
 				<div className="qtAMsgContainer">
 					<div className="qtAIconContainer">
 						<Check style={{strokeColor: 'green'}}/>
@@ -14,7 +14,17 @@ export function QuoteAcceptance(){
 					<p className="qtAMsg">Thank you for accepting the quote.</p>
 				</div>		
 			}
-			{isError && 
+			{isAcceptPending && (
+				<div className="qtAMsgContainer">
+					<div className="qtAIconContainer">
+						<div className='qtLoader'>
+							<Loader />
+						</div>
+					</div>	
+				</div>		
+			)
+			}
+			{isError || isAcceptError && 
 				<div className="qtAMsgContainer">
 						<div className="frownFaceContainer">
 							<div className="frownFaceEyes">

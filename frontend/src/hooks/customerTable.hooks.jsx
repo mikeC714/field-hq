@@ -19,11 +19,12 @@ export function useCustomerTableHook({activeFilter= '', searchFilter = '', page 
 	if(lMobile) limit = 3;
 	if(mMobile) limit = 3
 	if(sMobile) limit = 2;
+
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['customers', activeFilter, page, limit], 
         queryFn: async() => await apiFetch(`${config.SERVER}/api/customers?filter=${activeFilter}&page=${page}&limit=${limit}`),
         staleTime: 1000 * 60 * 10,
-		retry:0
+		retry:1
     })
     const filteredData = useMemo(() => {
         let result = data?.cusData ?? [];
@@ -68,7 +69,6 @@ export function useCustomerDelete(){
             queryClient.invalidateQueries({ queryKey: ['customers'] })
             queryClient.invalidateQueries({ queryKey: ['quickAccess'] })
         },
-        onError: (err) => console.log(err.message)
 	})
 }
 

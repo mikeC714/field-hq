@@ -27,8 +27,6 @@ export function UserProvider({children}){
 		}
     });
 
-	if(isLoading) window.location.reload();
-
     const firstName = data?.user?.first_name ?? "";
     const lastName = data?.user?.last_name ?? "";
     const email = data?.user?.email;
@@ -44,7 +42,7 @@ export function UserProvider({children}){
         userId,
         created_at, 
         isLoading 
-    }), [email, firstName, lastName, created_at, userId, isLoading])
+    }), [isLoading, created_at, email, firstName, lastName, userId])
 
     
     return(
