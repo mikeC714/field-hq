@@ -42,7 +42,7 @@ export function UserProvider({children}){
         userId,
         created_at, 
         isLoading 
-    }), [data, isLoading])
+    }), [isLoading, created_at, email, firstName, lastName, userId])
 
     
     return(

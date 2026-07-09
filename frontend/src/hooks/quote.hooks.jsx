@@ -72,7 +72,7 @@ export function useAcceptQuote(){
 		if(!isLoading && !isError && !isAcceptError && !isAcceptSuccess){
 			mutate()	
 		}
-	},[isLoading, isAcceptPending])
+	},[isLoading, isAcceptPending, isAcceptPending, isAcceptSuccess, mutate, isAcceptError, isError])
 
 	return { 
 		mutate,
