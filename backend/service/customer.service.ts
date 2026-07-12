@@ -4,12 +4,12 @@ import { AppError } from "../error/error.handler.js";
 
 
 export default{
-    async getAllCustomerIds(userId){
-        if(!userId) throw new AppError("User not found.", 404);
+    async getAllCustomerIds(user_id:string){
+        if(!user_id) throw new AppError("User not found.", 404);
         try{
             const results = await db.query(
                 `SELECT id FROM customers WHERE user_id = $1`,
-                [userId]
+                [user_id]
             );
             return results.rows;
         }catch(err){
@@ -17,13 +17,13 @@ export default{
 		}
     },
 
-    async getAllCustomerInfo(userId){
-        if(!userId) throw new AppError("User not found.", 404);
+    async getAllCustomerInfo(user_id:string){
+        if(!user_id) throw new AppError("User not found.", 404);
         try{
             const results = await db.query(
                 `SELECT * FROM customers 
                 WHERE user_id = $1
-                `,[userId]
+                `,[user_id]
             ); 
             return results.rows 
         }catch(err){
@@ -31,8 +31,8 @@ export default{
 		}
     },
 
-    async customerDetails(customerIds, userId){
-        if(!userId) throw new AppError("User not found.", 404);
+    async customerDetails(customerIds:Array<{id:string}>, user_id:string){
+        if(!user_id) throw new AppError("User not found.", 404);
         const cusIds = customerIds.map(customer => customer.id);
         try{
             const results = await db.query(
@@ -47,7 +47,7 @@ export default{
                 FROM customers
                 WHERE user_id = $1
                 AND id = ANY($2)
-                `, [userId, cusIds]
+                `, [user_id, cusIds]
             );
             return results.rows;
         }catch(err){
@@ -55,7 +55,7 @@ export default{
 		}
     },
 
-    async customerQuoteInfo(quotes){
+    async customerQuoteInfo(quotes:Array<{}>){
         if(!quotes || quotes.length === 0){
             return {
                 quotes: [], jobs: []

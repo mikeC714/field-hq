@@ -1,13 +1,22 @@
-import {db} from "../config/postgresql.config.js";
+import {db} from "../config/postgresql.config.ts";
+import type User from "../types/user.d.ts";
+import type {Quote} from "../types/quote.d.ts";
+
+type Notifications = {
+	type:string;
+	message:string;
+	quoteId:string;
+	total:number;
+}
 
 export default {
-	async getNotis(user, customerDetails, limit, offset){
+	async getNotis(user:User, customerDetails:Array<{id:string}>, limit:number, offset:number):Promise<{quotes:Array<Quote>, notis:Array<Notifications>}| any>{
         try{ 
             const customerMap = new Map();
             customerDetails.forEach(cus => customerMap.set(cus.id, cus));
             const customers = customerDetails.map(cus => cus.id);
 
-            let notis = []
+            let notis:any[] = [];
             const results = await db.query(
                 `SELECT 
                     id,
@@ -26,9 +35,9 @@ export default {
                 `,[user, customers, false, limit, offset]
             )
 
-            if(results.rows.length === 0) return { notis: [] };
+            if(results.rows.length === 0) return notis as any[] 
 
-            const quotes = results.rows;
+            const quotes:Array<Quote> = results.rows;
 
             quotes.forEach(qt => {
                 const customer = customerMap.get(qt.customer_id);
@@ -72,7 +81,7 @@ export default {
         }
     },
 
-	async softClearNotis(user, quotes){
+	async softClearNotis(user_id:string, quotes:Array<{id:string}>){
 		const qtIds = quotes.map(qt => qt.id);
 		try{
 			await db.query(
@@ -80,7 +89,7 @@ export default {
 				SET seen = $1
 				WHERE id = ANY($2::uuid[])
 				AND user_id = $3
-				`, [true, qtIds, user]
+				`, [true, qtIds, user_id]
 			)
 		}catch(err){
 			throw err

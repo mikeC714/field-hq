@@ -6,11 +6,12 @@ import { decrypt } from "../utils/encrypt.js";
 import { catchAsync } from "../utils/catchAsync.js";
 import { AppError, AuthenticationError } from "../error/error.handler.js";
 import { validateEmail } from "../utils/emailValidator.js";
+import type { Response, Request } from "express";
 import bcrypt from "bcrypt";
 const userService = new UserService(test_db); 
 const tokenService = new TokenService(test_db);
 	
-	export const login = catchAsync(async (req, res) => {
+	export const login = catchAsync(async (req:Request, res:Response) => {
         const { email, password } = req.body;
         if(!email || !password){
             throw new AppError("Invalid, Missing fields.", 400);
@@ -51,7 +52,7 @@ const tokenService = new TokenService(test_db);
 		});
 	});
 
-    export const signup = catchAsync(async (req, res) => {
+    export const signup = catchAsync(async (req:Request, res:Response) => {
         const { email, firstName, lastName, password } = req.body;
         if(!firstName || !lastName || !email || !password) throw new AppError("Missing Field. Please try again", 400);
             
@@ -90,7 +91,7 @@ const tokenService = new TokenService(test_db);
         });
 	});
     
-    export const logout = catchAsync(async (req, res) => {
+    export const logout = catchAsync(async (req:Request, res:Reponse) => {
         const refresh = req.cookies.refresh_token;
         if(!refresh) throw new AuthenticationError("Failed to provide valid token.");
 		
@@ -110,7 +111,7 @@ const tokenService = new TokenService(test_db);
     });
 
 
-    export const deleteUserAcc = catchAsync(async(req, res) => {
+    export const deleteUserAcc = catchAsync(async(req:Request, res:Response) => {
         const { password } = req.body;
 		const user = req.user;
         if(!password) throw new AppError("Missing field. Please try again.", 400);
@@ -131,7 +132,7 @@ const tokenService = new TokenService(test_db);
          return res.status(200).json({ message: "User deleted" });
     });
 
-	export const currUser = catchAsync(async(req,res) => {
+	export const currUser = catchAsync(async(req:Request,res:Response) => {
         const id = req.user;
         if(!id) throw new AppError("Failed to provide user id.", 400);
         const user = await userService.getUserById(id);  
@@ -139,7 +140,7 @@ const tokenService = new TokenService(test_db);
         return res.status(200).json({ user });
 	});
 
-	export const passwordReset = catchAsync(async(req,res) => {
+	export const passwordReset = catchAsync(async(req:Request,res:Response) => {
 		const { newPassword, token } = req.body;
 		if(!token) res.redirect(302, `${process.env.FRONTEND_URL}/404`);
 		if(!newPassword) throw new AppError("Missing field. Please fill all provided fields.", 400);

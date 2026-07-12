@@ -1,9 +1,10 @@
-import { startOfMonth, endOfMonth } from "../utils/date.js";
-import { db } from "../config/postgresql.config.js";
-import { AppError } from "../error/error.handler.js";
+import { startOfMonth, endOfMonth } from "../utils/date.ts";
+import { db } from "../config/postgresql.config.ts";
+import { AppError } from "../error/error.handler.ts";
+import type { Quote } from "../types/quote.d.ts";
 
 export default {    
-	async getJobInfo(quotes){
+	async getJobInfo(quotes:Array<{id:string}>):Promise<Array<object>>{
         try{
             const quoteIds = quotes.map(qts => qts.id);
             const results = await db.query(
@@ -23,8 +24,8 @@ export default {
 		}
     },
 
-    async allCompletedJobs(id){
-        if(!id) throw new AppError("User not found.", 404);
+    async allCompletedJobs(quote_id:Quote["quote_id"]):Promise<Array<object>>{
+        if(!quote_id) throw new AppError("User not found.", 404);
         try{
             const results = await db.query(
                 `SELECT status, created_at
@@ -33,7 +34,7 @@ export default {
                     AND status = 'COMPLETED'::quote_status_type
                     AND created_at >= $2
                     AND created_at < $3
-                `, [id, startOfMonth, endOfMonth]
+                `, [quote_id, startOfMonth, endOfMonth]
             );
 
             return results.rows
@@ -42,8 +43,8 @@ export default {
 		}
     },
 
-    async allUnpaidJobs(id){
-        if(!id) throw new AppError("User not found.", 404);
+    async allUnpaidJobs(quote_id:Quote["quote_id"]):Promise<Array<object>>{
+        if(!quote_id) throw new AppError("User not found.", 404);
         try{
             const results = await db.query(
                 `SELECT status, created_at
@@ -52,7 +53,7 @@ export default {
                     AND created_at >= $2
                     AND created_at < $3
                     AND status = 'UNPAID'::quote_status_type
-                `, [id, startOfMonth, endOfMonth]
+                `, [quote_id, startOfMonth, endOfMonth]
             );
 
             return results.rows;
@@ -61,8 +62,8 @@ export default {
 		}
     },	
 
-    async allActiveJobs(id){
-        if(!id) throw new AppError("User not found.", 404);
+    async allActiveJobs(quote_id:Quote["quote_id"]):Promise<Array<object>>{
+        if(!quote_id) throw new AppError("User not found.", 404);
         try{
             const results = await db.query(
                 `SELECT status, created_at
@@ -71,7 +72,7 @@ export default {
                     AND status = 'APPROVED'::quote_status_type
                     AND created_at >= $2
                     AND created_at < $3
-                `,[id, startOfMonth, endOfMonth] 
+                `,[quote_id, startOfMonth, endOfMonth] 
             );
 
             return results.rows;
@@ -80,8 +81,8 @@ export default {
 		}
     },
 
-    async getMonthlyTotal(id){
-        if(!id) throw new AppError("User not found.", 404);
+    async getMonthlyTotal(quote_id:Quote["quote_id"]):Promise<number>{
+        if(!quote_id) throw new AppError("User not found.", 404);
         try{
             const results = await db.query(
                   `SELECT SUM(total) AS total_value
@@ -90,7 +91,7 @@ export default {
                      AND created_at >= $2
                      AND created_at < $3
                      AND status = 'COMPLETED'`,
-                    [id, startOfMonth, endOfMonth]
+                    [quote_id, startOfMonth, endOfMonth]
             );
 			
 

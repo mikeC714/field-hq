@@ -1,13 +1,15 @@
 import { decrypt, encrypt } from "../../utils/encrypt.js";
 import { AppError } from "../../error/error.handler.js";
+import type ServiceRequire from "../../types/servicerequire.ts";
+
 
 export class TokenService{
-	constructor(db){
+	constructor(private db:any){
 		this.db = db;
 	}
-    async storeRefreshToken(id, token){
+    async storeRefreshToken({user:{user_id} = {}, token}:ServiceRequire):Promise<string>{
         if(!token) throw new AppError("Failed to provide valid token.", 401);
-        if(!id) throw new AppError("User not found.", 404);
+        if(!user_id) throw new AppError("User not found.", 404);
 		try{
 			const encrypted = encrypt(token);
          	await this.db.query(
@@ -15,46 +17,48 @@ export class TokenService{
             	VALUES($1, $2)
 				RETURNING token
 				`,
-            	[id, encrypted]
+            	[user_id, encrypted]
         	)
 			return encrypted;
 		}catch(err){
 			throw err;
 		}
 	};
-    async deleteRefreshToken(userId, token){
-        if(!userId) throw new AppError("User not found.", 404);
+    async deleteRefreshToken({user:{user_id}={}, token}:ServiceRequire){
+        if(!user_id) throw new AppError("User not found.", 404);
         if(!token) throw new AppError("Failed to provide valid token.", 401);
 		try{
             await this.db.query(
                 "DELETE FROM tokens WHERE user_id = $1 AND token = $2",
-                [userId, token]
+                [user_id, token]
             );
         }catch(err){
             throw err;
         }
     };
-    async getRefreshToken(id){
-        if(!id) throw new AppError("User not found.", 404);
+    async getRefreshToken({user:{user_id}={}}:ServiceRequire):Promise<string>{
+        if(!user_id) throw new AppError("User not found.", 404);
         try{
             const results = await this.db.query(
                 "SELECT token FROM tokens WHERE user_id = $1",
-                [id]
+                [user_id]
             );
 			const decrypted = decrypt(results.rows[0].token);
-			return token = decrypted;
+			const token = decrypted;
+			return token;
         }catch(err){
             throw err;
         }
     };
-    async storeQuoteToken(quoteId, token){
-        if(!quoteId) throw new AppError("Failed to provide quote id.", 400);
+
+    async storeQuoteToken({quote:{quote_id}={}, token}:ServiceRequire):Promise<{expiry: string, token: string}>{
+        if(!quote_id) throw new AppError("Failed to provide quote id.", 400);
         if(!token) throw new AppError("Failed to provide valid token.", 400);
         try{
 			const encrypted = encrypt(token);
             const results = await this.db.query(
                 "INSERT INTO quote_tokens (quote_id, token) VALUES($1, $2) RETURNING expires_at::date::text,token",
-                [quoteId, encrypted]
+                [quote_id, encrypted]
             );
 
 		return {
@@ -65,18 +69,19 @@ export class TokenService{
             throw err;
         }
     };
-    async getQuoteToken(id, quoteId){
-        if(!id) throw new AppError("User not found.", 404);
-        if(!quoteId) throw new AppError("Quote not found.", 404);
+    async getQuoteToken({user:{user_id}={}, quote:{quote_id}={}}:ServiceRequire):Promise<string>{
+        if(!user_id) throw new AppError("User not found.", 404);
+        if(!quote_id) throw new AppError("Quote not found.", 404);
         try{
             const results = await this.db.query(
                 `SELECT token FROM quote_tokens
                 WHERE user_id = $1
                 AND quote_id = $2
-                `, [id, quoteId]
+                `, [user_id, quote_id]
             )
 			const decrypted = decrypt(results.rows[0].token);
-            return token = decrypted;
+            const token = decrypted;
+			return token;
         }catch(err){
             throw err;
         }

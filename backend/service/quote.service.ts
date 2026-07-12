@@ -1,10 +1,11 @@
-import { AppError } from "../error/error.handler.js";
+import { AppError } from "../error/error.handler.ts";
+import type User from "../types/user.ts";
 
 export class QuoteService{
-	constructor(db){
+	constructor(private db:any){
 		this.db = db
 	}
-    async getQuoteInfo(customers, userId, filter, limit, offset){
+    async getQuoteInfo(customers:Array<>, user_id:User["user_id"], filter, limit, offset){
         if(!userId) throw new AppError("User not found.", 404);
         const cusIds = customers.map(c => c.id);
         try{

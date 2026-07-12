@@ -7,10 +7,11 @@ import { TokenService } from "../service/db/token.service.js";
 import { catchAsync } from "../utils/catchAsync.js";
 import { AppError } from "../error/error.handler.js";
 import { cache } from "../config/redis.config.js";
+import type { Response, Request } from "express";
 const quoteService = new QuoteService(test_db);
 const tokenService = new TokenService(test_db);
 
-	export const getCustomerInfo = catchAsync(async(req,res) => {
+	export const getCustomerInfo = catchAsync(async(req:Request, res:Response) => {
         const user = req.user;
         if(!user) throw new AppError("User not found", 404);
 
@@ -25,7 +26,7 @@ const tokenService = new TokenService(test_db);
         })
     });
 
-    export const getAllUserCustomers = catchAsync(async(req, res) => {
+    export const getAllUserCustomers = catchAsync(async(req:Request<{},{},{page: string | number, limit: string | number}>, res:Response) => {
         const user = req.user;
 		if(!user) throw new AppError("User not found.", 404);
 
@@ -90,7 +91,7 @@ const tokenService = new TokenService(test_db);
 		})
 	});
  
-    export const getCustomerQuoteInfo = catchAsync(async(req, res) => {
+    export const getCustomerQuoteInfo = catchAsync(async(req:Request, res:Response) => {
         const user = req.user;
 		if(!user) throw new AppError("User not found.", 404);
 
@@ -106,7 +107,7 @@ const tokenService = new TokenService(test_db);
         });
     })
 
-    export const getCustomerStatus = catchAsync(async(req, res) => {
+    export const getCustomerStatus = catchAsync(async(req:Request, res:Response) => {
         const user = req.user;
         if(!user) throw new AppError("User not found.", 404);
 
@@ -122,7 +123,7 @@ const tokenService = new TokenService(test_db);
         });
     })
 
-    export const createCustomerQuote = catchAsync(async(req, res) =>{
+    export const createCustomerQuote = catchAsync(async(req:Request, res:Response) =>{
 		const user = req.user;
 		if(!user) throw new AppError("User not found.", 404);
         const { customer, labor, materials, quote } = req.body;
@@ -140,7 +141,7 @@ const tokenService = new TokenService(test_db);
         });
     })
 
-    export const deleteCustomerQuote = catchAsync(async(req,res) => {
+    export const deleteCustomerQuote = catchAsync(async(req:Request, res:Response) => {
 		const user = req.user;
         if(!user) throw new AppError("User not found.", 404);
 		const { quoteId } = req.body;

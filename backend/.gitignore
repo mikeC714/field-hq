@@ -2,6 +2,8 @@ node_modules
 package-lock.json
 package.json
 .env
+.DS_Store
+.tsconfig.json
 
 
 /generated/prisma
