@@ -132,6 +132,6 @@ export class TokenService{
 			throw err;
 		}
     };
-}
+};
 
 

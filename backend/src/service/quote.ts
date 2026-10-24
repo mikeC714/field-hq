@@ -1,23 +1,17 @@
-import { AppError } from "../error/error.handler.js";
+import { AppError, AuthError } from "../error/error.handler.js";
 
 export class QuoteService{
-	constructor(db){
+	db:any;
+	constructor(db:any){
 		this.db = db
 	}
-    async getQuoteInfo(customers, userId, filter, limit, offset){
-        if(!userId) throw new AppError("User not found.", 404);
-        const cusIds = customers.map(c => c.id);
+    getQuoteInfo = async(customerIds:Array<string>, userId:string, filter:string, limit:number, offset:number) => {
+        if(!userId) throw new AuthError("Invalid user", 404);
         try{
             const results = filter !== "ALL" ? 
             (
                 await this.db.query(
-                `SELECT
-                    id,
-                    customer_id,
-                    status,
-                    total,
-                    markup,
-                    created_at,
+                `SELECT id, customer_id, status, total, markup, created_at,
                 COUNT(*) OVER() AS total_count
                 FROM quotes
                 WHERE user_id = $1
@@ -25,7 +19,7 @@ export class QuoteService{
                 AND customer_id = ANY ($3::uuid[])
                 ORDER BY created_at ASC
                 LIMIT $4 OFFSET $5
-                `, [userId, filter, cusIds, limit, offset]
+                `, [userId, filter, customerIds, limit, offset]
             )
             ):(
                 await this.db.query(
@@ -53,6 +47,10 @@ export class QuoteService{
         	throw err;
 		}
     }
+
+	getAllStatuses = async(customerIds:Array<string>) => {
+		if(customerIds.length === 0) throw new AppError("Failed to provide customers");	
+	};	
 
     async changeQuoteStatus(quoteId, status){
         if(!quoteId) throw new AppError("Quote not found.", 404);

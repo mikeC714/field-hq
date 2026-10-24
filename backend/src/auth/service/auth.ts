@@ -136,5 +136,5 @@ export class AuthService{
 			throw err;
 		};
 	};
-}
+};
 

@@ -1,5 +1,5 @@
 import express from 'express';
-import {getAllUserCustomers, getCustomerInfo, getCustomerStatus, }  from "../controllers/customer.controllers.js";
+import { CustomerController } from "../controllers/customer.ts";
 import { verifyToken } from '../middleware/auth.middleware.js';
 import { monitorQuotes } from "../middleware/quote.middleware.js";
 

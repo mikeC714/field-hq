@@ -1,8 +1,7 @@
-import { AuthService } from "../auth/service/auth.service.ts";
-import { TokenService } from "../auth/service/token.service.ts";
-import { catchAsync } from "../lib/lib.ts";
+import { AuthService } from "../auth/service/auth.ts";
+import { TokenService } from "../auth/service/token.ts";
 import { AppError, AuthError } from "../error/error.handler.js";
-import { validateEmail } from "../lib/lib.ts";
+import { validateEmail, catchAsync } from "../lib/lib.ts";
 import bcrypt from "bcrypt";
 
 import type { Request, Response } from "express";
