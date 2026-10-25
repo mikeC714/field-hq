@@ -1,174 +1,245 @@
+import { date } from "../lib/lib.ts";
 import { AppError, AuthError } from "../error/error.handler.js";
+import type { NEW_QUOTE } from "../types/quote.d.ts";
 
 export class QuoteService{
 	db:any;
 	constructor(db:any){
 		this.db = db
 	}
-    getQuoteInfo = async(customerIds:Array<string>, userId:string, filter:string, limit:number, offset:number) => {
-        if(!userId) throw new AuthError("Invalid user", 404);
-        try{
-            const results = filter !== "ALL" ? 
-            (
-                await this.db.query(
-                `SELECT id, customer_id, status, total, markup, created_at,
-                COUNT(*) OVER() AS total_count
-                FROM quotes
-                WHERE user_id = $1
-                AND status = $2
-                AND customer_id = ANY ($3::uuid[])
-                ORDER BY created_at ASC
-                LIMIT $4 OFFSET $5
-                `, [userId, filter, customerIds, limit, offset]
-            )
-            ):(
-                await this.db.query(
-                    `SELECT
-                        id,
-                        customer_id, 
-                        status,
-                        total,
-                        markup,
-                        created_at,
-                    COUNT(*) OVER() AS total_count
-                    FROM quotes
-                    WHERE user_id = $1
-                    AND customer_id = ANY ($2::uuid[])
-                    ORDER BY created_at ASC
-                    LIMIT $3 OFFSET $4
-                    `, [userId, cusIds, limit, offset]
-                ) 
-            )
-            return {
-                quoteDetails: results?.rows,
-                total: results?.rows[0].total_count ? parseInt(results.rows[0].total_count): 0
-            }
-        }catch(err){
-        	throw err;
-		}
-    }
 
-	getAllStatuses = async(customerIds:Array<string>) => {
-		if(customerIds.length === 0) throw new AppError("Failed to provide customers");	
-	};	
-
-    async changeQuoteStatus(quoteId, status){
-        if(!quoteId) throw new AppError("Quote not found.", 404);
-        try{    
-            await this.db.query(
-                `UPDATE quotes 
-                SET status = $1::quote_status_type
-                WHERE id = $2
-                `, [status, quoteId]
-            )
-        }catch(err){
-        	throw err;
-		}
-    }
-
-    async createQuote(user, customer, quote, labor, materials){
-        try{
-            const customerData = await this.db.query(
-                `INSERT INTO customers 
-                    (user_id, first_name, last_name, phone, email, address)
-                VALUES($1, $2, $3, $4, $5, $6)
-                RETURNING id`, 
-                [user, customer.firstName, customer.lastName, customer.phone, customer.email, customer.address]
-            );
-            const quoteData = await this.db.query(
-                `INSERT INTO quotes
-                    (user_id, customer_id, status, markup, total)
-                VALUES($1, $2, $3, $4, $5)    
-                RETURNING id, created_at::date::text`, 
-                [user, customerData?.rows[0]?.id, quote.status, quote.markup, quote.total]
-            );
-
-            await Promise.all([
-                    labor.map(labVals => 
-                        this.db.query(
-                        `INSERT INTO labor
-                            (quote_id, description, hours, hourly_rate, total)
-                        VALUES($1, $2, $3, $4, $5)
-                        `, [quoteData?.rows[0]?.id, labVals.description, labVals.hours, labVals.hourlyRate, labVals.total]
-                    )),
-                    materials.map(matVals =>
-                       this.db.query( 
-                        `INSERT INTO materials
-                            (quote_id, description, quantity, unit_cost, total)
-                        VALUES($1, $2, $3, $4, $5)
-                        `, [quoteData?.rows[0]?.id, matVals.description, matVals.quantity, matVals.unitCost, matVals.total]
-                    ))
-            ]);
-			
-			return{
-				quoteData: {id: quoteData.rows[0].id, created_at: quoteData.rows[0].created_at },
-				customerId: customerData.rows[0].id
+	getQuotes = async(customerIds:Array<string>, userId:string, filter:string, limit:number, offset:number) => {
+		if(!userId) throw new AuthError("Invalid user", 404);
+		try{
+			const results = filter !== "ALL" ? 
+			(
+			    await this.db.query(
+			    `SELECT id, customer_id, status, total, markup, created_at,
+			    COUNT(*) OVER() AS total_count
+			    FROM quotes
+			    WHERE user_id = $1
+			    AND status = $2
+			    AND customer_id = ANY ($3::uuid[])
+			    ORDER BY created_at ASC
+			    LIMIT $4 OFFSET $5
+			    `, [userId, filter, customerIds, limit, offset]
+			)
+			):(
+			    await this.db.query(
+				  `SELECT
+					id,
+					customer_id, 
+					status,
+					total,
+					markup,
+					created_at,
+				  COUNT(*) OVER() AS total_count
+				  FROM quotes
+				  WHERE user_id = $1
+				  AND customer_id = ANY ($2::uuid[])
+				  ORDER BY created_at ASC
+				  LIMIT $3 OFFSET $4
+				  `, [userId, customerIds, limit, offset]
+			    ) 
+			)
+			return {
+			    quoteDetails: results?.rows,
+			    total: results?.rows[0].total_count ? parseInt(results.rows[0].total_count): 0
 			}
+		}catch(err){
+			throw err;
+		};
+	};
 
-        }catch(err){
-        	throw err;
+	changeQuoteStatus = async(quoteId:string, status:string) => {
+		if(!quoteId) throw new AppError("Quote not found.", 404);
+		try{    
+			await this.db.query(
+			    `UPDATE quotes 
+			    SET status = $1::quote_status_type
+			    WHERE id = $2
+			    `, [status, quoteId]
+			);
+		}catch(err){
+			throw err;
+		};
+	};
+
+	createQuote = async(newQuote:NEW_QUOTE) => {
+		const { userId, customer, quote, labor, materials } = newQuote;
+		if(!userId) throw new AuthError("Invalid user.");
+		try{
+
+			const { rows } = await this.db.query(
+				`WITH c AS(
+					INSERT INTO customers
+					(user_id, first_name, last_name, phone, email, address)
+					VALUES($1, $2, $3, $4, $5, $6)
+					RETURNING id
+				)
+				WITH q AS(
+					INSERT INTO quotes
+					(user_id, customer_id, status, markup, total)
+					VALUES($1, c.id, $7, $8, $9)
+					RETURNING id, created_at::date::text
+				)
+
+				INSERT INTO labor
+				(quote_id, description, hours, hourly_rate, total)
+				VALUES(q.id, $10, $11, $12, $13)
+
+				INSERT INTO materials
+				(quote_id, description, quantity, unit_cost, total)
+				VALUES(q.id, $16, $17, $18, $19)
+				
+				SELECT id AS customer_id FROM c
+				SELECT id AS quote_id, created_at FROM q
+				`,[
+					userId, 
+					customer.firstName, 
+					customer.lastName, 
+					customer.phone, 
+					customer.email, 
+					customer.address,
+					quote.status,
+					quote.markup,
+					quote.total,
+					labor.description,
+					labor.hours,
+					labor.hourlyRate,
+					labor.total,
+					materials.description,
+					materials.quantity,
+					materials.unitCost,
+					materials.total
+				]
+			);
+			return{
+				customerId:rows[0].customer_id,
+				quote:{
+					id:rows[0].quote_id,
+					createdAt:rows[0].created_at
+				}
+			};
+			
+		}catch(err){
+		throw err;
 		}
-    }
+	}
 
-    async deleteQuote(quoteId, userId){
+	deleteQuote = async(quoteId:string, userId:string) => {
 		if(!userId) throw new AppError("User not found.", 404);
-        try{
-            return await this.db.query(
-                `DELETE FROM quotes WHERE user_id = $1 AND id = $2`,
-                [userId, quoteId]
-            );
-        }catch(err){
-        	throw err;
-		}
-        
-    }
+		try{
+			await this.db.query(
+			    `DELETE FROM quotes WHERE user_id = $1 AND id = $2`,
+			    [userId, quoteId]
+			);
+		}catch(err){
+			throw err;
+		};
+	};
 
-    async monitorQuotes(userId){
-        if(!userId) throw new AppError("User not found.", 404);
-        try{
-            const results  = await this.db.query(
-                `SELECT 
-                    id,
-                    status,
-                    created_at
-                    FROM quotes
-                    WHERE user_id = $1
-                    AND status = 'APPROVED'
-                    AND created_at <= NOW() - INTERVAL '6 days'
-                `, [userId]
-            );
+	monitorQuotes = async(userId:string) => {
+		if(!userId) throw new AppError("User not found.", 404);
+		try{
+			const { rows }  = await this.db.query(
+			    `SELECT 
+				  id,
+				  status,
+				  created_at
+				  FROM quotes
+				  WHERE user_id = $1
+				  AND status = 'APPROVED'
+				  AND created_at <= NOW() - INTERVAL '6 days'
+			    `, [userId]
+			);
 
-			const quotes = results.rows;
+			// IF NO OVERDUE QUOTES RETURN
 
-            // IF NO OVERDUE QUOTES RETURN
+			if(!rows.length) return;	
 
-            if(!quotes.length) return;	
+			const qtIds = rows.map(qt => qt.id); 
 
-            const qtIds = quotes.map(qt => qt.id); 
+			await this.db.query(
+			    `UPDATE quotes
+				  SET status = 'UNPAID'
+				  WHERE id = ANY($1::uuid[])
+			    `, [qtIds]
+			);
 
-            await this.db.query(
-                `UPDATE quotes
-                    SET status = 'UNPAID'
-                    WHERE id = ANY($1::uuid[])
-                `, [qtIds]
-            );
+		}catch(err){
+			throw err;
+		};
+	};
 
-        }catch(err){
-        	throw err;
-		}
-    }
-	async getQuoteById(id){
+	getQuoteById = async(id:string) => {
 		if(!id) throw new AppError("Failed to provide quote Id. Please provide quote Id inorder to get quote.", 400);
 		try{
-			const results = await this.db.query(
+			const { rows } = await this.db.query(
 				`SELECT * FROM quotes
 					WHERE id = $1
 				`,[id]
 			)
-			return results.rows;
+			return rows;
 		}catch(err){
 			throw err;
 		}
 	}
+
+	getQuoteCountByStatus = async(userId:string, status:Array<string>) => {
+		if(!userId) throw new AuthError("Invalid user.", 404);
+		if(status.length === 0) throw new AppError("Failed to provide status", 400);
+
+		try{
+			const { rows } = await this.db.query(
+				`SELECT COUNT(*)
+				FROM quotes
+				WHERE user_id = $1
+				AND status = ANY($2)::quote_status_type
+				`,[userId, status]
+			);
+
+			return rows;
+		}catch(e:Error | any){
+			throw e;	
+		};
+	};
+
+	getMonthlyTotal = async(userId:string) => {
+		if(!userId) throw new AuthError("Invalid user.", 404);
+		try{
+			const { rows } = await this.db.query(
+				`SELECT SUM(total) AS total_value
+				   FROM quotes
+				   WHERE user_id = $1
+				   AND created_at >= $2
+				   AND created_at < $3
+				   AND status = 'COMPLETED'
+				   `, [userId, date.startOfMonth, date.endOfMonth]
+			);
+			return rows[0]?.total_value ?? 0;
+		}catch(e:Error | any){
+			throw e;
+		};
+	};
+
+	getAllQuoteInfo = async(quoteIds:Array<string>) => {
+		try{
+			const results = await this.db.query(
+			    `SELECT 
+				  description, 
+				  hours,
+				  hourly_rate,
+				  quote_id
+			    FROM labor
+			    WHERE quote_id = ANY ($1)
+			    `, [quoteIds]
+			);
+			
+			return results.rows || []
+		}catch(err){
+			throw err;
+		};
+	};
 }
 

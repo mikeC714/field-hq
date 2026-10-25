@@ -1,20 +1,6 @@
 import bcrypt from "bcrypt";
 import { AppError, AuthError } from "../../error/error.handler.ts";
-
-interface USER{
-	id?:string;
-	firstName?:string;
-	lastName?:string;
-	email:string;
-	password?:string;
-};
-interface USER_QUERY{
-	id?:string;
-	first_name?:string;
-	last_name?:string;
-	email?:string;
-	password?:string;
-};
+import type { USER, USER_QUERY } from "../../types/user.d.ts";
 
 export class AuthService{
 	db:any;

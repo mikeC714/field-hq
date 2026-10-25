@@ -3,8 +3,8 @@ import { TokenService } from "../auth/service/token.ts";
 import { AppError, AuthError } from "../error/error.handler.js";
 import { validateEmail, catchAsync } from "../lib/lib.ts";
 import bcrypt from "bcrypt";
-
 import type { Request, Response } from "express";
+import type { VALIDATED_REQUEST } from "../types/param.d.ts";
 	
 
 export class AuthController {

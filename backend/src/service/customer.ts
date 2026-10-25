@@ -1,7 +1,5 @@
 import { AuthError } from "../error/error.handler.js";
 
-
-
 export class CustomerService{
 	private db:any;
 
@@ -59,27 +57,4 @@ export class CustomerService{
 	};
 };
 
-
-// GO TO QUOTEs
-		//   async customerQuoteInfo(quotes){
-		//       if(!quotes || quotes.length === 0){
-		//           return {
-		//               quotes: [], jobs: []
-		//           }
-		//       }
-		//       try{
-		//           const quotedJobs = await Promise.all(
-		//               quotes.map(async quote => {
-		//                   const jobInfo = await JobService.getJobInfo([quote]);
-		//                   return {
-		//                       ...quote,
-		//                       job: jobInfo
-		//                   }
-		//               })
-		//           );
-		//           return quotedJobs
-		//       }catch(err){
-		//       	throw err;
-		// }
-		//   }
 

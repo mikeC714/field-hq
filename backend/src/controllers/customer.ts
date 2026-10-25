@@ -2,38 +2,35 @@ import { catchAsync } from "../lib/lib.ts";
 import { QuoteService } from "../service/quote.ts";
 import { JobService } from "../service/job.ts";
 import { CustomerService } from "../service/customer.ts";
-import { TokenService } from "../auth/service/token.ts";
-import { AppError, AuthError } from "../error/error.handler.js";
+import { AppError } from "../error/error.handler.js";
 import { cache } from "../config/redis.config.js";
 import type { Request, Response } from "express";
 
 
 export class CustomerController{
-	private tokenService:TokenService;
 	private quoteService:QuoteService;
 	private customerService:CustomerService;
 	private jobService:JobService;
 
-	constructor(customerService:CustomerService, jobService:JobService, tokenService:TokenService, quoteService:QuoteService){
+	constructor(customerService:CustomerService, jobService:JobService, quoteService:QuoteService){
 		this.customerService = customerService;
 		this.jobService = jobService;
 		this.quoteService = quoteService;
-		this.tokenService = tokenService;
 	}
 
-	getCustomerInfo = catchAsync(async(req:Request,res:Response) => {
+	getCustomerInfo = catchAsync(async(req:Request | any, res:Response) => {
 		const userId = req.user;
 		if(!userId) throw new AppError("User not found", 404);
 
 		const customerIds = await this.customerService.getAllCustomerIds(userId);
 		if(customerIds.length === 0 || !customerIds) return res.status(200).json({ customerDetails: [] });
 
-		const cusDetails = await this.customerService.getCustomerDetails(customerIds, userId)
+		const customerDetails = await this.customerService.getCustomerDetails(customerIds, userId)
 
-		return res.status(200).json({ customerDetails: cusDetails });
+		return res.status(200).json({ customerDetails });
     });
 
-    getAllUserCustomers = catchAsync(async(req:Request<{}, {}, {}, { filter:string, page:string, limit:string }>, res:Response) => {
+    getAllUserCustomers = catchAsync(async(req:Request<{}, {}, {}, { filter:string, page:string, limit:string }> | any, res:Response) => {
 		const userId = req.user;
 		const filter = req.query.filter
 		const page  = parseInt(req.query.page)  || 1;
@@ -81,8 +78,8 @@ export class CustomerController{
 			};
 		};
 
-		const { quoteDetails, total } = await this.quoteService.getQuoteInfo(customerIds, userId, filter, limit, offset);
-		const  data = await this.jobService.getJobInfo(quoteDetails); 
+		const { quoteDetails, total } = await this.quoteService.getQuotes(customerIds, userId, filter, limit, offset);
+		const  data = await this.quoteService.getQuoteInfo(quoteDetails); 
 
 		// HANDLE THIS LOGIC STRICTLY WITHIN PSQL
 		const customerData = customers.map((cus:any) => {
@@ -117,54 +114,6 @@ export class CustomerController{
 		});
 	});
  
-	getCustomerQuoteInfo = catchAsync(async(req:Request, res:Response) => {
-		const user = req.user;
-
-		const customerIds = await this.customerService.getAllCustomerIds(user);
-		if(customerIds.length === 0 || !customerIds) return res.status(200).json({ customerQuoteDetails: [] });	
-
-		const quotes = await this.quoteService.getQuoteInfo(customerIds, user);
-		const customerQuoteDetails = await this.customerService.customerQuoteInfo(quotes, user)
-
-		return res.status(200).json({ customerQuoteDetails });
-	});
-
-	getCustomerStatus = catchAsync(async(req:Request, res:Response) => {
-		const userId = req.user;
-
-		const customerIds = await this.customerService.getAllCustomerIds(userId);
-		if(!customerIds || customerIds.length === 0) return res.status(200).json({ success: true }); 
-
-		const quoteStatus = await this.quoteService.getAllStatuses(customerIds);
-
-		return res.status(200).json({ quoteStatus });
-	});
-
-	createCustomerQuote = catchAsync(async(req:Request, res:Response) =>{
-		const user = req.user;
-		const { customer, labor, materials, quote } = req.body;
-
-		for(const [_, val] of Object.entries(customer)){
-			if(val.length === 0) throw new AppError("Missing Customer Input. Please fill all input fields.", 400);
-		};
-		const { quoteData, customerId } = await thi.squoteService.createQuote(user, customer, quote, labor, materials);
-
-		const emailToken = this.auth.signEmail({ id: user, quoteId: quoteData.id, customerId }, "1d")
-		await this.tokenService.storeQuoteToken(quoteData.id, emailToken);
-
-		return res.status(200).json({
-			success: true,
-			id: quoteData.id,
-		});
-	});
-
-	deleteCustomerQuote = catchAsync(async(req:Request,res:Response) => {
-		const user = req.user;
-		const { quoteId } = req.body;
-		await this.quoteService.deleteQuote(quoteId, user);
-
-		return res.status(200).json({ message: `Quote ${quoteId} was successfully deleted.` });
-	});
 
 
 };

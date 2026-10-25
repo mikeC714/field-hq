@@ -37,7 +37,7 @@ export class QuoteController{
 		const customerIds = await this.customerService.getAllCustomerIds(userId);
 		if(customerIds.length === 0 || !customerIds) return res.status(200).json({ customerQuoteDetails: [] });	
 
-		const quotes = await this.quoteService.getQuoteInfo(customerIds, userId);
+		const quotes = await this.quoteService.getAllQuoteInfo(customerIds, userId);
 		const customerQuoteDetails = await this.customerService.customerQuoteInfo(quotes, userId)
 
 		return res.status(200).json({ customerQuoteDetails });
@@ -67,5 +67,17 @@ export class QuoteController{
 		await this.quoteService.deleteQuote(quoteId, user);
 
 		return res.status(200).json({ message: `Quote ${quoteId} was successfully deleted.` });
+	});
+
+	allQuoteMetaData = catchAsync(async(req:Request | any, res:Response) => {
+		const user = req.user;
+		if(!user) throw new AppError("User not found.", 404);
+
+		const [ jobs, monthlyTotal ] = await Promise.all([
+			this.quoteService.getJobCountByStatus(user, ["unpaid","complete", "approved"]),
+			this.quoteService.getMonthlyTotal(user)
+		]);
+
+	    return res.status(200).json({ jobs, monthlyTotal });
 	});
 }
