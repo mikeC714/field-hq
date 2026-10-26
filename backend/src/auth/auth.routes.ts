@@ -1,22 +1,17 @@
 import express from 'express';
 import { AuthController } from "./auth.controllers.ts";
-import { AuthService } from "./service/auth.service.ts";
-import { TokenService } from "./service/token.service.ts";
-import { Auth } from "./auth.ts";
-import { handlePasswordReset, handlePasswordResetAcceptance, sendPasswordReset } from '../controllers/email.controller.js';
+import { AuthService } from "./service/auth.ts";
+import { TokenService } from "./service/token.ts";
 import { authLimiter } from '../middleware/ratelimiter.js';
-import { verifyToken } from '../middleware/auth.middleware.js';
+import { verifyToken } from "./auth.middleware.ts";
+import { handlePasswordReset, handlePasswordResetAcceptance, sendPasswordReset } from '../controllers/email.controller.js';
 import cors from "cors";
 
 
 
-export function AuthRoutes(db:any){
+export function AuthRoutes(authService:AuthService, tokenService:TokenService){
 	const authRouter = express.Router();
-
-	const auth = new Auth();
-	const service = new AuthService(db);
-	const tService = new TokenService(db, auth);
-	const controller = new AuthController(service, tService);
+	const controller = new AuthController(authService, tokenService);
 
 	authRouter.post('/auth/forgot-password', sendPasswordReset);
 	authRouter.get('/auth/reset-password', cors({ origin: process.env.FRONTEND_URL, credentials:false }), handlePasswordReset);

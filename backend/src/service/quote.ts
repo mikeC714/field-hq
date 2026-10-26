@@ -13,26 +13,20 @@ export class QuoteService{
 		try{
 			const results = filter !== "ALL" ? 
 			(
-			    await this.db.query(
-			    `SELECT id, customer_id, status, total, markup, created_at,
-			    COUNT(*) OVER() AS total_count
-			    FROM quotes
-			    WHERE user_id = $1
-			    AND status = $2
-			    AND customer_id = ANY ($3::uuid[])
-			    ORDER BY created_at ASC
-			    LIMIT $4 OFFSET $5
-			    `, [userId, filter, customerIds, limit, offset]
-			)
+				await this.db.query(
+					`SELECT id, customer_id, status, total, markup, created_at,
+					COUNT(*) OVER() AS total_count
+					FROM quotes
+					WHERE user_id = $1
+					AND status = $2
+					AND customer_id = ANY ($3::uuid[])
+					ORDER BY created_at ASC
+					LIMIT $4 OFFSET $5
+					`, [userId, filter, customerIds, limit, offset]
+				)
 			):(
-			    await this.db.query(
-				  `SELECT
-					id,
-					customer_id, 
-					status,
-					total,
-					markup,
-					created_at,
+				await this.db.query(
+				  `SELECT id, customer_id, status, total, markup, created_at,
 				  COUNT(*) OVER() AS total_count
 				  FROM quotes
 				  WHERE user_id = $1
@@ -40,12 +34,14 @@ export class QuoteService{
 				  ORDER BY created_at ASC
 				  LIMIT $3 OFFSET $4
 				  `, [userId, customerIds, limit, offset]
-			    ) 
-			)
+				) 
+			);
+
 			return {
-			    quoteDetails: results?.rows,
+			    quote: results?.rows,
 			    total: results?.rows[0].total_count ? parseInt(results.rows[0].total_count): 0
 			}
+
 		}catch(err){
 			throw err;
 		};
@@ -226,11 +222,7 @@ export class QuoteService{
 	getAllQuoteInfo = async(quoteIds:Array<string>) => {
 		try{
 			const results = await this.db.query(
-			    `SELECT 
-				  description, 
-				  hours,
-				  hourly_rate,
-				  quote_id
+			    `SELECT description, hours, hourly_rate, quote_id
 			    FROM labor
 			    WHERE quote_id = ANY ($1)
 			    `, [quoteIds]

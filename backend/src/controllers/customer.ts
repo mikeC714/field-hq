@@ -1,20 +1,17 @@
 import { catchAsync } from "../lib/lib.ts";
 import { QuoteService } from "../service/quote.ts";
-import { JobService } from "../service/job.ts";
 import { CustomerService } from "../service/customer.ts";
 import { AppError } from "../error/error.handler.js";
-import { cache } from "../config/redis.config.js";
+import { cache } from "../config/redis.ts";
 import type { Request, Response } from "express";
 
 
 export class CustomerController{
 	private quoteService:QuoteService;
 	private customerService:CustomerService;
-	private jobService:JobService;
 
-	constructor(customerService:CustomerService, jobService:JobService, quoteService:QuoteService){
+	constructor(customerService:CustomerService, quoteService:QuoteService){
 		this.customerService = customerService;
-		this.jobService = jobService;
 		this.quoteService = quoteService;
 	}
 
@@ -25,12 +22,12 @@ export class CustomerController{
 		const customerIds = await this.customerService.getAllCustomerIds(userId);
 		if(customerIds.length === 0 || !customerIds) return res.status(200).json({ customerDetails: [] });
 
-		const customerDetails = await this.customerService.getCustomerDetails(customerIds, userId)
+		const customer = await this.customerService.getCustomerInfo(customerIds, userId)
 
-		return res.status(200).json({ customerDetails });
+		return res.status(200).json({ customer });
     });
 
-    getAllUserCustomers = catchAsync(async(req:Request<{}, {}, {}, { filter:string, page:string, limit:string }> | any, res:Response) => {
+    getAllCustomers = catchAsync(async(req:Request<{}, {}, {}, { filter:string, page:string, limit:string }> | any, res:Response) => {
 		const userId = req.user;
 		const filter = req.query.filter
 		const page  = parseInt(req.query.page)  || 1;
@@ -45,7 +42,7 @@ export class CustomerController{
 
 			return res.status(200).json({
 				success: true,
-				customerData: cached.customerData,
+				customer: cached.customerData,
 				paginated:{
 					total: cached.total,
 					page,
@@ -57,12 +54,11 @@ export class CustomerController{
 			});
 		};
 
-		const customerIds = await this.customerService.getAllCustomerIds(userId);
-		const customers = await this.customerService.getAllCustomerInfo(userId);
+		const [customerIds, customers] = await Promise.all([ this.customerService.getAllCustomerIds(userId),  this.customerService.getAllCustomerInfo(userId)]);
 		//no customers just return
 		if(!customers || customers.length === 0){
 			return{
-				cusData: {
+				customer: {
 					quote:{
 						job:{}		
 					},
@@ -78,14 +74,13 @@ export class CustomerController{
 			};
 		};
 
-		const { quoteDetails, total } = await this.quoteService.getQuotes(customerIds, userId, filter, limit, offset);
-		const  data = await this.quoteService.getQuoteInfo(quoteDetails); 
+		const { quote, total } = await this.quoteService.getQuotes(customerIds, userId, filter, limit, offset);
 
 		// HANDLE THIS LOGIC STRICTLY WITHIN PSQL
 		const customerData = customers.map((cus:any) => {
 			return{
 				...cus,
-				quote: quoteDetails.filter((qt:any) => qt.customer_id === cus.id).map((qts:any) => {
+				quote: quote.filter((qt:any) => qt.customer_id === cus.id).map((qts:any) => {
 					return{
 						...qts,
 						job: data.filter((job:any) => job.quote_id === qts.id)
@@ -95,14 +90,13 @@ export class CustomerController{
 		});
 
 		const totalPages = Math.ceil(total / limit);      
-
 		// set cache value
 		await cache.set(`${userId}`, JSON.stringify({customerData, total, totalPages}), 'EX', 10_000);
 
 		// this return is strictly assuming that the cache is null since the check statement has not been executed 
 		return res.status(200).json({
 			success: true,
-			cusData: customerData,
+			customer: customerData,
 			paginated: {
 				total,
 				page,
@@ -113,9 +107,6 @@ export class CustomerController{
 			}
 		});
 	});
- 
-
-
 };
 
 

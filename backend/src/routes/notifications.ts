@@ -1,9 +1,16 @@
-import express from 'express';
-import { verifyToken } from "../middleware/auth.middleware.js";
-import { allNotifications } from "../controllers/notifications.js";
+import { Router } from 'express';
+import { CustomerService } from "../service/customer.ts";
+import { NotificationService } from "../service/notifications.ts";
+import { NotificationController } from "../controllers/notifications.ts";
+import { verifyToken } from "../auth/auth.middleware.js";
 
-const notiRouter = express.Router();
 
-notiRouter.get('/notifications', verifyToken, allNotifications)
+export function NotificationRoutes(notificationService:NotificationService, customerService:CustomerService){
+	const router = Router();
 
-export default notiRouter;
+	const controller = new NotificationController(notificationService, customerService);
+
+	router.get('/notifications', verifyToken, controller.allNotifications)
+
+	return router; 
+}

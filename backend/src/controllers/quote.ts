@@ -5,6 +5,8 @@ import { TokenService } from "../auth/service/token.ts";
 import { Auth } from "../auth/auth.ts";
 import { AppError } from "../error/error.handler.ts";
 import type { Request, Response } from "express";
+import type { CUSTOMER } from "../types/customer.d.ts";
+
 
 
 export class QuoteController{
@@ -12,6 +14,14 @@ export class QuoteController{
 	private quoteService:QuoteService;
 	private tokenService:TokenService;
 	private auth:Auth
+	private STATUS = [
+		"complete",
+		"approved",
+		"unpaid",
+		"pending",
+		"sent",
+		"draft",
+	];
 
 	constructor(customerService:CustomerService, quoteService:QuoteService, tokenService:TokenService, auth:Auth){
 		this.customerService = customerService;
@@ -20,48 +30,36 @@ export class QuoteController{
 		this.auth = auth;
 	};
 
-	getCustomerStatus = catchAsync(async(req:Request, res:Response) => {
-		const userId = req.user;
-
-		const customerIds = await this.customerService.getAllCustomerIds(userId);
-		if(!customerIds || customerIds.length === 0) return res.status(200).json({ success: true }); 
-
-		const quoteStatus = await this.quoteService.getAllStatuses(customerIds);
-
-		return res.status(200).json({ quoteStatus });
-	});
-
-	getCustomerQuoteInfo = catchAsync(async(req:Request, res:Response) => {
+	getAllQuoteInfo = catchAsync(async(req:Request | any, res:Response) => {
 		const userId = req.user;
 
 		const customerIds = await this.customerService.getAllCustomerIds(userId);
 		if(customerIds.length === 0 || !customerIds) return res.status(200).json({ customerQuoteDetails: [] });	
 
-		const quotes = await this.quoteService.getAllQuoteInfo(customerIds, userId);
-		const customerQuoteDetails = await this.customerService.customerQuoteInfo(quotes, userId)
+		const quotes = await this.quoteService.getAllQuoteInfo(customerIds);
 
-		return res.status(200).json({ customerQuoteDetails });
+		return res.status(200).json({ quotes });
 	});
 
-	createCustomerQuote = catchAsync(async(req:Request, res:Response) =>{
+	createQuote = catchAsync(async(req:Request | any, res:Response) =>{
 		const userId = req.user;
-		const { customer, labor, materials, quote } = req.body;
+		const { customer } = req.body;
 
-		for(const [_, val] of Object.entries(customer)){
+		for(const [_, val] of Object.entries(customer as CUSTOMER)){
 			if(val.length === 0) throw new AppError("Missing Customer Input. Please fill all input fields.", 400);
 		};
-		const { quoteData, customerId } = await this.quoteService.createQuote(userId, customer, quote, labor, materials);
+		const { quote , customerId } = await this.quoteService.createQuote(req.body);
 
-		const emailToken = this.auth.signEmail({ id: userId, quoteId: quoteData.id, customerId }, "1d")
-		await this.tokenService.storeQuoteToken(quoteData.id, emailToken);
+		const emailToken = this.auth.signEmail({ id:userId, quoteId:quote.id, customerId }, "1d");
+		await this.tokenService.storeQuoteToken(quote.id , emailToken);
 
 		return res.status(200).json({
 			success: true,
-			id: quoteData.id,
+			quoteId: quote.id,
 		});
 	});
 
-	deleteCustomerQuote = catchAsync(async(req:Request,res:Response) => {
+	deleteQuote = catchAsync(async(req:Request | any, res:Response) => {
 		const user = req.user;
 		const { quoteId } = req.body;
 		await this.quoteService.deleteQuote(quoteId, user);
@@ -69,15 +67,15 @@ export class QuoteController{
 		return res.status(200).json({ message: `Quote ${quoteId} was successfully deleted.` });
 	});
 
-	allQuoteMetaData = catchAsync(async(req:Request | any, res:Response) => {
+	monthlyQuoteInfo = catchAsync(async(req:Request | any, res:Response) => {
 		const user = req.user;
 		if(!user) throw new AppError("User not found.", 404);
 
-		const [ jobs, monthlyTotal ] = await Promise.all([
-			this.quoteService.getJobCountByStatus(user, ["unpaid","complete", "approved"]),
+		const [ quotes, monthlyTotal ] = await Promise.all([
+			this.quoteService.getQuoteCountByStatus(user, this.STATUS),
 			this.quoteService.getMonthlyTotal(user)
 		]);
 
-	    return res.status(200).json({ jobs, monthlyTotal });
+	    return res.status(200).json({ quotes, monthlyTotal });
 	});
 }

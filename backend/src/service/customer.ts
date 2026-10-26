@@ -39,7 +39,7 @@ export class CustomerService{
 		};
 	};
 
-	getCustomerDetails = async(customerIds:Array<string>, userId:string) => {
+	getCustomerInfo = async(customerIds:Array<string>, userId:string) => {
 		if(!userId) throw new AuthError("Invalid user.", 404);
 		try{
 			const { rows } = await this.db.query(

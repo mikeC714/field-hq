@@ -1,6 +1,6 @@
 import { Pool } from "pg";
 
-export const db = new Pool({
+const db = new Pool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -11,7 +11,7 @@ export const db = new Pool({
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 1000
 })
-export const test_db = new Pool({
+const test_db = new Pool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -26,3 +26,5 @@ export const test_db = new Pool({
 
 test_db.on('connect', () => console.log("CONNECTED TO TEST DB"))
 test_db.on('error', (err) => console.log(err))
+
+export { test_db, db };
