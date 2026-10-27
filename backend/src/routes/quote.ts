@@ -16,11 +16,10 @@ export function QuoteRoutes(quoteService:QuoteService, customerService:CustomerS
 
 	const quote = new QuoteController(customerService, quoteService, tokenService, auth);
 
-	quoteRouter.get('/quote/acceptance', cors({ origin: process.env.FRONTEND_URL, credentials:false }), quote.handleQuoteAcceptance);
-	quoteRouter.post('/quote/acceptance', cors({ origin: process.env.FRONTEND_URL, credentials:false }), quote.handleQuoteAcceptanceConfirm);
+	quoteRouter.get('/quote/acceptance', cors({ origin: process.env.FRONTEND_URL, credentials:false }), quote.quoteAccept);
+	quoteRouter.post('/quote/acceptance', cors({ origin: process.env.FRONTEND_URL, credentials:false }), quote.quoteAcceptConfirm);
 
 	quoteRouter.get('/quote', monitorQuotes,  verifyToken, quote.getAllQuoteInfo);
-	quoteRouter.post('/quote/send', authLimiter, verifyToken, quote.handleSending);
 	quoteRouter.post('/quote/create', authLimiter, verifyToken, quote.createQuote);
 	quoteRouter.delete('/quote/delete', verifyToken, quote.deleteQuote);
 

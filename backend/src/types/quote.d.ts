@@ -2,6 +2,29 @@ import type { CUSTOMER } from "./customer.d.ts";
 import type { LABOR } from "./labor.d.ts";
 import type { MATERIALS } from "./materials.d.ts";
 
+interface QUOTE_CONTENT{
+	user:{
+		firstName:string;
+		lastName:string;
+		email:string;
+		phone:string;
+	};
+	customer:{
+		firstName:string;
+		lastName:string;
+		email:string;
+	};
+	quote:{
+		total:string | number;
+		subTotal:string | number;
+	};
+	labor:{
+
+	};
+	materials:{
+
+	};
+};
 
 interface QUOTE{
 	id?:string;
@@ -19,3 +42,4 @@ interface NEW_QUOTE{
 };
 
 
+export { QUOTE, NEW_QUOTE, QUOTE_CONTENT };

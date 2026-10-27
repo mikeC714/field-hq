@@ -1,7 +1,7 @@
 import { AuthService } from "../auth/service/auth.ts";
 import { TokenService } from "../auth/service/token.ts";
 import { AppError, AuthError } from "../error/error.handler.js";
-import { validateEmail, catchAsync } from "../lib/lib.ts";
+import { validateEmail, catchAsync, crypt } from "../lib/lib.ts";
 import bcrypt from "bcrypt";
 import type { Request, Response } from "express";
 import type { VALIDATED_REQUEST } from "../types/param.d.ts";
@@ -82,6 +82,32 @@ export class AuthController {
 		return res.status(200).json({ success: true });
 	});
 
+	 passwordReset = catchAsync(async(req:Request, res:Response) => {
+		const token = req.query.token;
+		if(!token) return res.redirect(302, `${process.env.FRONTEND_URL}/404`);
+
+		const decrypted = crypt.decrypt(token);
+		const valid:any = this.auth.verifyEmail(decrypted);
+		if(valid.payload.purpose !== "password_reset") return res.redirect(302, `${process.env.FRONTEND_URL}/404`);
+
+		const user = await this.authService.getUserById(valid.payload.id);
+		if(!user) return res.status(401).json({ error:"Unauthorized user" });
+
+		return res.status(200).json({ success:true });
+	}); 
+
+	passwordResetAccept = catchAsync(async(req:Request, res:Response) => {
+		const { newPass,token } = req.body;
+		if(!newPass) return res.status(400).json({ message: "Failed to provide input requirements.Please try again." });
+		if(!token) return res.redirect(302, `${process.env.FRONTEND_URL}/404`);
+
+		const decrypted = crypt.decrypt(token);
+		const valid:any = this.auth.verifyEmail(decrypted);
+		
+		await this.authService.updatePassword(valid.payload.id, newPass);	
+
+		return res.status(200);
+	}); 
 
 };
 

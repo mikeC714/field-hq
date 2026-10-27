@@ -1,5 +1,5 @@
 
-export const quoteEmailTemplate = ({ userInfo, customer, link, senderName, expiry }) => (
+export const quoteEmailTemplate = ({ user, customer, link, senderName, expiry }) => (
 	`
 <div style="font-family: Arial, sans-serif; max-width: 560px; margin: 0 auto; padding: 20px;">
 

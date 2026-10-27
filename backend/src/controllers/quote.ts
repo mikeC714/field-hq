@@ -1,4 +1,4 @@
-import { catchAsync } from "../lib/lib.ts";
+import { catchAsync, crypt } from "../lib/lib.ts";
 import { CustomerService } from "../service/customer.ts";
 import { QuoteService } from "../service/quote.ts";
 import { TokenService } from "../auth/service/token.ts";
@@ -77,5 +77,38 @@ export class QuoteController{
 		]);
 
 	    return res.status(200).json({ quotes, monthlyTotal });
+	});
+
+
+	quoteAccept = catchAsync(async(req:Request<{}, {}, {}, { token:string }>, res:Response) => {
+		const token = req.query.token;
+		if(!token) return res.status(400).json({ error:"Link has expired. Get in contact with sender inorder to send link again" });
+
+		const decrypted = crypt.decrypt(token);
+
+		const valid:any = this.auth.verifyEmail(decrypted);
+		if(valid.payload.purpose !== "quote_acceptance") return res.redirect(302, `${process.env.FRONTEND_URL}/404`);
+
+		const quote = await this.quoteService.getQuoteById(valid.payload.quoteId)
+		if(!quote || quote.length === 0) return res.status(400).json({ error:"Failed to find valid quote." });
+
+		return res.status(200).json({ success:true });
+	});
+
+	quoteAcceptConfirm = catchAsync(async(req:Request<{}, {}, {}, { token:string }>,res:Response) => {
+		const token = req.query.token;
+		if(!token) return res.redirect(302, `${process.env.FRONTEND_URL}/404`);
+
+		const decrypted = crypt.decrypt(token);
+		const valid:any = this.auth.verifyEmail(decrypted);
+		if(valid.payload.purpose !== "quote_acceptance") return res.redirect(302, `${process.env.FRONTEND_URL}/404`);
+
+
+		const quote = await this.quoteService.getQuoteById(valid.payload.quoteId)
+		if(!quote || quote.length === 0) return res.status(400).json({ error:"Failed to find valid quote." });
+		if(quote.status === "APPROVED") return res.status(200);
+
+		await this.quoteService.changeQuoteStatus(valid.payload.quoteId, "APPROVED");
+		return res.status(200).json({ success:true });
 	});
 }

@@ -8,10 +8,13 @@ import { AuthService } from "./auth/service/auth.ts";
 import { TokenService } from "./auth/service/token.ts";
 import { QuoteService } from "./service/quote.ts";
 import { CustomerService } from "./service/customer.ts";
+import { EmailService } from "./service/email.ts";
 import { AuthRoutes } from "./auth/auth.routes.ts";
 import { QuoteRoutes } from "./routes/quote.ts";
 import { CustomerRoutes } from "./routes/customer.ts";
+import { EmailRoutes } from "./routes/email.ts";
 import { AppError, AuthError } from "./error/error.handler.js";
+import { Resend } from "resend";
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import helmet from "helmet";
@@ -19,12 +22,15 @@ import type { Request, Response, NextFunction } from "express";
 
 const PORT = process.env.PORT
 const app = express();
+const resend = new Resend(process.env.RESEND);
+
 
 const auth = new Auth();
 const authService = new AuthService(db);
 const tokenService = new TokenService(db, auth);
 const quoteService = new QuoteService(db);
 const customerService = new CustomerService(db);
+const emailService = new EmailService(resend)
 
 app.use(express.json());
 app.use(cookieParser());
@@ -34,11 +40,11 @@ app.use(cors({
     credentials: true
 }));
 
-
 app.use('/api', AuthRoutes(authService, tokenService));
 app.use('/api', CustomerRoutes(customerService, quoteService));
 app.use('/api', QuoteRoutes(quoteService, customerService, auth, tokenService));
 app.use('/api', NotiRoutes());
+app.use('/api', EmailRoutes(emailService, tokenService, quoteService, authService, auth));
 
 
 app.use((req:Request, res:Response) => {
