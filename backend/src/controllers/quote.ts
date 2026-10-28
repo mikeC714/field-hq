@@ -3,7 +3,7 @@ import { CustomerService } from "../service/customer.ts";
 import { QuoteService } from "../service/quote.ts";
 import { TokenService } from "../auth/service/token.ts";
 import { Auth } from "../auth/auth.ts";
-import { AppError } from "../error/error.handler.ts";
+import { AppError } from "../error/error.ts";
 import type { Request, Response } from "express";
 import type { CUSTOMER } from "../types/customer.d.ts";
 
@@ -72,7 +72,7 @@ export class QuoteController{
 		if(!user) throw new AppError("User not found.", 404);
 
 		const [ quotes, monthlyTotal ] = await Promise.all([
-			this.quoteService.getQuoteCountByStatus(user, this.STATUS),
+			this.quoteService.getQuoteCountByStatus(user, ["completed", "approved", "unpaid"]),
 			this.quoteService.getMonthlyTotal(user)
 		]);
 

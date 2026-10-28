@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { apiFetch } from "../utils/apiFetch.tsx";
+import { apiFetch, url } from "../lib/lib.tsx";
 
 export function useCustomers(){
 	const { data, isLoading, isError } = useQuery({
@@ -7,7 +7,7 @@ export function useCustomers(){
 		queryFn: async() => await apiFetch(url),
 		staleTime:Infinity,
 		gcTime:10,
-	})
+	});
 
 	return {
 		customers:data,

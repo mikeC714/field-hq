@@ -4,7 +4,7 @@ import { QuoteController } from "../controllers/quote.ts";
 import { CustomerService } from "../service/customer.ts";
 import { Auth } from "../auth/auth.ts";
 import { TokenService } from "../auth/service/token.ts";
-import { authLimiter } from '../middleware/ratelimiter.ts';
+import { limiter } from '../middleware/ratelimiter.ts';
 import { verifyToken } from "../auth/auth.middleware.ts";
 import { monitorQuotes } from '../middleware/quote.ts';
 import cors from "cors";
@@ -20,7 +20,7 @@ export function QuoteRoutes(quoteService:QuoteService, customerService:CustomerS
 	quoteRouter.post('/quote/acceptance', cors({ origin: process.env.FRONTEND_URL, credentials:false }), quote.quoteAcceptConfirm);
 
 	quoteRouter.get('/quote', monitorQuotes,  verifyToken, quote.getAllQuoteInfo);
-	quoteRouter.post('/quote/create', authLimiter, verifyToken, quote.createQuote);
+	quoteRouter.post('/quote/create', limiter, verifyToken, quote.createQuote);
 	quoteRouter.delete('/quote/delete', verifyToken, quote.deleteQuote);
 
 	return quoteRouter;

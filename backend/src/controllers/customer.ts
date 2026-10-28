@@ -1,7 +1,7 @@
 import { catchAsync } from "../lib/lib.ts";
 import { QuoteService } from "../service/quote.ts";
 import { CustomerService } from "../service/customer.ts";
-import { AppError } from "../error/error.handler.js";
+import { AppError } from "../error/error.ts";
 import { cache } from "../config/redis.ts";
 import type { Request, Response } from "express";
 

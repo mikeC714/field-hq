@@ -1,14 +1,15 @@
 import bcrypt from "bcrypt";
-import { AppError, AuthError } from "../../error/error.handler.ts";
+import { AppError, AuthError } from "../../error/error.ts";
 import type { USER, USER_QUERY } from "../../types/user.d.ts";
 
 export class AuthService{
 	db:any;
 	constructor(db:any){ this.db = db };
 
-	hashPass = async(password:string, rounds:number) => {
+	hashPass = async(password:string, rounds:number):Promise<string> => {
 		if(!password) throw new AppError("Failed to provide password", 400);
 		try{
+			console.log("WITHING HASH PASS")
 			const safePass = await bcrypt.hash(password, rounds);
 			return safePass;
 		}catch(e){
@@ -29,7 +30,9 @@ export class AuthService{
 
 			return results.rows[0]; 
 		}catch(err:Error | any){
-			if(err.code === "23505") throw new AuthError("Invalid credentials", 409);
+			if(err.code === "23505"){
+				throw new AuthError("Invalid credentials", 409)
+			};
 			throw err;
 		};
 	};

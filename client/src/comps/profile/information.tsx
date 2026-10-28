@@ -21,7 +21,7 @@ export function Information({ info }:PROPS){
 			<section className="profileSection1">
 				<h3 className="profileInfoHeader">User Information</h3>
 				<div className="profileContent">
-
+					
 				</div>
 			</section>
 			<section className="profileSection2">

@@ -1,5 +1,5 @@
 import { date } from "../lib/lib.ts";
-import { AppError, AuthError } from "../error/error.handler.js";
+import { AppError, AuthError } from "../error/error.ts";
 import type { NEW_QUOTE } from "../types/quote.d.ts";
 
 export class QuoteService{
@@ -188,8 +188,10 @@ export class QuoteService{
 
 		try{
 			const { rows } = await this.db.query(
-				`SELECT COUNT(*)
+				`SELECT status, COUNT(*) AS count
 				FROM quotes
+				GROUP BY status
+				ORDER BY count DESC
 				WHERE user_id = $1
 				AND status = ANY($2)::quote_status_type
 				`,[userId, status]

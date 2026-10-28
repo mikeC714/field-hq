@@ -1,6 +1,7 @@
+import { Auth } from "./auth.ts";
 import { AuthService } from "../auth/service/auth.ts";
 import { TokenService } from "../auth/service/token.ts";
-import { AppError, AuthError } from "../error/error.handler.js";
+import { AppError, AuthError } from "../error/error.ts";
 import { validateEmail, catchAsync, crypt } from "../lib/lib.ts";
 import bcrypt from "bcrypt";
 import type { Request, Response } from "express";
@@ -10,8 +11,10 @@ import type { VALIDATED_REQUEST } from "../types/param.d.ts";
 export class AuthController {
 	private authService:AuthService;
 	private tokenService:TokenService;
+	private auth:Auth;
 
-	constructor(authService:AuthService, tokenService:TokenService){
+	constructor(auth:Auth, authService:AuthService, tokenService:TokenService){
+		this.auth = auth;
 		this.authService = authService;
 		this.tokenService = tokenService;
 	}
@@ -20,11 +23,12 @@ export class AuthController {
 		const { email, firstName, lastName, password } = req.body;
 		if(!firstName || !lastName || !email || !password) throw new AuthError("Missing fields, failed to provide all needed fields. Please try again.", 400);
 
-		const validEmail = await validateEmail(email);
+		const validEmail = validateEmail(email);
 		if(!validEmail) throw new AuthError("Invalid email please provide a valid domain", 400);
 
-		const safePass = await this.authService.hashPass(password, 16);
-		const newUser = await this.authService.storeNewUser({ ...req.body, password: safePass });
+		const safePass = await this.authService.hashPass(password, 4);
+		const newUser = await this.authService.storeNewUser({ ...req.body, password:safePass });
+
 		await this.tokenService.genCookies(res, newUser.id!);
 
 		return res.status(201).json({
@@ -39,9 +43,6 @@ export class AuthController {
 	login = catchAsync(async(req:Request,res:Response) => {
 		const { email, password } = req.body;
 		if(email.length === 0 || !email) throw new AuthError("Invalid missing fields.", 400);
-
-		const validEmail = await validateEmail(email);
-		if(!validEmail) throw new AuthError("Invalid email please provide a valid domain", 400);
 
 		const user = await this.authService.getUser(email);
 		if(!user || user.password === undefined || user.id === undefined) throw new AuthError("Invalid Credentials");
@@ -86,7 +87,7 @@ export class AuthController {
 		const token = req.query.token;
 		if(!token) return res.redirect(302, `${process.env.FRONTEND_URL}/404`);
 
-		const decrypted = crypt.decrypt(token);
+		const decrypted = crypt.decrypt(token as string);
 		const valid:any = this.auth.verifyEmail(decrypted);
 		if(valid.payload.purpose !== "password_reset") return res.redirect(302, `${process.env.FRONTEND_URL}/404`);
 

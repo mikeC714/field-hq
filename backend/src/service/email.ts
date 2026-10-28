@@ -1,7 +1,7 @@
 import { pdf } from "../public/pdfTemplate.ts";
 import { quoteEmailTemplate } from "../public/quoteTemplate.ts";
 import { passwordResetEmailTemplate } from '../public/passwordResetTemplate.ts';
-import { AppError } from "../error/error.handler.ts" 
+import { AppError } from "../error/error.ts" 
 import { Resend } from 'resend';
 import type { QUOTE_CONTENT } from "../types/quote.d.ts";
 
@@ -20,22 +20,21 @@ export class EmailService{
 
 			const pdfBuffer:any = await pdf({ ...content, expiry });
 			const { error } = await this.resend.emails.send({
-
-			from: `${senderName}  <noreply@field-hq.com>`,
-			to: content.customer.email,
-			subject: 'Quote',
-			html: quoteEmailTemplate({ 
-				user:content.user, 
-				customer:content.customer, 
-				link, senderName, expiry 
-			}),
-			attachments: [
-				{
-					filename: `quote.pdf`,
-					content: pdfBuffer.toString("base64"),
-					contentType:"application/pdf"
-				}
-			]
+				from: `${senderName}  <noreply@field-hq.com>`,
+				to: content.customer.email,
+				subject: 'Quote',
+				html: quoteEmailTemplate({ 
+					user:content.user, 
+					customer:content.customer, 
+					link, senderName, expiry 
+				}),
+				attachments: [
+					{
+						filename: `quote.pdf`,
+						content: pdfBuffer.toString("base64"),
+						contentType:"application/pdf"
+					}
+				]
 			});
 
 			if(error) throw error;

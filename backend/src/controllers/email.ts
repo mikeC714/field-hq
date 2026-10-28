@@ -1,9 +1,9 @@
-import { Auth } from "../auth/auth.js";
+import { Auth } from "../auth/auth.ts";
 import { TokenService } from "../auth/service/token.ts";
 import { EmailService } from "../service/email.ts";
 import { AuthService } from "../auth/service/auth.ts";
 import { QuoteService } from "../service/quote.ts";
-import { AppError, AuthError } from "../error/error.handler.js";
+import { AppError, AuthError } from "../error/error.ts";
 import { catchAsync, crypt } from "../lib/lib.ts";
 import type { VALIDATED_REQUEST } from "../types/param.d.ts";
 import type { Request, Response } from "express";

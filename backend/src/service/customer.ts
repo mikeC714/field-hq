@@ -1,4 +1,4 @@
-import { AuthError } from "../error/error.handler.js";
+import { AuthError } from "../error/error.ts";
 
 export class CustomerService{
 	private db:any;

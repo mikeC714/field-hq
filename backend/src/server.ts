@@ -1,67 +1,11 @@
 import dotenv from 'dotenv';
 const envPath = new URL("./.env", import.meta.url).pathname;
 dotenv.config({ path: envPath});
-import express from 'express';
-import { db, test_db } from "./config/postgresql.ts";
-import { Auth } from "./auth/auth.ts";
-import { AuthService } from "./auth/service/auth.ts";
-import { TokenService } from "./auth/service/token.ts";
-import { QuoteService } from "./service/quote.ts";
-import { CustomerService } from "./service/customer.ts";
-import { EmailService } from "./service/email.ts";
-import { AuthRoutes } from "./auth/auth.routes.ts";
-import { QuoteRoutes } from "./routes/quote.ts";
-import { CustomerRoutes } from "./routes/customer.ts";
-import { EmailRoutes } from "./routes/email.ts";
-import { AppError, AuthError } from "./error/error.handler.js";
-import { Resend } from "resend";
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
-import helmet from "helmet";
-import type { Request, Response, NextFunction } from "express";
+import { build } from "./app.ts";
+import { db } from "./config/postgresql.ts";
+import { resend } from "./config/resend.ts";
 
-const PORT = process.env.PORT
-const app = express();
-const resend = new Resend(process.env.RESEND);
-
-
-const auth = new Auth();
-const authService = new AuthService(db);
-const tokenService = new TokenService(db, auth);
-const quoteService = new QuoteService(db);
-const customerService = new CustomerService(db);
-const emailService = new EmailService(resend)
-
-app.use(express.json());
-app.use(cookieParser());
-app.use(helmet());
-app.use(cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true
-}));
-
-app.use('/api', AuthRoutes(authService, tokenService));
-app.use('/api', CustomerRoutes(customerService, quoteService));
-app.use('/api', QuoteRoutes(quoteService, customerService, auth, tokenService));
-app.use('/api', NotiRoutes());
-app.use('/api', EmailRoutes(emailService, tokenService, quoteService, authService, auth));
-
-
-app.use((req:Request, res:Response) => {
-	res.redirect(302, `${process.env.FRONTEND_URL}/404`);
-})
-app.use((err:Error | any, req:Request, res:Response, next:NextFunction) => {
-	let status = 500;
-	if(err instanceof AppError){
-		return res.status(err.statusCode).json({ error: err.message })
-	}else if(err instanceof AuthError){
-		return res.status(err.statusCode).json({ error:err.message })
-	}
-	return res.status(err.statusCode || status).json({ error: err.message })
-})
-app.listen(PORT, () => {
-    console.log(`Server is running smooth on PORT: ${PORT}`)
-})
-
-
-export default app;
+const server = await build(db, resend);
+server.listen(process.env.PORT, () => {
+    console.log(`Server is running smooth on PORT: ${process.env.PORT}`)
+});

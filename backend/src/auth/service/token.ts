@@ -1,5 +1,5 @@
 import { crypt } from "../../lib/lib.ts";
-import { AppError, AuthError } from "../../error/error.handler.ts";
+import { AppError, AuthError } from "../../error/error.ts";
 import { Auth } from "../auth.ts";
 import type { Response } from "express";
 
@@ -18,6 +18,7 @@ export class TokenService{
 			const token = this.auth.sign({ id:userId });	
 			const rToken = this.auth.signRefresh({ id:userId });	
 			const safeRToken = crypt.encrypt(rToken);
+
 			await this.storeRefreshToken(userId, safeRToken);
 
 			res.cookie("access_token", token, {
@@ -40,15 +41,15 @@ export class TokenService{
 
 	};
 
-	storeRefreshToken = async(id:string, token:string):Promise<string> => {
+	storeRefreshToken = async(userId:string, token:string):Promise<string> => {
 		if(!token) throw new AppError("Failed to provide valid token.", 401);
-		if(!id) throw new AppError("User not found.", 404);
+		if(!userId) throw new AppError("User not found.", 404);
 		try{
 			 await this.db.query(
 				`INSERT INTO tokens(user_id, token) 
 				VALUES($1, $2)
 				RETURNING token`
-				, [id, token]
+				, [userId, token]
 			);
 
 			return token;
@@ -61,16 +62,17 @@ export class TokenService{
 		if(!userId) throw new AppError("User not found.", 404);
 		if(!token) throw new AppError("Failed to provide valid token.", 401);
 		try{
-			await this.db.query( "DELETE FROM tokens WHERE user_id = $1 AND token = $2",[userId, token] );
+			await this.db.query( "DELETE FROM tokens WHERE user_id = $1 AND token = $2",[userId, token]);
 		}catch(err){
 			throw err;
 		};
 	};
 
-	getRefreshToken = async(id:string):Promise<string> => {
-		if(!id) throw new AppError("User not found.", 404);
+	getRefreshToken = async(userId:string):Promise<string> => {
+		if(!userId) throw new AppError("User not found.", 404);
 		try{
-			const { rows } = await this.db.query( "SELECT token FROM tokens WHERE user_id = $1", [id] );
+			const { rows } = await this.db.query( "SELECT token FROM tokens WHERE user_id = $1", [userId]);
+
 			const decrypted = crypt.decrypt(rows[0].token);
 			return decrypted;
 		}catch(err){

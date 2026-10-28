@@ -3,20 +3,20 @@ import { Pool } from "pg";
 const db = new Pool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DATABASE,
-    port: process.env.DB_PORT,
+    password: process.env.DB_PASS,
+    database: process.env.DB,
+    port: Number(process.env.DB_PORT),
     min: 2,
     max: 10,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 1000
 })
-const test_db = new Pool({
+const testDb = new Pool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DATABASE_TEST,
-    port: process.env.DB_PORT,
+    password: process.env.DB_PASS,
+    database: process.env.DB_TEST,
+    port: Number(process.env.DB_PORT),
     min: 2,
     max: 10,
     idleTimeoutMillis: 30000,
@@ -24,7 +24,4 @@ const test_db = new Pool({
 
 });
 
-test_db.on('connect', () => console.log("CONNECTED TO TEST DB"))
-test_db.on('error', (err) => console.log(err))
-
-export { test_db, db };
+export { testDb, db };
