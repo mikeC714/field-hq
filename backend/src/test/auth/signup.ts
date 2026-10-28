@@ -37,33 +37,29 @@ describe("POST. Auth Signup testing", async() => {
 	});
 	
 	describe("FAILURE", async() => {
+		before(async() => {
+			try{
+				const safe = await bcrypt.hash(user.password, 4);
+				await testDb.query(
+					`INSERT INTO users
+					(first_name, last_name, email, password)
+					VALUES($1,$2,$3,$4)
+					`,[user.firstName, user.lastName, user.email, safe]
+				);
+			}catch(e){
+				throw e;
+			}
+		});
 	
 		test("Fail due to duplicate user", async() => {
 
-			before(async() => {
-				try{
-					const safe = await bcrypt.hash(user.password, 4);
-					await testDb.query(
-						`INSERT INTO users
-						(first_name, last_name, email, password)
-						VALUES($1,$2,$3,$4)
-						`,[user.firstName, user.lastName, user.email, safe]
-					);
-				}catch(e){
-					throw e;
-				}
-			});
 
 			const res = await req
 						.post("/api/auth/signup")
 						.set("Content-type", "application/json")
 						.send(user);
-
 			assert.strictEqual(res.statusCode, 409);
 
-			after(async() => {
-				await testDb.query("TRUNCATE users CASCADE")
-			})
 		});
 
 		test("Fail due to invalid email domain", async() => {
@@ -74,6 +70,10 @@ describe("POST. Auth Signup testing", async() => {
 
 			assert.strictEqual(res.statusCode, 409);
 		});
+
+		after(async() => {
+			await testDb.query("TRUNCATE users CASCADE")
+		})
 
 	});
 
