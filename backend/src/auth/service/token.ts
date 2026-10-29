@@ -62,7 +62,7 @@ export class TokenService{
 		if(!userId) throw new AppError("User not found.", 404);
 		if(!token) throw new AppError("Failed to provide valid token.", 401);
 		try{
-			await this.db.query( "DELETE FROM tokens WHERE user_id = $1 AND token = $2",[userId, token]);
+			await this.db.query( "DELETE FROM tokens WHERE user_id = $1",[userId]);
 		}catch(err){
 			throw err;
 		};

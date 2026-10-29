@@ -9,7 +9,7 @@ export class Auth{
     
 	sign = (payload:string | object) => {
 		try{
-			return jwt.sign({ payload: payload }, this.access, { expiresIn: this.accessExp });
+			return jwt.sign({ payload } , this.access, { expiresIn: this.accessExp });
 		}catch(err){
 			throw err;
 		}        
@@ -17,7 +17,7 @@ export class Auth{
 
 	signRefresh = (payload:string | object) => {
 		try{
-			return jwt.sign({ payload: payload }, this.refresh, { expiresIn: this.refreshExp });
+			return jwt.sign({ payload }, this.refresh, { expiresIn: this.refreshExp });
 		}catch(err){
 			throw err;
 		}

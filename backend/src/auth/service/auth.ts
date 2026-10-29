@@ -9,7 +9,6 @@ export class AuthService{
 	hashPass = async(password:string, rounds:number):Promise<string> => {
 		if(!password) throw new AppError("Failed to provide password", 400);
 		try{
-			console.log("WITHING HASH PASS")
 			const safePass = await bcrypt.hash(password, rounds);
 			return safePass;
 		}catch(e){
@@ -30,9 +29,7 @@ export class AuthService{
 
 			return results.rows[0]; 
 		}catch(err:Error | any){
-			if(err.code === "23505"){
-				throw new AuthError("Invalid credentials", 409)
-			};
+			if(err.code === "23505" || err.statusCode === "23505") throw new AuthError("Invalid credentials", 409);
 			throw err;
 		};
 	};

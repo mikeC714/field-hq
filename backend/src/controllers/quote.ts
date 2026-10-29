@@ -14,14 +14,6 @@ export class QuoteController{
 	private quoteService:QuoteService;
 	private tokenService:TokenService;
 	private auth:Auth
-	private STATUS = [
-		"complete",
-		"approved",
-		"unpaid",
-		"pending",
-		"sent",
-		"draft",
-	];
 
 	constructor(customerService:CustomerService, quoteService:QuoteService, tokenService:TokenService, auth:Auth){
 		this.customerService = customerService;

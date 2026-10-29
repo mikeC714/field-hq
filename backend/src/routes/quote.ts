@@ -20,6 +20,7 @@ export function QuoteRoutes(quoteService:QuoteService, customerService:CustomerS
 	quoteRouter.post('/quote/acceptance', cors({ origin: process.env.FRONTEND_URL, credentials:false }), quote.quoteAcceptConfirm);
 
 	quoteRouter.get('/quote', monitorQuotes,  verifyToken, quote.getAllQuoteInfo);
+	quoteRouter.get('/quote/monthly', verifyToken, quote.monthlyQuoteInfo);
 	quoteRouter.post('/quote/create', limiter, verifyToken, quote.createQuote);
 	quoteRouter.delete('/quote/delete', verifyToken, quote.deleteQuote);
 

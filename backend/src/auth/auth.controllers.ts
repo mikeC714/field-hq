@@ -5,8 +5,6 @@ import { AppError, AuthError } from "../error/error.ts";
 import { validateEmail, catchAsync, crypt } from "../lib/lib.ts";
 import bcrypt from "bcrypt";
 import type { Request, Response } from "express";
-import type { VALIDATED_REQUEST } from "../types/param.d.ts";
-	
 
 export class AuthController {
 	private authService:AuthService;
@@ -63,7 +61,9 @@ export class AuthController {
 
 	logout = catchAsync(async(req:Request,res:Response) => {
 		const userId = await this.tokenService.verifyRefreshToken(req.cookies.refresh_token); 
+		console.log("USERID", userId)
 		await this.tokenService.deleteRefreshToken(userId, req.cookies.refresh_token);
+		console.log("DELETED TOKEN");
 
 		res.clearCookie("access_token");
 		res.clearCookie("refresh_token");

@@ -4,8 +4,7 @@ import assert from "node:assert";
 import { build } from "../../app.ts";
 import { testDb } from "../../config/postgresql.ts";
 import { resend } from "../../config/resend.ts"
-import { user } from "../mock/user.ts";
-import bcrypt from "bcrypt"; 
+import { user, insertUser } from "../mock/user.ts";
 
 
 describe("POST. Auth Login testing", async() => {
@@ -16,14 +15,7 @@ describe("POST. Auth Login testing", async() => {
 		try{
 			server = await build(testDb, resend);
 			req = request(server);
-
-			const safe = await bcrypt.hash(user.password, 4); 
-			await testDb.query(
-				`INSERT INTO users
-				(first_name, last_name, email, password)
-				VALUES($1, $2, $3, $4)
-				`,[user.first, user.last, user.email, safe]
-			);
+			await insertUser(user, testDb);
 
 		}catch(e:Error | any){
 			throw e;
