@@ -5,7 +5,12 @@ export function useStats(){
 	const { data, isLoading, isError } = useQuery({
 		queryKey:["stats"],
 		queryFn: async() => await apiFetch(url),
+
+		// change this
 		staleTime:Infinity,
+
+
+		// look more into this
 		gcTime:10,
 	});
 

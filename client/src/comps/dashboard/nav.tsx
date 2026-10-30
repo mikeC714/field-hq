@@ -36,7 +36,7 @@ export function Nav({ activeStatus, setActiveStatus }:PROPS){
 		"APPROVED",
 		"COMPLETE",
 		"UNPAID",
-	]
+	];
 	return(
 		<div className="nav">
 			<div className="navCellContainer">
