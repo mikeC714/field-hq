@@ -1,7 +1,6 @@
 import { catchAsync } from "../lib/lib.ts";
 import { QuoteService } from "../service/quote.ts";
 import { CustomerService } from "../service/customer.ts";
-import { AppError } from "../error/error.ts";
 import { cache } from "../config/redis.ts";
 import type { Request, Response } from "express";
 
@@ -17,12 +16,9 @@ export class CustomerController{
 
 	getCustomerInfo = catchAsync(async(req:Request | any, res:Response) => {
 		const userId = req.user;
-		if(!userId) throw new AppError("User not found", 404);
+		const customerId = req.params.id;
 
-		const customerIds = await this.customerService.getAllCustomerIds(userId);
-		if(customerIds.length === 0 || !customerIds) return res.status(200).json({ customerDetails: [] });
-
-		const customer = await this.customerService.getCustomerInfo(customerIds, userId)
+		const customer = await this.customerService.getCustomerInfo(userId, customerId);
 
 		return res.status(200).json({ customer });
     });
@@ -54,7 +50,11 @@ export class CustomerController{
 			});
 		};
 
-		const [customerIds, customers] = await Promise.all([ this.customerService.getAllCustomerIds(userId),  this.customerService.getAllCustomerInfo(userId)]);
+		const [customerIds, customers] = await Promise.all([
+			this.customerService.getAllCustomerIds(userId), 
+			this.customerService.getAllCustomerInfo(userId)
+		]);
+
 		//no customers just return
 		if(!customers || customers.length === 0){
 			return{

@@ -22,6 +22,15 @@ export class QuoteController{
 		this.auth = auth;
 	};
 
+	getQuoteInfo = catchAsync(async(req:Request | any, res:Response) => {
+		const userId = req.user;
+		const quoteId = req.params.id;
+	
+		const quoteInfo = await this.quoteService.getQuoteById(quoteId, userId);
+
+		return res.status(200).json({ quoteInfo });
+	});
+
 	getAllQuoteInfo = catchAsync(async(req:Request | any, res:Response) => {
 		const userId = req.user;
 

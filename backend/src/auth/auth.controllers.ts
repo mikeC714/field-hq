@@ -59,11 +59,10 @@ export class AuthController {
 		});
 	});
 
-	logout = catchAsync(async(req:Request,res:Response) => {
-		const userId = await this.tokenService.verifyRefreshToken(req.cookies.refresh_token); 
-		console.log("USERID", userId)
+	logout = catchAsync(async(req:Request | any,res:Response) => {
+		const userId = req.user;
 		await this.tokenService.deleteRefreshToken(userId, req.cookies.refresh_token);
-		console.log("DELETED TOKEN");
+
 
 		res.clearCookie("access_token");
 		res.clearCookie("refresh_token");

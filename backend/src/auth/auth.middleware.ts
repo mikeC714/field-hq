@@ -5,6 +5,7 @@ import { TokenService } from "../auth/service/token.ts";
 import { cache } from "../config/redis.ts";
 import { crypt } from "../lib/lib.ts";
 import { AuthError } from "../error/error.ts";
+import type { Request, Response, NextFunction } from "express";
 
 const tokenService = new TokenService(db);
 
@@ -36,33 +37,34 @@ const mutex = new Mutex();
 */
 
 
-export async function verifyToken (req, res, next){
+export async function verifyToken (req:Request | any, res:Response, next:NextFunction){
 	const accessToken = req.cookies.access_token;
 	const refreshToken = req.cookies.refresh_token;
 
 	try{
-		if(!accessToken && !refreshToken) throw new AuthenticationError("Unauthorized user. Failed to provide valid token.");	
+		if(!accessToken && !refreshToken) throw new AuthError("Unauthorized user. Failed to provide valid token.");	
 		if(!accessToken && refreshToken) return await handleRefresh(req, res, next, refreshToken);
 		
-		const decode = Auth.verify(accessToken);
+		const decode:any = Auth.verify(accessToken);
 
-	req.user = decode.payload.id;
-	next();
-  }catch(err){
+		req.user = decode.payload;
+		next();
+  }catch(err:Error | any){
 		if(err.name === "TokenExpiredError" && refreshToken) return await handleRefresh(req, res, next, refreshToken);
-	next(err);
+		if(err.message === "invalid signature") throw new AuthError("Invalid token", 401);
+		next(err);
   }
 }
 
 async function handleRefresh (req, res, next, refreshToken){
 	try{
-	const rToken = decrypt(refreshToken);
+	const rToken = crypt.decrypt(refreshToken);
 	const decode = Auth.verifyRefresh(rToken);
-	const id = decode.payload.id;
+	const userId = decode.payload;
 
 		const release = await mutex.acquire();
 		try{
-				const alreadyRotated = await cache.get(`rotated:${id}`);
+				const alreadyRotated = await cache.get(`rotated:${userId}`);
 				if(alreadyRotated){
 				const tokens = JSON.parse(alreadyRotated);
 				res.cookie("access_token", tokens.access, {

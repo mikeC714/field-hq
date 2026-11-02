@@ -39,15 +39,15 @@ export class CustomerService{
 		};
 	};
 
-	getCustomerInfo = async(customerIds:Array<string>, userId:string) => {
+	getCustomerInfo = async(customerId:string, userId:string) => {
 		if(!userId) throw new AuthError("Invalid user.", 404);
 		try{
 			const { rows } = await this.db.query(
 				`SELECT *
 				FROM customers
 				WHERE user_id = $1
-				AND id = ANY($2)
-				`,[userId, customerIds]
+				AND customer_id = $2
+				`,[userId, customerId]
 			);
 
 			return rows;

@@ -92,6 +92,7 @@ export class AuthService{
 	validatePassword = async(userId:string, password:string):Promise<boolean> => {
 		if(!userId) throw new AppError("User not found.", 404);
 		if(!password) throw new AppError("Missing field. Please try again.", 400);
+
 		try{
 			const { rows } = await this.db.query(
 			    `SELECT password FROM users WHERE id = $1`,

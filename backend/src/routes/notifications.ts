@@ -13,4 +13,4 @@ export function NotificationRoutes(notificationService:NotificationService, cust
 	router.get('/notifications', verifyToken, controller.allNotifications)
 
 	return router; 
-}
+};

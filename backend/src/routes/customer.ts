@@ -10,7 +10,7 @@ export function CustomerRoutes(customer:CustomerService, quote:QuoteService){
 	const controller = new CustomerController(customer, quote);
 
 	customerRouter.get('/customers', verifyToken, quote.monitorQuotes, controller.getAllCustomers);
-	customerRouter.get('/customer/info', verifyToken, controller.getCustomerInfo);
+	customerRouter.get('/customer/info/:id', verifyToken, controller.getCustomerInfo);
 
 	return customerRouter;
 }

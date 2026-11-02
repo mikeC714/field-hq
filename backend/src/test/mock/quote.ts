@@ -1,8 +1,14 @@
-const quotes = [
+const quote = [
 	{
 		hourly:2000,
 		markup:10.2,
 		total:100,
+
+		customer:{
+			firstName:"Joe",
+			lastName:"Smith",
+			lastName:"Smith",
+		},
 		labor:[
 			{
 				desc:"Changed light bulb",
@@ -46,4 +52,4 @@ const quotes = [
 	},
 ];
 
-export { quotes };
+export { quote };

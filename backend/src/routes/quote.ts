@@ -12,17 +12,18 @@ import cors from "cors";
 
 
 export function QuoteRoutes(quoteService:QuoteService, customerService:CustomerService, auth:Auth, tokenService:TokenService){
-	const quoteRouter = Router();
+	const router = Router();
 
 	const quote = new QuoteController(customerService, quoteService, tokenService, auth);
 
-	quoteRouter.get('/quote/acceptance', cors({ origin: process.env.FRONTEND_URL, credentials:false }), quote.quoteAccept);
-	quoteRouter.post('/quote/acceptance', cors({ origin: process.env.FRONTEND_URL, credentials:false }), quote.quoteAcceptConfirm);
+	router.get('/quote/acceptance', cors({ origin: process.env.FRONTEND_URL, credentials:false }), quote.quoteAccept);
+	router.post('/quote/acceptance', cors({ origin: process.env.FRONTEND_URL, credentials:false }), quote.quoteAcceptConfirm);
 
-	quoteRouter.get('/quote', monitorQuotes,  verifyToken, quote.getAllQuoteInfo);
-	quoteRouter.get('/quote/monthly', verifyToken, quote.monthlyQuoteInfo);
-	quoteRouter.post('/quote/create', limiter, verifyToken, quote.createQuote);
-	quoteRouter.delete('/quote/delete', verifyToken, quote.deleteQuote);
+	router.get('/quote', monitorQuotes,  verifyToken, quote.getAllQuoteInfo);
+	router.get('/quote/monthly', verifyToken, quote.monthlyQuoteInfo);
+	router.get('/quote/info/:id', verifyToken, quote.getQuoteInfo);
+	router.post('/quote/create', limiter, verifyToken, quote.createQuote);
+	router.delete('/quote/delete', verifyToken, quote.deleteQuote);
 
-	return quoteRouter;
+	return router;
 };

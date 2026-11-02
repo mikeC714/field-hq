@@ -63,7 +63,7 @@ export class QuoteService{
 
 	createQuote = async(newQuote:NEW_QUOTE) => {
 		const { userId, customer, quote, labor, materials } = newQuote;
-		if(!userId) throw new AuthError("Invalid user.");
+		if(!userId) throw new AuthError("User not found", 404);
 		try{
 
 			const { rows } = await this.db.query(
@@ -100,9 +100,9 @@ export class QuoteService{
 					quote.status,
 					quote.markup,
 					quote.total,
+					quote.hourlyRate,
 					labor.description,
 					labor.hours,
-					labor.hourlyRate,
 					labor.total,
 					materials.description,
 					materials.quantity,
@@ -139,14 +139,11 @@ export class QuoteService{
 		if(!userId) throw new AppError("User not found.", 404);
 		try{
 			const { rows }  = await this.db.query(
-			    `SELECT 
-				  id,
-				  status,
-				  created_at
-				  FROM quotes
-				  WHERE user_id = $1
-				  AND status = 'APPROVED'
-				  AND created_at <= NOW() - INTERVAL '6 days'
+				`SELECT id, status, created_at 
+				FROM quotes 
+				WHERE user_id = $1 
+				AND status = 'APPROVED' 
+				AND created_at <= NOW() - INTERVAL '6 days'
 			    `, [userId]
 			);
 
@@ -157,10 +154,10 @@ export class QuoteService{
 			const qtIds = rows.map(qt => qt.id); 
 
 			await this.db.query(
-			    `UPDATE quotes
-				  SET status = 'UNPAID'
-				  WHERE id = ANY($1::uuid[])
-			    `, [qtIds]
+				`UPDATE quotes 
+				SET status = 'UNPAID' 
+				WHERE id = ANY($1::uuid[]) 
+				`, [qtIds]
 			);
 
 		}catch(err){
@@ -168,19 +165,24 @@ export class QuoteService{
 		};
 	};
 
-	getQuoteById = async(id:string) => {
-		if(!id) throw new AppError("Failed to provide quote Id. Please provide quote Id inorder to get quote.", 400);
+	getQuoteById = async(quoteId:string, userId:string) => {
+		if(!userId) throw new AuthError("User not found", 404);
+		if(!quoteId) throw new AppError("Failed to provide quote Id. Please provide quote Id in order to get quote.", 400);
 		try{
 			const { rows } = await this.db.query(
-				`SELECT * FROM quotes
-					WHERE id = $1
-				`,[id]
-			)
+				`SELECT * FROM quotes q
+				WHERE id = $1
+				INNER JOIN customers c
+				ON c.id = q.customer_id
+				AND c.user_id = $3
+				`,[quoteId, userId]
+			);
+
 			return rows;
 		}catch(err){
 			throw err;
 		}
-	}
+	};
 
 	getQuoteCountByStatus = async(userId:string, status:Array<string>) => {
 		if(!userId) throw new AuthError("Invalid user.", 404);

@@ -4,6 +4,8 @@ import { QuoteService } from "../service/quote.ts";
 
 const quoteService = new QuoteService(db)
 
+
+// change to cron job
 export async function monitorQuotes(req, res, next){
 	const user = req.user;
 	if(!user) throw new AuthError("Unauthorized user. Failed to provide user ID");
