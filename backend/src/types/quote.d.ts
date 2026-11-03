@@ -14,23 +14,17 @@ interface QUOTE_CONTENT{
 		lastName:string;
 		email:string;
 	};
-	quote:{
-		total:string | number;
-		subTotal:string | number;
-	};
-	labor:{
-
-	};
-	materials:{
-
-	};
+	quote:QUOTE;
+	labor:LABOR;
+	materials:MATERIALS;
 };
 
 interface QUOTE{
 	id?:string;
 	status:string;
-	total:number;
-	markup:number | float;
+	total:string;
+	hourlyRate:string;
+	markup:string;
 };
 
 interface NEW_QUOTE{

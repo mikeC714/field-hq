@@ -17,14 +17,19 @@ const user = {
 	password:"superDuperSecret"
 };
 
-async function insertUser(user:USER, testDb:any){
-	const safe = await bcrypt.hash(user.password, 4); 
+async function insertUser(user:USER, testDb:any, override?:any){
+	const data = {
+		...user,
+		...override
+	};
+
+	const safe = await bcrypt.hash(data.password, 4); 
 	const { rows } = await testDb.query(
 		`INSERT INTO users
 		(first_name, last_name, email, password)
 		VALUES($1, $2, $3, $4)
 		RETURNING id
-		`,[user.firstName, user.lastName, user.email, safe]
+		`,[data.firstName, data.lastName, data.email, safe]
 	);
 
 	return rows[0].id;

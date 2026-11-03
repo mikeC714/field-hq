@@ -42,7 +42,7 @@ export async function verifyToken (req:Request | any, res:Response, next:NextFun
 	const refreshToken = req.cookies.refresh_token;
 
 	try{
-		if(!accessToken && !refreshToken) throw new AuthError("Unauthorized user. Failed to provide valid token.");	
+		if(!accessToken && !refreshToken) throw new AuthError("Unauthorized user. Failed to provide valid token.", 401);	
 		if(!accessToken && refreshToken) return await handleRefresh(req, res, next, refreshToken);
 		
 		const decode:any = Auth.verify(accessToken);

@@ -49,21 +49,25 @@ export class QuoteController{
 		for(const [_, val] of Object.entries(customer as CUSTOMER)){
 			if(val.length === 0) throw new AppError("Missing Customer Input. Please fill all input fields.", 400);
 		};
-		const { quote , customerId } = await this.quoteService.createQuote(req.body);
+		const { quote , customerId } = await this.quoteService.createQuote({ ...req.body, userId });
 
-		const emailToken = this.auth.signEmail({ id:userId, quoteId:quote.id, customerId }, "1d");
+		const emailToken = this.auth.signEmail({ userId, quoteId:quote.id, customerId }, "1d");
 		await this.tokenService.storeQuoteToken(quote.id , emailToken);
 
-		return res.status(200).json({
+		return res.status(201).json({
 			success: true,
 			quoteId: quote.id,
 		});
 	});
 
 	deleteQuote = catchAsync(async(req:Request | any, res:Response) => {
-		const user = req.user;
+		const userId = req.user;
 		const { quoteId } = req.body;
-		await this.quoteService.deleteQuote(quoteId, user);
+
+		console.log("QUOTE ID FROM CONTROLLER", quoteId)
+		console.log("USER ID FROM CONTROLLER", userId)
+
+		await this.quoteService.deleteQuote(quoteId, userId);
 
 		return res.status(200).json({ message: `Quote ${quoteId} was successfully deleted.` });
 	});

@@ -66,69 +66,73 @@ export class QuoteService{
 		if(!userId) throw new AuthError("User not found", 404);
 		try{
 
-			const { rows } = await this.db.query(
-				`WITH c AS(
-					INSERT INTO customers
-					(user_id, first_name, last_name, phone, email, address)
-					VALUES($1, $2, $3, $4, $5, $6)
-					RETURNING id
-				)
-				WITH q AS(
+			await this.db.query("BEGIN");
+
+				const { rows } = await this.db.query(
+					`WITH c AS (
+				       INSERT INTO customers
+				       (user_id, first_name, last_name, phone, email, address)
+				       VALUES ($1, $2, $3, $4, $5, $6)
+				       RETURNING id
+					)
 					INSERT INTO quotes
-					(user_id, customer_id, status, markup, total)
-					VALUES($1, c.id, $7, $8, $9)
-					RETURNING id, created_at::date::text
-				)
+					(customer_id, status, hourly, markup, total)
+					SELECT c.id, $7, $8, $9, $10 
+					FROM c
+					RETURNING id, customer_id, created_at;
+					`,[userId, customer.firstName, customer.lastName, customer.phone, customer.email, customer.address, quote.status, quote.hourlyRate, quote.markup, quote.total]
+				); 
 
-				INSERT INTO labor
-				(quote_id, description, hours, hourly_rate, total)
-				VALUES(q.id, $10, $11, $12, $13)
+				const quoteId = rows[0].id;
+				const createdAt = rows[0].created_at;
+				const customerId = rows[0].customer_id;
 
-				INSERT INTO materials
-				(quote_id, description, quantity, unit_cost, total)
-				VALUES(q.id, $16, $17, $18, $19)
-				
-				SELECT id AS customer_id FROM c
-				SELECT id AS quote_id, created_at FROM q
-				`,[
-					userId, 
-					customer.firstName, 
-					customer.lastName, 
-					customer.phone, 
-					customer.email, 
-					customer.address,
-					quote.status,
-					quote.markup,
-					quote.total,
-					quote.hourlyRate,
-					labor.description,
-					labor.hours,
-					labor.total,
-					materials.description,
-					materials.quantity,
-					materials.unitCost,
-					materials.total
-				]
-			);
+				for(const lab of labor){
+					await this.db.query(
+						`INSERT INTO labor
+						(quote_key, descr, hours)
+						VALUES($1,$2,$3)
+						`,[quoteId, lab.description, lab.hours]
+					);
+				}
+
+				for(const mat of materials){
+					await this.db.query(
+						`INSERT INTO materials 
+						(quote_key, descr, qty, unit_cost)
+						VALUES($1,$2,$3,$4)
+						`,[quoteId, mat.description, mat.quantity, mat.unitCost]
+					);
+				};
+
+			await this.db.query("COMMIT");
+
 			return{
-				customerId:rows[0].customer_id,
-				quote:{
-					id:rows[0].quote_id,
-					createdAt:rows[0].created_at
+				customerId,
+				quote:{ 
+					id:quoteId, 
+					createdAt 
 				}
 			};
 			
 		}catch(err){
-		throw err;
+			await this.db.query("ROLLBACK");
+			throw err;
 		}
 	}
 
 	deleteQuote = async(quoteId:string, userId:string) => {
+		console.log("HIT SERVICE")
 		if(!userId) throw new AppError("User not found.", 404);
 		try{
+			console.log("QUOTE ID", quoteId)
+			console.log("USER ID", userId)
+
 			await this.db.query(
-			    `DELETE FROM quotes WHERE user_id = $1 AND id = $2`,
-			    [userId, quoteId]
+			    `DELETE FROM quotes 
+			    WHERE user_key = $1 
+			    AND id = $2`
+			    , [userId, quoteId]
 			);
 		}catch(err){
 			throw err;
