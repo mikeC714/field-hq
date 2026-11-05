@@ -3,7 +3,7 @@ import { CustomerService } from "../service/customer.ts";
 import { QuoteService } from "../service/quote.ts";
 import { TokenService } from "../auth/service/token.ts";
 import { Auth } from "../auth/auth.ts";
-import { AppError } from "../error/error.ts";
+import { AppError, AuthError } from "../error/error.ts";
 import type { Request, Response } from "express";
 import type { CUSTOMER } from "../types/customer.d.ts";
 
@@ -71,14 +71,22 @@ export class QuoteController{
 
 	monthlyQuoteInfo = catchAsync(async(req:Request | any, res:Response) => {
 		const user = req.user;
-		if(!user) throw new AppError("User not found.", 404);
+		if(!user) throw new AuthError("User not found.", 404);
 
 		const [ quotes, monthlyTotal ] = await Promise.all([
 			this.quoteService.getQuoteCountByStatus(user, ["completed", "approved", "unpaid"]),
 			this.quoteService.getMonthlyTotal(user)
 		]);
 
-	    return res.status(200).json({ quotes, monthlyTotal });
+		const [ completed, approved, unpaid ] = quotes; 
+
+		return res.status(200).json({ 
+			quote:{ 
+				completed,
+				approved,
+				unpaid
+			},
+			monthlyTotal });
 	});
 
 

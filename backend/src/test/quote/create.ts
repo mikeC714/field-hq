@@ -20,7 +20,7 @@ describe("POST. Should successfully create quote", () => {
 		server = await build(testDb, resend);
 		req = request(server);
 		userId = await insertUser(user, testDb);
-			tokens = await signTokens(userId);
+		tokens = await signTokens(userId);
 	});
 
 	after(async() => {

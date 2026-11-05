@@ -133,7 +133,7 @@ export class QuoteService{
 			);
 			
 			if(rowCount === 0) throw new AppError(`Quote:${quoteId} not found`, 404); 
-
+ 
 		}catch(err){
 			throw err;
 		};
@@ -196,13 +196,13 @@ export class QuoteService{
 			const { rows } = await this.db.query(
 				`SELECT status, COUNT(*) AS count
 				FROM quotes
+				WHERE user_key = $1
+				AND status = ANY($2::text[])
 				GROUP BY status
 				ORDER BY count DESC
-				WHERE user_id = $1
-				AND status = ANY($2)::quote_status_type
 				`,[userId, status]
 			);
-
+	
 			return rows;
 		}catch(e:Error | any){
 			throw e;	
@@ -215,12 +215,15 @@ export class QuoteService{
 			const { rows } = await this.db.query(
 				`SELECT SUM(total) AS total_value
 				   FROM quotes
-				   WHERE user_id = $1
+				   WHERE user_key = $1
 				   AND created_at >= $2
-				   AND created_at < $3
-				   AND status = 'COMPLETED'
+				   AND created_at <= $3
+				   AND status = 'completed'
 				   `, [userId, date.startOfMonth, date.endOfMonth]
 			);
+
+			console.log(rows)
+
 			return rows[0]?.total_value ?? 0;
 		}catch(e:Error | any){
 			throw e;
