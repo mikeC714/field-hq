@@ -1,5 +1,5 @@
 import request from "supertest";
-import { describe, before, after, beforeEach, afterEach, test } from "node:test";
+import { describe, before, after, test } from "node:test";
 import assert from "node:assert";
 import { build } from "../../app.ts";
 import { testDb } from "../../config/postgresql.ts";
@@ -7,6 +7,7 @@ import { resend } from "../../config/resend.ts"
 import { user, insertUser } from "../mock/user.ts";
 import { signTokens } from "../mock/token.ts";
 import { insertQuote } from "../mock/quote.ts";
+import { randomUUID } from "node:crypto";
 
 
 
@@ -35,20 +36,12 @@ describe("DELETE. Should successfully delete quote and everything regarding the 
 
 		quoteId = await insertQuote(testDb, userId);
 		quoteId2 = await insertQuote(testDb, userId2);
-		console.log("QUOTE IDS", quoteId, quoteId2);
 	});
-
-	after(async() => {
-		await testDb.query("TRUNCATE users CASCADE");
-		await testDb.query("TRUNCATE quote CASCADE");
-		await testDb.end();
-	});
-
 
 	describe("SUCCESS", () => {
 
 		test("Delete Quote", async() => {
-		console.log("QUOTE IDS", quoteId, quoteId2);
+			console.log(quoteId)
 			const res = await req
 						.delete("/api/quote/delete")
 						.set("Cookie", [`access_token=${tokens?.access}`, `refresh_token=${tokens?.refresh}`])
@@ -63,14 +56,14 @@ describe("DELETE. Should successfully delete quote and everything regarding the 
 	describe("FAIL", () => {
 
 		test("Attempt to delete quote with invalid quoteId", async() => {
-			const quoteId = "superDangerousId";
+			const quoteId = randomUUID();
 
 			const res = await req
 						.delete("/api/quote/delete")
 						.set("Cookie", [`access_token=${tokens?.access}`, `refresh_token=${tokens?.refresh}`])
 						.send( { quoteId });
 		
-			assert.strictEqual(res.statusCode, 400);
+			assert.strictEqual(res.statusCode, 404);
 		});
 
 		test("Attempt to delete quote that is not assigned to designated userId", async() => {
@@ -79,7 +72,7 @@ describe("DELETE. Should successfully delete quote and everything regarding the 
 						.set("Cookie", [`access_token=${tokens2?.access}`, `refresh_token=${tokens2?.refresh}`])
 						.send({ quoteId });
 		
-			assert.strictEqual(res.statusCode, 400);
+			assert.strictEqual(res.statusCode, 404);
 		});
 
 
@@ -93,6 +86,12 @@ describe("DELETE. Should successfully delete quote and everything regarding the 
 			assert.strictEqual(res.statusCode, 401);
 
 		});
+	});
+
+	after(async() => {
+		await testDb.query("TRUNCATE users CASCADE");
+		await testDb.query("TRUNCATE quote CASCADE");
+		await testDb.end();
 	});
 
 });

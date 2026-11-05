@@ -122,18 +122,19 @@ export class QuoteService{
 	}
 
 	deleteQuote = async(quoteId:string, userId:string) => {
-		console.log("HIT SERVICE")
 		if(!userId) throw new AppError("User not found.", 404);
-		try{
-			console.log("QUOTE ID", quoteId)
-			console.log("USER ID", userId)
+		console.log("QUOTE ID FROM CONTROLLER", quoteId)
 
-			await this.db.query(
+		try{
+			const { rowCount } = await this.db.query(
 			    `DELETE FROM quotes 
 			    WHERE user_key = $1 
 			    AND id = $2`
 			    , [userId, quoteId]
 			);
+			
+			if(rowCount === 0) throw new AppError(`Quote:${quoteId} not found`, 404);
+
 		}catch(err){
 			throw err;
 		};

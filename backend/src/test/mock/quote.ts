@@ -83,7 +83,7 @@ async function insertQuote(testDb:any, userId:string){
 					`INSERT INTO labor
 					(quote_key, descr, hours)
 					VALUES($1,$2,$3)
-					`,[quoteId, lab.desc, lab.hours]
+					`,[quoteId, JSON.stringify(lab.desc), lab.hours]
 				);
 			}
 
@@ -92,7 +92,7 @@ async function insertQuote(testDb:any, userId:string){
 					`INSERT INTO materials 
 					(quote_key, descr, qty, unit_cost)
 					VALUES($1,$2,$3,$4)
-					`,[quoteId, mat.desc, mat.quantity, mat.unitCost]
+					`,[quoteId, JSON.stringify(mat.desc), mat.quantity, mat.unitCost]
 				);
 			};
 

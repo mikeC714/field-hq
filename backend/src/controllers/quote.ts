@@ -64,12 +64,9 @@ export class QuoteController{
 		const userId = req.user;
 		const { quoteId } = req.body;
 
-		console.log("QUOTE ID FROM CONTROLLER", quoteId)
-		console.log("USER ID FROM CONTROLLER", userId)
-
 		await this.quoteService.deleteQuote(quoteId, userId);
 
-		return res.status(200).json({ message: `Quote ${quoteId} was successfully deleted.` });
+		return res.status(200);
 	});
 
 	monthlyQuoteInfo = catchAsync(async(req:Request | any, res:Response) => {

@@ -5,7 +5,7 @@ export const cache = new Redis({
     host: process.env.REDIS_HOST,
     connectTimeout: 2000,
     commandTimeout: 4000,
-    retryStrategy: (times) => times > 5 ? null : Math.min(times * 100, 2000),
+    retryStrategy: (times:number) => times > 5 ? null : Math.min(times * 100, 2000),
     lazyConnect: true
 },{
     password: process.env.REDIS_PASS,
@@ -13,6 +13,3 @@ export const cache = new Redis({
     noDelay: true,
 });
 
-cache.on('error', (err) => console.log(err));
-cache.on('connect', () => console.log('connected'));
-cache.on('data', (data) => console.log(data));
