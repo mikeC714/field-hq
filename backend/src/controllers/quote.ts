@@ -66,7 +66,7 @@ export class QuoteController{
 
 		await this.quoteService.deleteQuote(quoteId, userId);
 
-		return res.status(200);
+		return res.sendStatus(200);
 	});
 
 	monthlyQuoteInfo = catchAsync(async(req:Request | any, res:Response) => {
@@ -94,7 +94,7 @@ export class QuoteController{
 		const quote = await this.quoteService.getQuoteById(valid.payload.quoteId)
 		if(!quote || quote.length === 0) return res.status(400).json({ error:"Failed to find valid quote." });
 
-		return res.status(200).json({ success:true });
+		return res.sendStatus(200);
 	});
 
 	quoteAcceptConfirm = catchAsync(async(req:Request<{}, {}, {}, { token:string }>,res:Response) => {
@@ -111,6 +111,6 @@ export class QuoteController{
 		if(quote.status === "APPROVED") return res.status(200);
 
 		await this.quoteService.changeQuoteStatus(valid.payload.quoteId, "APPROVED");
-		return res.status(200).json({ success:true });
+		return res.sendStatus(200);
 	});
 }

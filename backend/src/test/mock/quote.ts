@@ -63,13 +63,13 @@ async function insertQuote(testDb:any, userId:string){
 			const { rows } = await testDb.query(
 				`WITH c AS (
 				 INSERT INTO customers
-				 (user_id, first_name, last_name, phone, email, address)
+				 (user_key, first_name, last_name, phone, email, address)
 				 VALUES ($1, $2, $3, $4, $5, $6)
-				 RETURNING id
+				 RETURNING id, user_key
 				)
 				INSERT INTO quotes
-				(customer_id, status, hourly, markup, total)
-				SELECT c.id, $7, $8, $9, $10 
+				(customer_id, user_key, status, hourly, markup, total)
+				SELECT c.id, c.user_key, $7, $8, $9, $10 
 				FROM c
 				RETURNING id, customer_id, created_at;
 				`,[userId, customer.firstName, customer.lastName, customer.phone, customer.email, customer.address, quote.status, quote.hourlyRate, quote.markup, quote.total]

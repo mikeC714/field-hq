@@ -41,13 +41,11 @@ describe("DELETE. Should successfully delete quote and everything regarding the 
 	describe("SUCCESS", () => {
 
 		test("Delete Quote", async() => {
-			console.log(quoteId)
 			const res = await req
 						.delete("/api/quote/delete")
 						.set("Cookie", [`access_token=${tokens?.access}`, `refresh_token=${tokens?.refresh}`])
 						.send({ quoteId });
 
-			console.log(res)
 			assert.strictEqual(res.statusCode, 200);
 		});
 	});
@@ -90,7 +88,6 @@ describe("DELETE. Should successfully delete quote and everything regarding the 
 
 	after(async() => {
 		await testDb.query("TRUNCATE users CASCADE");
-		await testDb.query("TRUNCATE quote CASCADE");
 		await testDb.end();
 	});
 
