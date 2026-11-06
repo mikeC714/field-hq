@@ -222,8 +222,6 @@ export class QuoteService{
 				   `, [userId, date.startOfMonth, date.endOfMonth]
 			);
 
-			console.log(rows)
-
 			return rows[0]?.total_value ?? 0;
 		}catch(e:Error | any){
 			throw e;

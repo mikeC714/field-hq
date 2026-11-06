@@ -12,7 +12,7 @@ export function useAuth(){
 		return{
 			signup:mutate,
 			signupLoading:isPending,
-			signError:isError,
+			signupError:isError,
 		}
 	};
 
@@ -27,9 +27,45 @@ export function useAuth(){
 		}
 	};
 
+	function useLogout(){
+		const { mutate, isPending, isError } = useMutation({
+			mutationFn: async() => await apiFetch(`${url}/auth/logout`, "POST"),
+		});
+		return{
+			logout:mutate,
+			logoutLoading:isPending,
+			logoutError:isError
+		};
+	};
+
+	function useDelete(){
+		const { mutate, isPending, isError } = useMutation({
+			mutationFn: async(password:string) => await apiFetch(`${url}/auth/delete`, "POST", { password }),
+		});
+		return{
+			deleteAcc:mutate,
+			deleteAccLoading:isPending,
+			deleteAccError:isError
+		};
+	};
+
+	function useForgot(){
+		const { mutate, isPending, isError } = useMutation({
+			mutationFn: async(email:string) => await apiFetch(`${url}/auth/forgot`, "POST", { email }),
+		});
+		return{
+			forgot:mutate,
+			forgotLoading:isPending,
+			forgotError:isError,
+		};
+	};
+
 	return{
 		useSignup,
-		useLogin
+		useLogin,
+		useLogout,
+		useDelete,
+		useForgot
 	};	
 };
 

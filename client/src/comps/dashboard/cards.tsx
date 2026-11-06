@@ -3,9 +3,11 @@ type PROPS = {
 	title:string;
 	data:string | number;
 	footer:string;
+	loading:boolean;
+	error:boolean;
 }
 
-export function Card({ title, data, footer }:PROPS){
+export function Card({ title, data, footer, loading, error }:PROPS){
 	return(
 		<div className="card">
 			<div className="cardContent">

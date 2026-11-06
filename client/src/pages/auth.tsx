@@ -4,12 +4,14 @@ import { Form } from "../comps/auth/form.tsx";
 import { Login } from "../comps/auth/login.tsx";
 import { Signup } from "../comps/auth/signup.tsx";
 import { Forgot } from "../comps/auth/forgot.tsx";
+import type { AUTH_MODES } from "../types/auth.d.ts";
 
 
 export function Auth(){
-	const { useSignup, useLogin } = useAuth();
+	const { useSignup, useLogin, useForgot } = useAuth();
 	const { login, loginLoading, loginError } = useLogin();
 	const { signup, signupLoading, signupError } = useSignup();
+	const { forgot, forgotLoading, forgotError } = useForgot();
 	const [authMode, setAuthMode] = useState<AUTH_MODES>("login");
 
 	function handleSignup(e:Event | HTMLFormElement){
@@ -43,19 +45,30 @@ export function Auth(){
 		login({ email, password });	
 	};
 
+	function handleForgot(e:Event | HTMLFormElement){
+		e.preventDefault();
+		const data = new FormData(e.currentTarget);
+
+		const email = data.get("fEmail") as string;
+
+		if(email.length === 0) return;
+
+		forgot(email);
+	};
+
 	const FORMS = {
 		signIn:<Login 
-				login={handleLogin as any}
+				login={handleLogin}
 				loginLoading={loginLoading}
 				loginError={loginError}
 			/>,
 		create:<Signup 
-				signup={handleSignup as any}
+				signup={handleSignup}
 				signupLoading={signupLoading}
 				signupError={signupError}
 			/>,
 		reset:<Forgot 
-				forgot={handleForgot as any}
+				forgot={handleForgot}
 				forgotLoading={forgotLoading}
 				forgotError={forgotError}
 			/>

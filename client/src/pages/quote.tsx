@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { useSendQuote, useCreateQuote } from "../hooks/quote.tsx";
+import { useQuote } from "../hooks/quotes.tsx";
 import { Form } from "../comps/quote/form.tsx";
 import { Summary } from "../comps/quote/summary.tsx";
 
 export function Quote(){
-	const { sendQuote, sendLoading, sendError } = useSendQuote();
-	const { createQuote, createLoading, createError } = useCreateQuote();
+	const { useSendQuote,useCreateQuote } = useQuote();
+	const { send, sendLoading, sendError } = useSendQuote();
+	const { create, createLoading, createError } = useCreateQuote();
+
 	const [price, setPrice] = useState({
 		subtotal:"",
 		markup:"",
@@ -39,7 +41,6 @@ export function Quote(){
 	const [markup, setMarkup] = useState("");
 	const [status, setStatus] = useState("");
 
-
 	
 
 	return(
@@ -48,6 +49,9 @@ export function Quote(){
 			<Summary
 				price={price}
 				setPrice={setPrice}
+				send={send}
+				sendLoading={sendLoading}
+				sendError={sendError}
 			/>
 		</div>
 	)

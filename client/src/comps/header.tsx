@@ -1,5 +1,13 @@
-export function Header(){
+import type { ReactElement } from "react";
+
+type PROPS = {
+	logout:ReactElement<any>;
+};
+
+export function Header({ logout }:PROPS){
 	return(
-		<div></div>
+		<div className="header">
+			{ logout }
+		</div>
 	)
 }

@@ -1,10 +1,12 @@
 import { ArrowRight, ArrowLeft } from "lucide-react";
 
 type PROPS = {
-	customers:Array<object>
+	quotes:Array<object>
+	loading:boolean;
+	error:boolean;
 };
 
-export function Table({ customers }:PROPS){
+export function Table({ quotes, loading, error }:PROPS){
 	const headerL = [ "ID", "CUSTOMER", "JOB" ];
 	const headerR = [ "STATUS", "PRICE", "DATE" ];
 
@@ -23,7 +25,7 @@ export function Table({ customers }:PROPS){
 				</div>
 			</header>
 			<div className="tableRow">
-				{customers.map((cus:any) => ( 
+				{quotes.map((cus:any) => ( 
 					<div className="rowContent">
 						<div className="rowContentL">
 							<div>
