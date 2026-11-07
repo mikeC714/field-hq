@@ -8,6 +8,7 @@ import type { AUTH_MODES } from "../types/auth.d.ts";
 
 
 export function Auth(){
+	console.log("AUTH IS RENDERED");
 	const { useSignup, useLogin, useForgot } = useAuth();
 	const { login, loginLoading, loginError } = useLogin();
 	const { signup, signupLoading, signupError } = useSignup();
@@ -55,6 +56,7 @@ export function Auth(){
 
 		forgot(email);
 	};
+
 
 	const FORMS = {
 		signIn:<Login 

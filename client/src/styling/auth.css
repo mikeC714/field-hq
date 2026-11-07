@@ -1,0 +1,16 @@
+@import url("config.css");
+
+.auth{
+	height:100vh;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+.authContainer{
+	background:var(--bg2);
+	height:48em;
+	width:60em;
+	display:grid;
+	grid-template: .4fr 1fr .2fr / repeat(3, auto);
+}

@@ -1,3 +1,4 @@
+import { CornerDownLeft, CornerDownRight } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
 import type { AUTH_MODES } from "../../types/auth.d.ts";
 
@@ -10,6 +11,15 @@ type PROPS = {
 
 
 export function Form({ FORMS, auth, setAuth }:PROPS){
+
+	function handleSwitch(){
+		if(auth === "login" || auth === "signup"){
+			setAuth("reset");
+		};
+
+		setAuth("login");
+	};
+
 	return(
 		<div className="authContainer">
 			<div className="authBtns">
@@ -29,9 +39,14 @@ export function Form({ FORMS, auth, setAuth }:PROPS){
 				</button>
 			</div>
 
-			{ FORMS[auth] || <FORMS.login /> }
+			{ FORMS[auth] }
 
-			<button className="authSwitch">{auth === "login" ? "Forgot password" : "Login to account"}</button>
+			<button 
+				className="authSwitch"
+				onClick={() => setAuth("reset")}
+			>
+				{auth === "signup" || auth === "login" ? "Forgot password" : "Login to account"}
+			</button>
 		</div>
 	);
 }

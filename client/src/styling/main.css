@@ -1,0 +1,13 @@
+@import ("./config.css");
+
+body{
+	margin:0;
+	padding:0;
+	background:var(--bg);	
+}
+
+#root{
+	margin:0;
+	padding:0;
+	height:100vh;
+}

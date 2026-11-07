@@ -10,22 +10,9 @@ type CUSTOMER = {
 
 };
 
-type LABOR = {
-};
-
-type CUSTOMER = {
-	firstName:string;
-	lastName:string;
-	email:string;
-	phone:string;
-	address:string;
-
-};
 
 type PROPS = {
 	setCustomer:Dispatch<SetStateAction<CUSTOMER>>;
-	setLabor:;
-	setMaterials:;
 }
 
 
