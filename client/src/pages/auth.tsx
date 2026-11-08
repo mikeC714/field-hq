@@ -59,22 +59,21 @@ export function Auth(){
 
 
 	const FORMS = {
-		signIn:<Login 
+		"login":<Login 
 				login={handleLogin}
 				loginLoading={loginLoading}
 				loginError={loginError}
 			/>,
-		create:<Signup 
+		"signup":<Signup 
 				signup={handleSignup}
 				signupLoading={signupLoading}
 				signupError={signupError}
 			/>,
-		reset:<Forgot 
+		"reset":<Forgot 
 				forgot={handleForgot}
 				forgotLoading={forgotLoading}
 				forgotError={forgotError}
 			/>
-
 	};
 
 	return(

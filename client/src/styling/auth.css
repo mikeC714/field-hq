@@ -9,8 +9,36 @@
 
 .authContainer{
 	background:var(--bg2);
-	height:48em;
-	width:60em;
+	height:44em;
+	width:48em;
 	display:grid;
 	grid-template: .4fr 1fr .2fr / repeat(3, auto);
+	border-radius:22px;
+}
+
+.authBtns{
+	grid-row:1;
+	grid-column:1 / span 3;
+	width:40%;
+	justify-self:center;
+	display:flex;
+	justify-content:space-between;;
+	align-items:center;
+}
+
+.authBtn{
+	border:none;
+	background:none;
+	font-size:16px;
+	font-weight:440;
+}
+
+.authForm{
+	grid-row:2;
+	grid-column:1 / span 3;
+	justify-self:center;
+}
+
+.authSwitch{
+	grid-row:3;
 }

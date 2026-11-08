@@ -13,11 +13,11 @@ type PROPS = {
 export function Form({ FORMS, auth, setAuth }:PROPS){
 
 	function handleSwitch(){
-		if(auth === "login" || auth === "signup"){
-			setAuth("reset");
-		};
-
-		setAuth("login");
+		switch (auth){
+			case "login": return setAuth("reset");
+			case "signup": return setAuth("reset");
+			case "reset": return setAuth("login");
+		}
 	};
 
 	return(
@@ -38,14 +38,14 @@ export function Form({ FORMS, auth, setAuth }:PROPS){
 					Signup
 				</button>
 			</div>
-
 			{ FORMS[auth] }
-
 			<button 
-				className="authSwitch"
-				onClick={() => setAuth("reset")}
+				className={auth === "reset" ? `authSwitch left` : `authSwitch right`}
+				onClick={handleSwitch}
 			>
-				{auth === "signup" || auth === "login" ? "Forgot password" : "Login to account"}
+				{auth === "signup" || auth === "login" ? "Forgot password "  : "Login to account"}
+				{auth === "signup" || auth === "login" ? <CornerDownRight /> : <CornerDownLeft />}
+
 			</button>
 		</div>
 	);
