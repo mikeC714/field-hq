@@ -34,11 +34,71 @@
 }
 
 .authForm{
+	width:100%;
 	grid-row:2;
 	grid-column:1 / span 3;
 	justify-self:center;
+	display:grid;
+}
+
+.authFormBody{
+	display:grid;
+	grid-template-rows:1fr auto;	
+}
+
+.authFormInputs{
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+	gap:4em;
+
 }
 
 .authSwitch{
-	grid-row:3;
+	border:none;
+	background:none;
+	height:fit-content;
+	display:flex;
+	justify-content:center;
+	gap:10px;
+	font-size:16px;
+	font-weight:500;
+
 }
+
+.authInput{
+	width:60%;
+	height:2em;
+	padding:4px;
+	background:none;
+	border:none;	
+	border-bottom:2px solid #C5C6D0;	
+	border-radius:2px;
+	font-size:14px;
+	outline:none;
+}
+
+.authInput:focus{
+	border-color:var(--color);
+}
+
+.authSubmit{
+	width:fit-content;
+	height:2em;
+	padding:1.4em 4em 1.4em 4em;
+	margin:none;
+	border:none;
+	border-radius:8px;
+	display:flex;
+	justify-content:center;
+	justify-self:center;
+	align-self:center;
+	align-items:center;
+	background-color:var(--color);
+	color:white;
+	font-size:16px;
+	font-weight:460;
+}
+

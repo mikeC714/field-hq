@@ -57,22 +57,35 @@ export function Auth(){
 		forgot(email);
 	};
 
+	function handleSwitch(){
+		switch (authMode){
+			case "login": return setAuthMode("reset");
+			case "signup": return setAuthMode("reset");
+			case "reset": return setAuthMode("login");
+		}
+	};
 
 	const FORMS = {
 		"login":<Login 
-				login={handleLogin}
-				loginLoading={loginLoading}
-				loginError={loginError}
+				auth={authMode}
+				authSwitch={handleSwitch}
+				mutate={handleLogin}
+				loading={loginLoading}
+				error={loginError}
 			/>,
 		"signup":<Signup 
-				signup={handleSignup}
-				signupLoading={signupLoading}
-				signupError={signupError}
+				auth={authMode}
+				authSwitch={handleSwitch}
+				mutate={handleSignup}
+				loading={signupLoading}
+				error={signupError}
 			/>,
 		"reset":<Forgot 
-				forgot={handleForgot}
-				forgotLoading={forgotLoading}
-				forgotError={forgotError}
+				auth={authMode}
+				authSwitch={handleSwitch}
+				mutate={handleForgot}
+				loading={forgotLoading}
+				error={forgotError}
 			/>
 	};
 
