@@ -4,11 +4,10 @@ import { Form } from "../comps/auth/form.tsx";
 import { Login } from "../comps/auth/login.tsx";
 import { Signup } from "../comps/auth/signup.tsx";
 import { Forgot } from "../comps/auth/forgot.tsx";
-import type { AUTH_MODES } from "../types/auth.d.ts";
+import type { AUTH_MODES } from "../types/auth/auth.d.ts";
 
 
-export function Auth(){
-	console.log("AUTH IS RENDERED");
+export function Auth({ closeAuth }:any){
 	const { useSignup, useLogin, useForgot } = useAuth();
 	const { login, loginLoading, loginError } = useLogin();
 	const { signup, signupLoading, signupError } = useSignup();
@@ -92,6 +91,7 @@ export function Auth(){
 	return(
 		<div className="auth">
 			<Form 
+				closeAuth={closeAuth}
 				FORMS={FORMS}
 				auth={authMode}
 				setAuth={setAuthMode}

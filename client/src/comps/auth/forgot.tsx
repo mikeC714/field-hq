@@ -1,24 +1,18 @@
-import { CornerDownLeft, CornerDownRight } from "lucide-react";
 import type { AUTH_FORM } from "../../types/auth/form.d.ts";
 
 
-export function Forgot({ auth, authSwitch, mutate, loading, error }:AUTH_FORM){
+export function Forgot({ mutate, loading, error }:AUTH_FORM){
 	return(
 		<form className="authForgot" onSubmit={mutate}>
 			<div className="authFormBody">
-				<h3>Oops...</h3>
-				<p>Mistakes happen, in order to attempt to gain access of your account enter the email for the account so a reset link can be emitted.</p>
-				<p>Once sent follow the instructions in order to regain access to your account.</p>
-				<input className="authReset" type="email" name="fEmail" placeholder="example@gmail.com"/>
-				<button className="authSwitch" onClick={authSwitch}>
-					{
-						auth === "login" ?
-					<> Forgot password { <CornerDownRight /> } </> :
-						<> { <CornerDownLeft /> } Login to account </>
-					}
-				</button>
+				<h3 className="authForgotHeader">Oops...</h3>
+				<p className="authForgotPara1">Mistakes happen, in order to attempt to gain access of your account enter the email for the account to send  a reset link.</p>
+				<p className="authForgotPara2">Once sent follow the instructions in order to regain access to your account.</p>
 			</div>
-			<button type="submit" className="authSubmit">Send Email</button>
+			<div className="authForgotFooter">
+				<input className="authForgotInput authInput" type="email" name="fEmail" placeholder="example@gmail.com"/>
+				<button type="submit" className="authSubmit authForgotSubmit">Send Email</button>
+			</div>
 		</form>
 	);
 }

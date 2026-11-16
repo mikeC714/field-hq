@@ -1,0 +1,58 @@
+@import url("config.css");
+
+	/* --manrope:'Manrope', sans-serif; */
+	/* --montserrat:'Montserrat', italic; */
+
+.nav{
+	display:grid;
+	grid-template-columns:repeat(3, 1fr);
+}
+
+.navLinks{
+	grid-column:2;
+	justify-self:center;
+	align-self:center;
+	border:1px solid rgba(255,255,255,.2);
+	color:#F5FEFD;
+	font-family:var(--montserrat);
+	font-size:14px;
+	font-weight:480;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+.navList{
+	display:flex;	
+	justify-content:flex-start;
+	align-items:center;
+	gap:10em;
+	border:none;
+	background:none;
+	list-style:none;
+}
+
+.navListItem{
+	text-align:center;
+	display:flex;
+	justify-content:center;
+	align-items:center;	
+	gap:10px;
+}
+
+.navBtns{
+	grid-column:3;
+	justify-self:center;
+	align-self:center;
+}
+
+.loginBtn{
+	border:none;
+	width:fit-content;
+	padding:10px 2em 10px 2em;
+	border-radius:20px;
+	font-family:var(--montserrat);
+	font-size:14px;
+	font-weight:480;
+}
+

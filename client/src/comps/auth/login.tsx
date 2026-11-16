@@ -1,23 +1,19 @@
-import { CornerDownLeft, CornerDownRight } from "lucide-react";
 import type { AUTH_FORM } from "../../types/auth/form.d.ts";
 
-export function Login({ auth, authSwitch, mutate, loading, error }:AUTH_FORM){
+export function Login({ authSwitch, mutate, loading, error }:AUTH_FORM){
 	return(
 		<form className="authForm" onSubmit={mutate}>
 				<div className="authFormBody">
 					<div className="authFormInputs">
 						<input className="authEmail authInput" type="email" name="lEmail"  placeholder="example@gmail.com"/>
-						<input className="authPassword authInput" type="password" name="lPassword"  placeholder="supersecretpassword"/>
+						<div className="authLoginPass">
+							<button className="authSwitch" onClick={authSwitch}>Forgot password ?</button>
+							<input className="authPassword authInput" type="password" name="lPassword"  placeholder="supersecretpassword"/>
+						</div>
 					</div>
-					<button className="authSwitch" onClick={authSwitch}>
-						{
-							auth === "login" ?
-							<> Forgot password { <CornerDownRight /> } </> :
-							<> { <CornerDownLeft /> } Login to account </>
-						}
-					</button>
 				</div>
 			<button type="submit" className="authSubmit">Login</button>
+			<span className="authSplit">or</span>
 		</form>
 	);
 }

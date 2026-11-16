@@ -12,6 +12,7 @@ type AUTH_FORM = {
 };
 
 type AUTH_PAGE = {
+	closeAuth:Dispatch<SetStateAction<boolean>>;
 	FORMS:Record<string, any>;
 	auth:string;
 	setAuth:Dispatch<SetStateAction<AUTH_MODES>>;

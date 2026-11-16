@@ -1,12 +1,16 @@
-:root{
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
 	/* COLORS */
 
-	--bg:#B2BEB5;
-	--bg2:#F2F3F4;
+	--bg:#060607;
+	--bg2:#373738;
 	--color:#3E3D53;
 	--font-color:#313238;
 
 
 	/* FONTS */
-
+	--manrope:'Manrope', sans-serif;
+	--montserrat:'Montserrat', italic;
 }
