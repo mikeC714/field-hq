@@ -9,8 +9,8 @@
 
 .authContainer{
 	background:var(--bg2);
-	height:44em;
-	width:48em;
+	height:40em;
+	width:32em;
 	display:grid;
 	grid-template: .4fr 1fr .2fr / repeat(3, auto);
 	border-radius:22px;
