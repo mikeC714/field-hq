@@ -8,17 +8,16 @@ import { useUnmount } from "../hooks/unmount.tsx";
 export function Display(){
 	const [openAuth, setOpenAuth] = useState<boolean>(false);
 	const [hovered, setHovered] = useState<{id:string | null, open:boolean}>({ id:null, open:false });
-	
-
 	const showDrop = useUnmount(hovered.open, 200);
-	
-	const dropDown = useCallback((id:string, open:boolean = true) => {
-		setHovered((prev:any) => { 
-			if(!open && prev?.id === id) return prev;
 
-			return { id, open };
-		})
+
+	const dropDown = useCallback((id:string, open:boolean = true) => {
+		return setHovered(() => ({ 
+			id,
+			open
+		}))
 	},[]);
+
 
 	const MemoNav = memo(Nav); 
 
@@ -30,6 +29,7 @@ export function Display(){
 			)}	
 
 			<MemoNav 
+				hovered={hovered}
 				showDrop={showDrop}
 				setShow={dropDown}
 				openAuth={openAuth} 

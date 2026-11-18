@@ -1,7 +1,7 @@
-export function About({ cards }:any){
+export function About({ children }:any){
 	return(
-		<div className="navAbout">
-			{cards}
+		<div className="cardContainer">
+			{children}
 		</div>
 	);
 };

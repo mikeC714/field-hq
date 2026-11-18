@@ -1,6 +1,6 @@
 export function Goal({cards}:any){
 	return(
-		<div className="navGoal">
+		<div className="cardContainer">
 			{cards}
 		</div>
 	);

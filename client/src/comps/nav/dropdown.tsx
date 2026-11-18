@@ -1,8 +1,7 @@
-export function DropDown({ child }:any){
-	console.log("RED")
+export function DropDown({ children }:any){
 	return(
 		<div className="dropDown">
-			{ child }
+			{ children }
 		</div>
 	)
 };
