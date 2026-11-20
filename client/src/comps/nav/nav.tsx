@@ -7,7 +7,7 @@ import { features, about, goal } from "../../utils/nav.tsx";
 import { ChevronDown } from "lucide-react";
 
 
-export function Nav({ hovered, showDrop, setShow, openAuth }:any){
+export function Nav({ hovered, showDrop, closeDrop, setShow, openAuth }:any){
 
 	const NAV = ["Features", "About", "Goal"];	
 
@@ -30,7 +30,9 @@ export function Nav({ hovered, showDrop, setShow, openAuth }:any){
 				{ NAV.map((key:string) => (
 					<li 
 						key={key} 
-						onMouseEnter={() => setShow(key)} 
+						onMouseEnter={() => (
+							setShow(key)
+						)} 
 						onMouseLeave={() => setShow(null, false)}
 						className="navListItem"
 					>
